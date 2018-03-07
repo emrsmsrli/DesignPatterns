@@ -1,6 +1,8 @@
+import java.util.List;
+
 public interface Mediator {
-    void monitorPatients();
-    void monitorHospitalStaff();
+    void monitorPatients(List<Patient> patientList);
+    void monitorHospitalStaff(List<HospitalStaff> staffList);
     void goPatientsRoom();
     void assignTaskToStaff();
 }
