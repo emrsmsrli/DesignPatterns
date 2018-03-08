@@ -1,7 +1,7 @@
-package people.staff;
+package application.people.staff;
 
-import people.Patient;
-import people.staff.task.TaskResult;
+import application.people.Patient;
+import application.people.staff.task.TaskResult;
 
 public class Nurse extends HospitalStaff {
     private static float medicineProbability = 0;
@@ -29,7 +29,7 @@ public class Nurse extends HospitalStaff {
             switch(taskAndProb[0]) {
                 case "medicine": medicineProbability = prob; break;
                 case "take_blood": takeBloodProbability = prob; break;
-                default: System.err.println("unknown people.staff.task: " + taskAndProb[0] + ". skipping..");
+                default: System.err.println("unknown application.people.staff.task: " + taskAndProb[0] + ". skipping..");
             }
         }
     }

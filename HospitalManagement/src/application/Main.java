@@ -1,10 +1,11 @@
+package application;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
 public class Main {
-    // used for randomization of people.staff.task results
+    // used for randomization of application.people.staff.task results
     public static Random random = new Random(new Date().getTime());
 
     public static void main(String[] args) {
@@ -16,7 +17,7 @@ public class Main {
         IMediator mediator = new HospitalDispatchAndMonitorSystem();
         distributeProbabilities(mediator, args[0]);
 
-        System.out.println("Choose a people.staff.task:");
+        System.out.println("Choose a application.people.staff.task:");
         System.out.println("1- Monitor patients");
         System.out.println("2- Monitor Hospital Staff");
         System.out.println("3- Perform operation");
@@ -40,7 +41,7 @@ public class Main {
      */
     private static void distributeProbabilities(IMediator mediator, String path) {
         try(Scanner s = new Scanner(new File(path))) {
-            for(int i = 0; i < 3; ++i) {    // have 3 people.staff types
+            for(int i = 0; i < 3; ++i) {    // have 3 application.people.staff types
                 String[] taskProbabilityPairs = s.nextLine().split(",");
                 mediator.distributeProbabilities(taskProbabilityPairs);
             }

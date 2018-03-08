@@ -1,8 +1,8 @@
-package people.staff;
+package application.people.staff;
 
-import people.Patient;
-import people.staff.task.ITaskExecuter;
-import people.staff.task.TaskResult;
+import application.people.Patient;
+import application.people.staff.task.ITaskExecuter;
+import application.people.staff.task.TaskResult;
 
 public abstract class HospitalStaff implements ITaskExecuter {
     private String name;

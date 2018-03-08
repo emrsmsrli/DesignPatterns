@@ -1,6 +1,6 @@
-package people.staff.task;
+package application.people.staff.task;
 
-import people.Patient;
+import application.people.Patient;
 
 public interface ITaskExecuter {
     TaskResult executeTask(Patient patient);

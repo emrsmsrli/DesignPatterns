@@ -1,7 +1,7 @@
-package people.staff;
+package application.people.staff;
 
-import people.Patient;
-import people.staff.task.TaskResult;
+import application.people.Patient;
+import application.people.staff.task.TaskResult;
 
 public class PatientCompanion extends HospitalStaff {
     private static float takeMriProbability = 0;
@@ -29,7 +29,7 @@ public class PatientCompanion extends HospitalStaff {
             switch(taskAndProb[0]) {
                 case "mri": takeMriProbability = prob; break;
                 case "xray": takeXRayProbability = prob; break;
-                default: System.err.println("unknown people.staff.task: " + taskAndProb[0] + ". skipping..");
+                default: System.err.println("unknown application.people.staff.task: " + taskAndProb[0] + ". skipping..");
             }
         }
     }
