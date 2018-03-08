@@ -1,13 +1,11 @@
-package application;
+import hospitalmanagement.HospitalDispatchAndMonitorSystem;
+import hospitalmanagement.IMediator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
 public class Main {
-    // used for randomization of task results
-    public static Random random = new Random(new Date().getTime());
-
     public static void main(String[] args) {
         if(args.length < 1) {
             System.err.println("provide a probability distribution file");

@@ -1,15 +1,16 @@
-package application;
+package hospitalmanagement;
 
-import application.people.Patient;
-import application.people.staff.Doctor;
-import application.people.staff.Nurse;
-import application.people.staff.PatientCompanion;
+import hospitalmanagement.people.Patient;
+import hospitalmanagement.people.staff.Doctor;
+import hospitalmanagement.people.staff.Nurse;
+import hospitalmanagement.people.staff.PatientCompanion;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class HospitalDispatchAndMonitorSystem implements IMediator {
+    // used for randomization of task results
+    public static Random random = new Random(new Date().getTime());
+
     private List<Patient> patients = new ArrayList<>();
     private List<Doctor> doctors = new ArrayList<>();
     private List<Nurse> nurses = new ArrayList<>();
@@ -33,4 +34,12 @@ public class HospitalDispatchAndMonitorSystem implements IMediator {
                 break;
         }
     }
+/*
+    @Override
+    public String toString() {
+        return "patients: " + patients.toString() + '\n' +
+                "doctors: " + doctors.toString() + '\n' +
+                "nurses: " + nurses.toString() + '\n' +
+                "patComps: " + patientCompanions.toString() + '\n';
+    }*/
 }

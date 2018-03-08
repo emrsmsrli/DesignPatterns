@@ -1,4 +1,4 @@
-package application.people.staff.task;
+package hospitalmanagement.people.staff.task;
 
 public enum TaskResult {
     SUCCESS, FAILURE

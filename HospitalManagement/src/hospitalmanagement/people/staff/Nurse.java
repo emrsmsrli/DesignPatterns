@@ -1,14 +1,14 @@
-package application.people.staff;
+package hospitalmanagement.people.staff;
 
-import application.IMediator;
-import application.people.Patient;
-import application.people.staff.task.TaskResult;
+import hospitalmanagement.IMediator;
+import hospitalmanagement.people.Patient;
+import hospitalmanagement.people.staff.task.TaskResult;
 
-public class PatientCompanion extends HospitalStaff {
-    private static float takeMriProbability = 0;
-    private static float takeXRayProbability = 0;
+public class Nurse extends HospitalStaff {
+    private static float medicineProbability = 0;
+    private static float takeBloodProbability = 0;
 
-    public PatientCompanion(IMediator mediator, String name) {
+    public Nurse(IMediator mediator, String name) {
         super(mediator, name);
     }
 
@@ -28,8 +28,8 @@ public class PatientCompanion extends HospitalStaff {
                 System.exit(-1);
             }
             switch(taskAndProb[0]) {
-                case "mri": takeMriProbability = prob; break;
-                case "xray": takeXRayProbability = prob; break;
+                case "medicine": medicineProbability = prob; break;
+                case "take_blood": takeBloodProbability = prob; break;
                 default: System.err.println("unknown task: " + taskAndProb[0] + ". skipping..");
             }
         }

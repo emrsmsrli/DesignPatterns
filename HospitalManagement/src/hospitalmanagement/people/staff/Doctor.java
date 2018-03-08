@@ -1,8 +1,8 @@
-package application.people.staff;
+package hospitalmanagement.people.staff;
 
-import application.IMediator;
-import application.people.Patient;
-import application.people.staff.task.TaskResult;
+import hospitalmanagement.IMediator;
+import hospitalmanagement.people.Patient;
+import hospitalmanagement.people.staff.task.TaskResult;
 
 public class Doctor extends HospitalStaff {
     private static float operationProbability = 0;

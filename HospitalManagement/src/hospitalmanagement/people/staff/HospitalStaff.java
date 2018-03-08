@@ -1,9 +1,9 @@
-package application.people.staff;
+package hospitalmanagement.people.staff;
 
-import application.IMediator;
-import application.people.Patient;
-import application.people.staff.task.ITaskExecuter;
-import application.people.staff.task.TaskResult;
+import hospitalmanagement.IMediator;
+import hospitalmanagement.people.Patient;
+import hospitalmanagement.people.staff.task.ITaskExecuter;
+import hospitalmanagement.people.staff.task.TaskResult;
 
 public abstract class HospitalStaff implements ITaskExecuter {
     private String name;

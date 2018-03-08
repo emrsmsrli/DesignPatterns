@@ -1,4 +1,4 @@
-package application.people;
+package hospitalmanagement.people;
 
 public class Patient {
     private String name;
