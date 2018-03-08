@@ -30,7 +30,7 @@ public class Nurse extends HospitalStaff {
             switch(taskAndProb[0]) {
                 case "medicine": medicineProbability = prob; break;
                 case "take_blood": takeBloodProbability = prob; break;
-                default: System.err.println("unknown application.people.staff.task: " + taskAndProb[0] + ". skipping..");
+                default: System.err.println("unknown task: " + taskAndProb[0] + ". skipping..");
             }
         }
     }

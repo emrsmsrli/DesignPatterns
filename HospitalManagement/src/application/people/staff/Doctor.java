@@ -32,7 +32,7 @@ public class Doctor extends HospitalStaff {
                 case "operation": operationProbability = prob; break;
                 case "visit": visitProbability = prob; break;
                 case "dismiss": dismissProbability = prob; break;
-                default: System.err.println("unknown application.people.staff.task: " + taskAndProb[0] + ". skipping..");
+                default: System.err.println("unknown task: " + taskAndProb[0] + ". skipping..");
             }
         }
     }
