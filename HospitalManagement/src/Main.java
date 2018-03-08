@@ -1,25 +1,22 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.*;
 
 public class Main {
+    // used for randomization of people.staff.task results
+    public static Random random = new Random(new Date().getTime());
 
     public static void main(String[] args) {
-        List<Patient> patientList = new ArrayList<>();
-        patientList.add(new Patient("Mert"));
-        patientList.add(new Patient("Emre"));
-        patientList.add(new Patient("Sadık"));
-        patientList.add(new Patient("Bahadır"));
+        if(args.length < 1) {
+            System.err.println("provide a probability distribution file");
+            System.exit(0);
+        }
 
-        List<HospitalStaff> staffList = new ArrayList<>();
-        staffList.add(new Nurse("MertS"));
-        staffList.add(new PatientCompanion("SadıkS"));
-        staffList.add(new Doctor("BahadırS"));
+        IMediator mediator = new HospitalDispatchAndMonitorSystem();
+        distributeProbabilities(mediator, args[0]);
 
-        Scanner scanner = new Scanner(System.in);
-        int task;
-        
-        System.out.println("Choose a task:");
+        System.out.println("Choose a people.staff.task:");
         System.out.println("1- Monitor patients");
         System.out.println("2- Monitor Hospital Staff");
         System.out.println("3- Perform operation");
@@ -29,31 +26,27 @@ public class Main {
         System.out.println("7- Take blood sample");
         System.out.println("8- Take patient to MRI");
         System.out.println("9- Take patient to X-Ray");
+    }
 
-        task = scanner.nextInt();
-
-        switch (task){
-            case 1:
-                staffList.get(0).monitorPatients(patientList);
-                break;
-            case 2:
-                staffList.get(0).monitorHospitalStaff(staffList);
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-            case 6:
-                break;
-            case 7:
-                break;
-            case 8:
-                break;
-            case 9:
-                break;
-            default: break;
+    /**
+     * Distribution file should be formatted as:
+     *      <i>className</i>,<i>action:prob</i>,<i>action:prob</i>,... <br>
+     *      <i>i.e</i> doctor,operation:0.3,visit:0.8,dismiss:0.3 <br><br>
+     *
+     *       Available classNames are {@code doctor}, {@code nurse} and {@code patient_comp}<br><br>
+     *
+     *      data is split with commas and action-probability pairs with colons
+     * @param path distribution file path to read
+     */
+    private static void distributeProbabilities(IMediator mediator, String path) {
+        try(Scanner s = new Scanner(new File(path))) {
+            for(int i = 0; i < 3; ++i) {    // have 3 people.staff types
+                String[] taskProbabilityPairs = s.nextLine().split(",");
+                mediator.distributeProbabilities(taskProbabilityPairs);
+            }
+        } catch(FileNotFoundException e) {
+            System.err.println("probability distribution file not found");
+            System.exit(-1);
         }
     }
 }

@@ -1,7 +1,9 @@
+package people;
+
 public class Patient {
     private String name;
 
-    Patient(String name){
+    public Patient(String name){
         this.name = name;
     }
 
