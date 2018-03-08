@@ -1,5 +1,6 @@
 package application.people.staff;
 
+import application.IMediator;
 import application.people.Patient;
 import application.people.staff.task.TaskResult;
 
@@ -8,8 +9,8 @@ public class Doctor extends HospitalStaff {
     private static float visitProbability = 0;
     private static float dismissProbability = 0;
 
-    public Doctor(String name) {
-        super(name);
+    public Doctor(IMediator mediator, String name) {
+        super(mediator, name);
     }
 
     @Override

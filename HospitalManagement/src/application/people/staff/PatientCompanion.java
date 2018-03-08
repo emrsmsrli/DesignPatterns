@@ -1,5 +1,6 @@
 package application.people.staff;
 
+import application.IMediator;
 import application.people.Patient;
 import application.people.staff.task.TaskResult;
 
@@ -7,8 +8,8 @@ public class PatientCompanion extends HospitalStaff {
     private static float takeMriProbability = 0;
     private static float takeXRayProbability = 0;
 
-    public PatientCompanion(String name) {
-        super(name);
+    public PatientCompanion(IMediator mediator, String name) {
+        super(mediator, name);
     }
 
     @Override
