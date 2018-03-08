@@ -1,14 +1,14 @@
 class Nurse extends HospitalStaff {
 
-    Nurse(String name) {
-        super(name);
+    Nurse(Mediator m, String name) {
+        super(m, name);
     }
 
-    public Enum bringMedicine(){
+    TaskResult bringMedicine(){
         return TaskResult.values()[randomTask.nextInt(TaskResult.values().length)];
     }
 
-    public Enum takeBloodSample(){
+    TaskResult takeBloodSample(){
         return TaskResult.values()[randomTask.nextInt(TaskResult.values().length)];
     }
 }

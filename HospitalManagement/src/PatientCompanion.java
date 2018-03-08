@@ -4,11 +4,11 @@ class PatientCompanion extends HospitalStaff {
         super(name);
     }
 
-    Enum takePatientToMRI(){
+    TaskResult takePatientToMRI(){
         return TaskResult.values()[randomTask.nextInt(TaskResult.values().length)];
     }
 
-    Enum takePatientToXRAY(){
+    TaskResult takePatientToXRAY(){
         return TaskResult.values()[randomTask.nextInt(TaskResult.values().length)];
     }
 }

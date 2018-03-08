@@ -4,15 +4,15 @@ class Doctor extends HospitalStaff {
         super(name);
     }
 
-    Enum performOperation(){
+    TaskResult performOperation(){
         return TaskResult.values()[randomTask.nextInt(TaskResult.values().length)];
     }
 
-    Enum performVisit(){
+    TaskResult performVisit(){
         return TaskResult.values()[randomTask.nextInt(TaskResult.values().length)];
     }
 
-    Enum dismissPatient(){
+    TaskResult dismissPatient(){
         return TaskResult.values()[randomTask.nextInt(TaskResult.values().length)];
     }
 }

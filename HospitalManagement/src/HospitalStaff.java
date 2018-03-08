@@ -1,36 +1,25 @@
-import java.util.List;
 import java.util.Random;
 
-public class HospitalStaff implements Mediator {
+public class HospitalStaff {
     Random randomTask;
+    private Mediator mediator;
     private String name;
 
-    HospitalStaff(String name){
+    HospitalStaff(Mediator m, String n){
         randomTask = new Random();
-        this.name = name;
-    }
-
-    @Override
-    public void monitorPatients(List<Patient> patientList) {
-
-    }
-
-    @Override
-    public void monitorHospitalStaff(List<HospitalStaff> staffList) {
-
-    }
-
-    @Override
-    public void goPatientsRoom() {
-
-    }
-
-    @Override
-    public void assignTaskToStaff() {
-
+        name = n;
+        mediator = m;
     }
 
     public String getName() {
         return name;
+    }
+
+    public Mediator getMediator() {
+        return mediator;
+    }
+
+    public void setMediator(Mediator mediator) {
+        this.mediator = mediator;
     }
 }

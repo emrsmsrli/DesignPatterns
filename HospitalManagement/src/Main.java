@@ -1,20 +1,12 @@
-import java.util.ArrayList;
-import java.util.List;
+import javax.net.ssl.HostnameVerifier;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
-        List<Patient> patientList = new ArrayList<>();
-        patientList.add(new Patient("Mert"));
-        patientList.add(new Patient("Emre"));
-        patientList.add(new Patient("Sadık"));
-        patientList.add(new Patient("Bahadır"));
-
-        List<HospitalStaff> staffList = new ArrayList<>();
-        staffList.add(new Nurse("MertS"));
-        staffList.add(new PatientCompanion("SadıkS"));
-        staffList.add(new Doctor("BahadırS"));
+        Mediator mediator = new Mediator();
+        Patient mert = new Patient("Mert");
+        HospitalStaff staff = new Nurse(mediator, "MertS");
 
         Scanner scanner = new Scanner(System.in);
         int task;
@@ -34,10 +26,10 @@ public class Main {
 
         switch (task){
             case 1:
-                staffList.get(0).monitorPatients(patientList);
+                mediator.monitorPatients();
                 break;
             case 2:
-                staffList.get(0).monitorHospitalStaff(staffList);
+                mediator.monitorHospitalStaff();
                 break;
             case 3:
                 break;
