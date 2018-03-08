@@ -1,10 +1,19 @@
-import people.staff.Doctor;
-import people.staff.Nurse;
-import people.staff.PatientCompanion;
+package application;
 
+import application.people.Patient;
+import application.people.staff.Doctor;
+import application.people.staff.Nurse;
+import application.people.staff.PatientCompanion;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class HospitalDispatchAndMonitorSystem implements IMediator {
+    private List<Patient> patients = new ArrayList<>();
+    private List<Doctor> doctors = new ArrayList<>();
+    private List<Nurse> nurses = new ArrayList<>();
+    private List<PatientCompanion> patientCompanions = new ArrayList<>();
 
     public HospitalDispatchAndMonitorSystem() {
 
