@@ -3,5 +3,5 @@ package hospitalmanagement.people.staff.task;
 import hospitalmanagement.people.Patient;
 
 public interface ITaskExecuter {
-    TaskResult executeTask(Patient patient);
+    Task.Result executeTask(Task task, Patient patient);
 }

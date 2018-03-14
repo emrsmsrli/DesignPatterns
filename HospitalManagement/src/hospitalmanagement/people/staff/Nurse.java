@@ -2,19 +2,29 @@ package hospitalmanagement.people.staff;
 
 import hospitalmanagement.IMediator;
 import hospitalmanagement.people.Patient;
-import hospitalmanagement.people.staff.task.TaskResult;
+import hospitalmanagement.people.staff.task.Task;
 
 public class Nurse extends HospitalStaff {
-    private static float medicineProbability = 0;
-    private static float takeBloodProbability = 0;
+    public static final Task TASK_MEDICINE = new Task();
+    public static final Task TASK_TAKE_BLOOD = new Task();
 
     public Nurse(IMediator mediator, String name) {
         super(mediator, name);
     }
 
     @Override
-    public TaskResult executeTask(Patient patient) {
+    public Task.Result executeTask(Task task, Patient patient) {
         return null;
+    }
+
+    @Override
+    public String getStatus() {
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        return "@Nurse [name: " + name + "]";
     }
 
     public static void setProbabilities(String[] probs) {
@@ -28,8 +38,8 @@ public class Nurse extends HospitalStaff {
                 System.exit(-1);
             }
             switch(taskAndProb[0]) {
-                case "medicine": medicineProbability = prob; break;
-                case "take_blood": takeBloodProbability = prob; break;
+                case "medicine": TASK_MEDICINE.setProbability(prob); break;
+                case "take_blood": TASK_TAKE_BLOOD.setProbability(prob); break;
                 default: System.err.println("unknown task: " + taskAndProb[0] + ". skipping..");
             }
         }

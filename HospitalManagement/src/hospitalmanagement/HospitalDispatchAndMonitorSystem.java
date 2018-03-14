@@ -9,14 +9,23 @@ import java.util.*;
 
 public class HospitalDispatchAndMonitorSystem implements IMediator {
     // used for randomization of task results
-    public static Random random = new Random(new Date().getTime());
+    public static final Random random = new Random(new Date().getTime());
 
-    private List<Patient> patients = new ArrayList<>();
-    private List<Doctor> doctors = new ArrayList<>();
-    private List<Nurse> nurses = new ArrayList<>();
-    private List<PatientCompanion> patientCompanions = new ArrayList<>();
+    private final List<Patient> patients = new ArrayList<>();
+    private final List<Doctor> doctors = new ArrayList<>();
+    private final List<Nurse> nurses = new ArrayList<>();
+    private final List<PatientCompanion> patientCompanions = new ArrayList<>();
 
     public HospitalDispatchAndMonitorSystem() {
+        // TODO mantıklı bir şekilde ekle
+        for(int i = 0; i < 5; ++i)
+            patients.add(new Patient(this, "patient" + i));
+        doctors.add(new Doctor(this, "doctor1"));
+        nurses.add(new Nurse(this, "nurse1"));
+        patientCompanions.add(new PatientCompanion(this, "patcom1"));
+    }
+
+    public void monitor() {
 
     }
 
@@ -34,12 +43,12 @@ public class HospitalDispatchAndMonitorSystem implements IMediator {
                 break;
         }
     }
-/*
+
     @Override
     public String toString() {
         return "patients: " + patients.toString() + '\n' +
                 "doctors: " + doctors.toString() + '\n' +
                 "nurses: " + nurses.toString() + '\n' +
                 "patComps: " + patientCompanions.toString() + '\n';
-    }*/
+    }
 }
