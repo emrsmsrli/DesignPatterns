@@ -17,8 +17,12 @@ public class PersonList<T extends Person> {
         people.add(person);
     }
 
-    public void removeAt(T person) {
+    public void remove(T person) {
         people.remove(person);
+    }
+
+    public boolean contains(T person) {
+        return people.contains(person);
     }
 
     public int size() {
