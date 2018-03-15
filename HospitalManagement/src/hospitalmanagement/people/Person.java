@@ -1,19 +1,22 @@
 package hospitalmanagement.people;
 
 import hospitalmanagement.IMediator;
+import hospitalmanagement.Room;
 
 public abstract class Person {
-    protected String name;
     protected IMediator mediator;
+    protected Room currentRoom;
 
-    public Person(IMediator mediator, String name) {
-        this.name = name;
+    public Person(IMediator mediator) {
         this.mediator = mediator;
+        this.currentRoom = null;
     }
 
-    public String getName() {
-        return name;
+    public void goToRoom(Room room) {
+        currentRoom = room;
     }
 
-    public abstract String getStatus();
+    public Room getCurrentRoom() {
+        return currentRoom;
+    }
 }

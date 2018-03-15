@@ -1,30 +1,19 @@
 package hospitalmanagement.people.staff;
 
 import hospitalmanagement.IMediator;
-import hospitalmanagement.people.Patient;
 import hospitalmanagement.people.staff.task.Task;
 
 public class Nurse extends HospitalStaff {
     public static final Task TASK_MEDICINE = new Task();
     public static final Task TASK_TAKE_BLOOD = new Task();
 
-    public Nurse(IMediator mediator, String name) {
-        super(mediator, name);
+    public Nurse(IMediator mediator) {
+        super(mediator);
     }
 
     @Override
-    public Task.Result executeTask(Task task, Patient patient) {
+    public Task.Result executeTask(Task task) {
         return null;
-    }
-
-    @Override
-    public String getStatus() {
-        return null;
-    }
-
-    @Override
-    public String toString() {
-        return "@Nurse [name: " + name + "]";
     }
 
     public static void setProbabilities(String[] probs) {

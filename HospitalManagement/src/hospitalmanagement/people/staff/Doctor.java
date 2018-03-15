@@ -1,7 +1,6 @@
 package hospitalmanagement.people.staff;
 
 import hospitalmanagement.IMediator;
-import hospitalmanagement.people.Patient;
 import hospitalmanagement.people.staff.task.Task;
 
 public class Doctor extends HospitalStaff {
@@ -9,23 +8,13 @@ public class Doctor extends HospitalStaff {
     public static final Task TASK_VISIT = new Task();
     public static final Task TASK_DISMISS = new Task();
 
-    public Doctor(IMediator mediator, String name) {
-        super(mediator, name);
+    public Doctor(IMediator mediator) {
+        super(mediator);
     }
 
     @Override
-    public Task.Result executeTask(Task task, Patient patient) {
+    public Task.Result executeTask(Task task) {
         return null;
-    }
-
-    @Override
-    public String getStatus() {
-        return null;
-    }
-
-    @Override
-    public String toString() {
-        return "@Doctor [name: " + name + "]";
     }
 
     public static void setProbabilities(String[] probs) {

@@ -1,30 +1,19 @@
 package hospitalmanagement.people.staff;
 
 import hospitalmanagement.IMediator;
-import hospitalmanagement.people.Patient;
 import hospitalmanagement.people.staff.task.Task;
 
 public class PatientCompanion extends HospitalStaff {
     public static final Task TASK_TAKE_TO_MRI = new Task();
     public static final Task TASK_TAKE_TO_XRAY = new Task();
 
-    public PatientCompanion(IMediator mediator, String name) {
-        super(mediator, name);
+    public PatientCompanion(IMediator mediator) {
+        super(mediator);
     }
 
     @Override
-    public Task.Result executeTask(Task task, Patient patient) {
+    public Task.Result executeTask(Task task) {
         return null;
-    }
-
-    @Override
-    public String getStatus() {
-        return null;
-    }
-
-    @Override
-    public String toString() {
-        return "@PatientCompanion [name: " + name + "]";
     }
 
     public static void setProbabilities(String[] probs) {

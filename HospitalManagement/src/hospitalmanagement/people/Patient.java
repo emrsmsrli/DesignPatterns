@@ -1,21 +1,21 @@
 package hospitalmanagement.people;
 
 import hospitalmanagement.IMediator;
+import hospitalmanagement.Room;
 
 public class Patient extends Person {
-    private String illness;
-
-    public Patient(IMediator mediator, String name){
-        super(mediator, name);
+    public Patient(IMediator mediator){
+        super(mediator);
     }
 
     @Override
-    public String getStatus() {
-        return null;
+    public void goToRoom(Room room) {
+        super.goToRoom(room);
+        room.setPatient(this);
     }
 
-    @Override
-    public String toString() {
-        return "@Patient [name: " + name + "]";
+    public void dismiss() {
+        currentRoom.setPatient(null);
+        currentRoom = null;
     }
 }
