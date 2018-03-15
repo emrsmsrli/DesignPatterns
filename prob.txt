@@ -1,0 +1,3 @@
+doctor,operation:0.3,visit:0.4,dismiss:0.3
+nurse,medicine:0.4,take_blood:0.6
+patient_comp,mri:0.2,xray:0.8
