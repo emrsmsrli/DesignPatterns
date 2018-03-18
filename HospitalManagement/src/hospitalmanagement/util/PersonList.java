@@ -22,6 +22,10 @@ public class PersonList<T extends Person> {
         people.remove(person);
     }
 
+    public void clear() {
+        people.clear();
+    }
+
     public int size() {
         return people.size();
     }
