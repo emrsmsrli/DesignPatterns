@@ -9,4 +9,5 @@ public interface IMediator {
     void monitor();
     void report(HospitalStaff staff, Patient patient, Task task, Task.Result taskResult);
     void registerNewPatient();
+    void dismissPatient(Patient patient);
 }

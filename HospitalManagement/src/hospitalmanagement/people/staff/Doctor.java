@@ -21,6 +21,8 @@ public class Doctor extends HospitalStaff {
         Task task = tasks[taskId - 1];
         Patient p = getCurrentRoom().getPatient();
         Task.Result result = task.execute(this);
+        if(task == tasks[2] && result == Task.Result.SUCCESS)   // special treatment
+            mediator.dismissPatient(p);                         // for dismiss task
         reportToHospital(p, task, result);
     }
 

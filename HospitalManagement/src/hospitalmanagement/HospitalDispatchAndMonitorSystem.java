@@ -17,6 +17,7 @@ public class HospitalDispatchAndMonitorSystem implements IMediator {
     private final PersonList<Nurse> nurses = new PersonList<>();
     private final PersonList<PatientCompanion> patientCompanions = new PersonList<>();
 
+    private final PersonList<Patient> toBeDismissedPatients = new PersonList<>();
     private final List<Room> rooms = new ArrayList<>();
 
     private final Scanner scanner = new Scanner(System.in);
@@ -45,35 +46,45 @@ public class HospitalDispatchAndMonitorSystem implements IMediator {
         }
     }
 
-    private void dismissPatient(Patient patient) {
-        patients.remove(patient);
+    @Override
+    public void dismissPatient(Patient patient) {
+        toBeDismissedPatients.add(patient);
     }
 
     @Override
     public void monitor() {
         PersonList<HospitalStaff> busyStaffs = new PersonList<>();
-        PersonList<Patient> toBeDismissedPatients = new PersonList<>();
 
         patients.forEach(p -> {
             askForTask(p);
 
-            int requestedTask = scanner.nextInt();
-
             HospitalStaff staff = null;
-            switch(requestedTask) {
-                case 3:
-                    toBeDismissedPatients.add(p);
-                case 1: case 2:
-                    staff = doctors.first(d -> d.getCurrentRoom() == null); break;
-                case 4: case 5:
-                    staff = nurses.first(d -> d.getCurrentRoom() == null); break;
-                case 6: case 7:
-                    staff = patientCompanions.first(d -> d.getCurrentRoom() == null); break;
-                default:
-                    System.err.println("unknown task"); System.exit(-1);
+            int requestedTask;
+            while(true) {
+                requestedTask = scanner.nextInt();
+                switch(requestedTask) {
+                    case 1:
+                    case 2:
+                    case 3:
+                        staff = doctors.first(d -> d.getCurrentRoom() == null);
+                        break;
+                    case 4:
+                    case 5:
+                        staff = nurses.first(d -> d.getCurrentRoom() == null);
+                        break;
+                    case 6:
+                    case 7:
+                        staff = patientCompanions.first(d -> d.getCurrentRoom() == null);
+                        break;
+                    default:
+                        System.err.println("unknown task");
+                        System.exit(-1);
+                }
+                if(staff != null)
+                    break;
+
+                System.err.println("no remaining staff for this task, choose another");
             }
-            if(staff == null)
-                return; // continue
 
             System.out.println("------- " + staff + " going to " + p.getCurrentRoom());
             staff.goToRoom(p.getCurrentRoom());
@@ -81,7 +92,8 @@ public class HospitalDispatchAndMonitorSystem implements IMediator {
             busyStaffs.add(staff);
         });
 
-        toBeDismissedPatients.forEach(this::dismissPatient);
+        toBeDismissedPatients.forEach(patients::remove);
+        toBeDismissedPatients.clear();
         busyStaffs.forEach(staff -> {
             System.out.println("------- " + staff + " getting out of " + staff.getCurrentRoom());
             staff.getOutOfRoom();
@@ -89,8 +101,6 @@ public class HospitalDispatchAndMonitorSystem implements IMediator {
 
         System.out.println("Total patient count: " + patients.size());
     }
-
-    // FIXME dismiss tasks might return FAILURE but they will be dismissed nonetheless
 
     @Override
     public void report(HospitalStaff staff, Patient patient, Task task, Task.Result taskResult) {
