@@ -45,14 +45,14 @@ public class HospitalDispatchAndMonitorSystem implements IMediator {
         }
     }
 
-    @Override
-    public void dismissPatient(Patient p) {
-        patients.remove(p);
+    private void dismissPatient(Patient patient) {
+        patients.remove(patient);
     }
 
     @Override
     public void monitor() {
-        PersonList<HospitalStaff> assignedStaff = new PersonList<>();
+        PersonList<HospitalStaff> busyStaffs = new PersonList<>();
+        PersonList<Patient> toBeDismissedPatients = new PersonList<>();
 
         patients.forEach(p -> {
             askForTask(p);
@@ -61,33 +61,41 @@ public class HospitalDispatchAndMonitorSystem implements IMediator {
 
             HospitalStaff staff = null;
             switch(requestedTask) {
-                case 1: case 2: case 3:
+                case 3:
+                    toBeDismissedPatients.add(p);
+                case 1: case 2:
                     staff = doctors.first(d -> d.getCurrentRoom() == null); break;
                 case 4: case 5:
                     staff = nurses.first(d -> d.getCurrentRoom() == null); break;
                 case 6: case 7:
                     staff = patientCompanions.first(d -> d.getCurrentRoom() == null); break;
                 default:
-                    System.err.println("unknown task"); break;
+                    System.err.println("unknown task"); System.exit(-1);
             }
             if(staff == null)
                 return; // continue
 
+            System.out.println("------- " + staff + " going to " + p.getCurrentRoom());
             staff.goToRoom(p.getCurrentRoom());
             staff.executeTask(requestedTask);
-            assignedStaff.add(staff);
+            busyStaffs.add(staff);
         });
 
-        assignedStaff.forEach(HospitalStaff::getOutOfRoom);
+        toBeDismissedPatients.forEach(this::dismissPatient);
+        busyStaffs.forEach(staff -> {
+            System.out.println("------- " + staff + " getting out of " + staff.getCurrentRoom());
+            staff.getOutOfRoom();
+        });
 
         System.out.println("Total patient count: " + patients.size());
     }
 
+    // FIXME dismiss tasks might return FAILURE but they will be dismissed nonetheless
+
     @Override
-    public void report(Room room, Task task, Task.Result taskResult) {
-        System.out.println(room.getStaff().toString() + " executed task " +
-                task.toString() + " on " + room.getPatient().toString() + " in " +
-                room + " with " + taskResult.name());
+    public void report(HospitalStaff staff, Patient patient, Task task, Task.Result taskResult) {
+        System.out.println(staff + " executed " + task + " on " + patient + " in " +
+                staff.getCurrentRoom() + " with " + taskResult);
     }
 
     private void askForTask(Patient p) {
@@ -114,14 +122,17 @@ public class HospitalDispatchAndMonitorSystem implements IMediator {
             case "patient_comp":
                 PatientCompanion.setProbabilities(taskProbs);
                 break;
+            default:
+                System.err.println("unknown class");
+                System.exit(-1);
         }
     }
 
     @Override
     public String toString() {
-        return "patients: " + patients.toString() + '\n' +
-                "doctors: " + doctors.toString() + '\n' +
-                "nurses: " + nurses.toString() + '\n' +
-                "patComps: " + patientCompanions.toString() + '\n';
+        return "patients: " + patients + '\n' +
+                "doctors: " + doctors + '\n' +
+                "nurses: " + nurses + '\n' +
+                "patComps: " + patientCompanions + '\n';
     }
 }

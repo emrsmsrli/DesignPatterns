@@ -1,6 +1,7 @@
 package hospitalmanagement.people.staff;
 
 import hospitalmanagement.IMediator;
+import hospitalmanagement.people.Patient;
 import hospitalmanagement.people.staff.task.Task;
 import hospitalmanagement.util.names.Name;
 
@@ -17,8 +18,9 @@ public class PatientCompanion extends HospitalStaff {
     @Override
     public void executeTask(int taskId) {
         Task task = tasks[taskId - 6];
+        Patient p = getCurrentRoom().getPatient();
         Task.Result result = task.execute(this);
-        reportToHospital(task, result);
+        reportToHospital(p, task, result);
     }
 
     @Override

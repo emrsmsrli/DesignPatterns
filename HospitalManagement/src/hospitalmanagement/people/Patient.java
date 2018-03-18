@@ -15,8 +15,9 @@ public class Patient extends Person {
         room.setPatient(this);
     }
 
-    public void dismiss() {
+    @Override
+    public void getOutOfRoom() {
         currentRoom.setPatient(null);
-        currentRoom = null;
+        super.getOutOfRoom();
     }
 }

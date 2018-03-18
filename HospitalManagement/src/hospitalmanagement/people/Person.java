@@ -5,8 +5,7 @@ import hospitalmanagement.Room;
 import hospitalmanagement.util.names.Name;
 
 public abstract class Person {
-    public Name name;
-
+    private Name name;
     protected IMediator mediator;
     protected Room currentRoom;
 
@@ -18,6 +17,10 @@ public abstract class Person {
 
     public void goToRoom(Room room) {
         currentRoom = room;
+    }
+
+    public void getOutOfRoom() {
+        currentRoom = null;
     }
 
     public Room getCurrentRoom() {

@@ -1,6 +1,7 @@
 package hospitalmanagement.people.staff;
 
 import hospitalmanagement.IMediator;
+import hospitalmanagement.people.Patient;
 import hospitalmanagement.people.staff.task.Task;
 import hospitalmanagement.util.names.Name;
 
@@ -8,7 +9,7 @@ public class Doctor extends HospitalStaff {
     private static final Task[] tasks = {
             new Task("operation"),
             new Task("visit"),
-            new Task("dismiss", s -> s.getCurrentRoom().getPatient().dismiss())
+            new Task("dismiss", staff -> staff.getCurrentRoom().getPatient().getOutOfRoom())
     };
 
     public Doctor(IMediator mediator, Name name) {
@@ -18,8 +19,9 @@ public class Doctor extends HospitalStaff {
     @Override
     public void executeTask(int taskId) {
         Task task = tasks[taskId - 1];
+        Patient p = getCurrentRoom().getPatient();
         Task.Result result = task.execute(this);
-        reportToHospital(task, result);
+        reportToHospital(p, task, result);
     }
 
     @Override

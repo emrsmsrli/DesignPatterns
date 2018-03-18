@@ -2,13 +2,12 @@ package hospitalmanagement.people.staff;
 
 import hospitalmanagement.IMediator;
 import hospitalmanagement.Room;
+import hospitalmanagement.people.Patient;
 import hospitalmanagement.people.Person;
 import hospitalmanagement.people.staff.task.Task;
 import hospitalmanagement.util.names.Name;
 
 public abstract class HospitalStaff extends Person {
-    private Room currentRoom = null;
-
     public HospitalStaff(IMediator mediator, Name name) {
         super(mediator, name);
     }
@@ -19,13 +18,14 @@ public abstract class HospitalStaff extends Person {
         room.setStaff(this);
     }
 
+    @Override
     public void getOutOfRoom() {
         currentRoom.setStaff(null);
-        currentRoom = null;
+        super.getOutOfRoom();
     }
 
-    public void reportToHospital(Task t, Task.Result tr) {
-        mediator.report(getCurrentRoom(), t, tr);
+    public void reportToHospital(Patient p, Task t, Task.Result tr) {
+        mediator.report(this, p, t, tr);
     }
 
     public abstract void executeTask(int taskId);

@@ -22,10 +22,6 @@ public class PersonList<T extends Person> {
         people.remove(person);
     }
 
-    public boolean contains(T person) {
-        return people.contains(person);
-    }
-
     public int size() {
         return people.size();
     }
