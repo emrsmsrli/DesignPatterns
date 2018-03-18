@@ -25,7 +25,7 @@ public class HospitalDispatchAndMonitorSystem implements IMediator {
         for(int i = 0; i < 20; ++i)
             rooms.add(new Room(i + 1));
 
-        for(int i = 0; i < 2/*10*/; ++i)
+        for(int i = 0; i < 10; ++i)
             registerNewPatient();
 
         for(int i = 0; i < 5; ++i) {
@@ -47,7 +47,7 @@ public class HospitalDispatchAndMonitorSystem implements IMediator {
 
     @Override
     public void dismissPatient(Patient p) {
-
+        patients.remove(p);
     }
 
     @Override
@@ -79,6 +79,8 @@ public class HospitalDispatchAndMonitorSystem implements IMediator {
         });
 
         assignedStaff.forEach(HospitalStaff::getOutOfRoom);
+
+        System.out.println("Total patient count: " + patients.size());
     }
 
     @Override
