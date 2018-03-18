@@ -8,13 +8,8 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        if(args.length < 1) {
-            System.err.println("provide a probability distribution file");
-            System.exit(-1);
-        }
-
         IMediator mediator = new HospitalDispatchAndMonitorSystem();
-        distributeProbabilities(mediator, args[0]);
+        distributeProbabilities(mediator);
 
         for(int i = 0; i < Integer.MAX_VALUE; ++i) {
             if(Random.f() < .1)
@@ -31,10 +26,9 @@ public class Main {
      *       Available classNames are {@code doctor}, {@code nurse} and {@code patient_comp}<br><br>
      *
      *      data is split with commas and action-probability pairs with colons
-     * @param path distribution file path to read
      */
-    private static void distributeProbabilities(IMediator mediator, String path) {
-        try(Scanner s = new Scanner(new File(path))) {
+    private static void distributeProbabilities(IMediator mediator) {
+        try(Scanner s = new Scanner(new File("prob.txt"))) {
             for(int i = 0; i < 3; ++i) {    // have 3 staff types
                 if(!s.hasNext())
                     throw new RuntimeException("no new line");
