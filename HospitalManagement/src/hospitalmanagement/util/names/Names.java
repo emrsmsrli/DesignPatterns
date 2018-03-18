@@ -14,9 +14,11 @@ public class Names {
 
     static {
         try(Scanner scanner = new Scanner(new File("names.txt"))) {
-            String[] names = scanner.nextLine().trim().split(" ");
-            firstNames.add(names[0]);
-            lastNames.add(names[1]);
+            while(scanner.hasNextLine()) {
+                String[] names = scanner.nextLine().trim().split(" ");
+                firstNames.add(names[0]);
+                lastNames.add(names[1]);
+            }
         } catch(FileNotFoundException e) {
             e.printStackTrace();
         }
