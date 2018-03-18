@@ -1,9 +1,10 @@
 import hospitalmanagement.HospitalDispatchAndMonitorSystem;
 import hospitalmanagement.IMediator;
+import hospitalmanagement.util.Random;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.*;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -16,19 +17,10 @@ public class Main {
         distributeProbabilities(mediator, args[0]);
 
         for(int i = 0; i < Integer.MAX_VALUE; ++i) {
+            if(Random.f() < .1)
+                mediator.registerNewPatient();
             mediator.monitor();
         }
-
-        System.out.println("Choose a task:");
-        System.out.println("1- Monitor patients");
-        System.out.println("2- Monitor Hospital Staff");
-        System.out.println("3- Perform operation");
-        System.out.println("4- Perform visit");
-        System.out.println("5- Dismiss from hospital");
-        System.out.println("6- Bring medicine to patient");
-        System.out.println("7- Take blood sample");
-        System.out.println("8- Take patient to MRI");
-        System.out.println("9- Take patient to X-Ray");
     }
 
     /**

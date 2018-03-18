@@ -6,8 +6,10 @@ import hospitalmanagement.people.staff.HospitalStaff;
 public class Room {
     private Patient patient;
     private HospitalStaff staff;
+    private int roomNumber;
 
-    public Room() {
+    public Room(int roomNumber) {
+        this.roomNumber = roomNumber;
         patient = null;
         staff = null;
     }
@@ -30,5 +32,10 @@ public class Room {
 
     public Patient getPatient() {
         return patient;
+    }
+
+    @Override
+    public String toString() {
+        return "Room " + roomNumber;
     }
 }

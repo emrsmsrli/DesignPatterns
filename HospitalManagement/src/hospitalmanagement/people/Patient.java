@@ -2,10 +2,11 @@ package hospitalmanagement.people;
 
 import hospitalmanagement.IMediator;
 import hospitalmanagement.Room;
+import hospitalmanagement.util.names.Name;
 
 public class Patient extends Person {
-    public Patient(IMediator mediator){
-        super(mediator);
+    public Patient(IMediator mediator, Name name){
+        super(mediator, name);
     }
 
     @Override

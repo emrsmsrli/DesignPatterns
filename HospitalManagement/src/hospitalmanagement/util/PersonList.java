@@ -5,6 +5,7 @@ import hospitalmanagement.people.Person;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class PersonList<T extends Person> {
     private List<T> people;
@@ -33,6 +34,13 @@ public class PersonList<T extends Person> {
         for(T t : people) {
             consumer.accept(t);
         }
+    }
+
+    public T first(Predicate<? super T> predicate) {
+        for(T t : people)
+            if(predicate.test(t))
+                return t;
+        return null;
     }
 
     @Override
