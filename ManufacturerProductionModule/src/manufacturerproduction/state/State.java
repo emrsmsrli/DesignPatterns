@@ -1,4 +1,5 @@
 package manufacturerproduction.state;
 
-public abstract class State {
+public interface State {
+    State nextState();
 }
