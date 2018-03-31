@@ -1,6 +1,5 @@
-package manufacturerproduction.state.part;
+package manufacturerproduction.state;
 
-import manufacturerproduction.state.State;
 import manufacturerproduction.util.Random;
 
 public class OrderedState extends LastingState {

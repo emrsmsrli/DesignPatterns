@@ -1,7 +1,4 @@
-package manufacturerproduction.state.part;
-
-import manufacturerproduction.state.State;
-import manufacturerproduction.state.ReadyState;
+package manufacturerproduction.state;
 
 class InQualityControlState extends LastingState {
     public InQualityControlState(int durationInDays) {

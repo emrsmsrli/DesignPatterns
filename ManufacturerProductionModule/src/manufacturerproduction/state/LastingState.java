@@ -1,7 +1,4 @@
-package manufacturerproduction.state.part;
-
-import manufacturerproduction.state.State;
-import manufacturerproduction.state.WaitingState;
+package manufacturerproduction.state;
 
 /**
  * A state template with duration
