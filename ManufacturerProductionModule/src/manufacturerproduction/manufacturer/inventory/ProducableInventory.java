@@ -15,18 +15,17 @@ public class ProducableInventory<T extends Producable> implements Inventory<T> {
     }
 
     @Override
-    public boolean put(T item) {
+    public void put(T item) {
         inventory.computeIfAbsent(item.getName(), k -> new ArrayList<>());
         List<Producable> producables = inventory.get(item.getName());
-        return producables.add(item);
+        producables.add(item);
     }
 
     @Override
-    public T pop(String name) {
+    public void pop(String name) {
         T producable = get(name);
         if(producable != null)
             inventory.get(name).remove(producable);
-        return producable;
     }
 
     @SuppressWarnings("unchecked")
