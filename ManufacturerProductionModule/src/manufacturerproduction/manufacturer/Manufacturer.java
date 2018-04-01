@@ -2,9 +2,6 @@ package manufacturerproduction.manufacturer;
 
 import manufacturerproduction.manufacturer.inventory.*;
 import manufacturerproduction.manufacturer.items.*;
-import manufacturerproduction.states.OrderedState;
-import manufacturerproduction.states.WaitingState;
-import manufacturerproduction.util.Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,7 +20,7 @@ public class Manufacturer {
     }
 
     public static Part newPart(String name) {
-        return new Part(name, new OrderedState(Utils.randomInt(1, 11)));
+        return new Part(name);
     }
 
     public static CompositeComponent newCompositeComponent(String name, List<Component> subComponents) {

@@ -1,7 +1,6 @@
 package manufacturerproduction.manufacturer.items;
 
 import manufacturerproduction.manufacturer.Manufacturer;
-import manufacturerproduction.states.WaitingState;
 import manufacturerproduction.util.Utils;
 
 import java.util.List;
@@ -9,7 +8,7 @@ import java.util.List;
 public class CompositeComponent extends MultiComponent {
 
     public CompositeComponent(String name, List<Component> subComponents) {
-        super(name, subComponents, new WaitingState());
+        super(name, subComponents);
     }
 
     @Override

@@ -2,12 +2,12 @@ package manufacturerproduction.manufacturer.items;
 
 import manufacturerproduction.manufacturer.Manufacturer;
 import manufacturerproduction.states.LastingState;
-import manufacturerproduction.states.State;
+import manufacturerproduction.states.OrderedState;
 import manufacturerproduction.util.Utils;
 
 public class Part extends Component {
-    public Part(String name, State state) {
-        super(name, state);
+    public Part(String name) {
+        super(name, new OrderedState(Utils.randomInt(1, 11)));
     }
 
     @Override

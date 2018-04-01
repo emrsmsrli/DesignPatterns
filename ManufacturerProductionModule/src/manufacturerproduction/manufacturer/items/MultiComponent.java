@@ -1,7 +1,7 @@
 package manufacturerproduction.manufacturer.items;
 
 import manufacturerproduction.manufacturer.Manufacturer;
-import manufacturerproduction.states.State;
+import manufacturerproduction.states.WaitingState;
 import manufacturerproduction.util.Utils;
 
 import java.util.ArrayList;
@@ -10,8 +10,8 @@ import java.util.List;
 public abstract class MultiComponent extends Component {
     private List<Component> subComponents;
 
-    public MultiComponent(String name, List<Component> subComponents, State state) {
-        super(name, state);
+    public MultiComponent(String name, List<Component> subComponents) {
+        super(name, new WaitingState());
         if(subComponents == null)
             this.subComponents = new ArrayList<>();
         else this.subComponents = subComponents;

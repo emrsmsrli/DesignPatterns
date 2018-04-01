@@ -1,13 +1,11 @@
 package manufacturerproduction.manufacturer.items;
 
-import manufacturerproduction.states.WaitingState;
-
 import java.util.List;
 
 public class Product extends MultiComponent {
 
     public Product(String name, List<Component> subComponents) {
-        super(name, subComponents, new WaitingState());
+        super(name, subComponents);
     }
 
     public String describe() {
