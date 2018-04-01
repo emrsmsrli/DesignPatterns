@@ -73,7 +73,7 @@ public class Manufacturer {
     }
 
     public static String stockStatus() {
-        return "-- Inventories ----------" + '\n' +
+        return "-- Inventories ----------\n" +
                 "\tProduct: " + productInventory + '\n' +
                 "\tComponent: " + componentInventory + '\n' +
                 "\tPart: " + partInventory + '\n';
