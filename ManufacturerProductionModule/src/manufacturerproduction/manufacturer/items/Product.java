@@ -16,6 +16,6 @@ public class Product extends MultiComponent {
 
     @Override
     public String toString() {
-        return "Product( " + getName() + ") - " + state;
+        return "Product(" + getName() + ") - " + state;
     }
 }

@@ -30,6 +30,6 @@ public abstract class LastingState extends WaitingState {
 
     @Override
     public String toString() {
-        return durationInDays + " days to go";
+        return durationInDays + " days remaining";
     }
 }
