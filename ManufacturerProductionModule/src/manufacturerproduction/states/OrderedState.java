@@ -1,4 +1,4 @@
-package manufacturerproduction.state;
+package manufacturerproduction.states;
 
 import manufacturerproduction.util.Random;
 

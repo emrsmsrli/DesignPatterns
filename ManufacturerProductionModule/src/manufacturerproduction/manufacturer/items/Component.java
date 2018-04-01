@@ -1,7 +1,7 @@
 package manufacturerproduction.manufacturer.items;
 
-import manufacturerproduction.state.ReadyState;
-import manufacturerproduction.state.State;
+import manufacturerproduction.states.ReadyState;
+import manufacturerproduction.states.State;
 
 public abstract class Component implements Producable {
     private String name;

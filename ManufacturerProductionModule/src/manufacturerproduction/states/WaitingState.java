@@ -1,4 +1,4 @@
-package manufacturerproduction.state;
+package manufacturerproduction.states;
 
 public class WaitingState implements State {
     @Override

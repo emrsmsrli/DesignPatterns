@@ -1,4 +1,4 @@
-package manufacturerproduction.state;
+package manufacturerproduction.states;
 
 /**
  * A state template with duration

@@ -1,7 +1,7 @@
 package manufacturerproduction.manufacturer.items;
 
 import manufacturerproduction.manufacturer.Manufacturer;
-import manufacturerproduction.state.State;
+import manufacturerproduction.states.State;
 
 import java.util.ArrayList;
 import java.util.List;

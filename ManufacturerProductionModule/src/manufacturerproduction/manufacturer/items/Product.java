@@ -1,6 +1,6 @@
 package manufacturerproduction.manufacturer.items;
 
-import manufacturerproduction.state.WaitingState;
+import manufacturerproduction.states.WaitingState;
 
 public class Product extends MultiComponent {
 

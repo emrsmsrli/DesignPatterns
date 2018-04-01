@@ -1,4 +1,4 @@
-package manufacturerproduction.state;
+package manufacturerproduction.states;
 
 class InQualityControlState extends LastingState {
     public InQualityControlState(int durationInDays) {

@@ -2,8 +2,8 @@ package manufacturerproduction.manufacturer;
 
 import manufacturerproduction.manufacturer.inventory.*;
 import manufacturerproduction.manufacturer.items.*;
-import manufacturerproduction.state.OrderedState;
-import manufacturerproduction.state.WaitingState;
+import manufacturerproduction.states.OrderedState;
+import manufacturerproduction.states.WaitingState;
 import manufacturerproduction.util.Random;
 
 import java.util.ArrayList;
