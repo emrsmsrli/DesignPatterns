@@ -11,10 +11,10 @@ public class Part extends Component {
 
     @Override
     public void tryProduce() {
-        if(isProduced() || !Manufacturer.canProducePart())
+        if(isProduced())
             return;
         state = state.nextState();
-        if(!isProduced())
+        if(!isProduced() || !Manufacturer.canProducePart())
             return;
         Manufacturer.produce(this);
     }
