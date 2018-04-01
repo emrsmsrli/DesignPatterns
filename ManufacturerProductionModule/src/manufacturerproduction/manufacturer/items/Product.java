@@ -11,7 +11,9 @@ public class Product extends MultiComponent {
     public String describe() {
         StringBuilder builder = new StringBuilder(128);
         describe(builder, 0);
-        return builder.toString();
+        return builder.append("Total remaining days: ")
+                .append(getRemainingDays())
+                .append('\n').toString();
     }
 
     @Override

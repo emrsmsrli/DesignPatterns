@@ -1,6 +1,7 @@
 package manufacturerproduction.manufacturer.items;
 
 import manufacturerproduction.manufacturer.Manufacturer;
+import manufacturerproduction.states.LastingState;
 import manufacturerproduction.states.State;
 import manufacturerproduction.util.Utils;
 
@@ -23,6 +24,13 @@ public class Part extends Component {
     public void describe(StringBuilder builder, int depth) {
         Utils.indent(builder, depth);
         builder.append(this).append('\n');
+    }
+
+    @Override
+    public int getRemainingDays() {
+        if(isProduced())
+            return 0;
+        return ((LastingState) state).getDurationInDays();
     }
 
     @Override

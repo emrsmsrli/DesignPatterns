@@ -2,6 +2,7 @@ package manufacturerproduction.manufacturer.items;
 
 import manufacturerproduction.manufacturer.Manufacturer;
 import manufacturerproduction.states.State;
+import manufacturerproduction.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,5 +41,13 @@ public abstract class MultiComponent extends Component {
         builder.append(this).append('\n');
         for(Component component : subComponents)
             component.describe(builder, depth + 1);
+    }
+
+    @Override
+    public int getRemainingDays() {
+        int days = 0;
+        for(Component component : subComponents)
+            days = Utils.max(days, component.getRemainingDays());
+        return days;
     }
 }

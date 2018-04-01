@@ -18,6 +18,10 @@ public abstract class LastingState extends WaitingState {
         return durationInDays == 0;
     }
 
+    public int getDurationInDays() {
+        return durationInDays;
+    }
+
     @Override
     public State nextState() {
         advanceTime();

@@ -20,4 +20,8 @@ public class Utils {
     public static int randomInt(int lo, int hi) {
         return rand.nextInt(hi - lo) + lo;
     }
+
+    public static int max(int f, int s) {
+        return Math.max(f, s);
+    }
 }

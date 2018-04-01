@@ -5,4 +5,5 @@ public interface Producable {
     boolean isProduced();
     void tryProduce();
     void describe(StringBuilder builder, int depth);
+    int getRemainingDays();
 }
