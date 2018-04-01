@@ -1,61 +1,34 @@
-import java.util.ArrayList;
+import manufacturerproduction.manufacturer.Manufacturer;
+import manufacturerproduction.manufacturer.items.Component;
+import manufacturerproduction.manufacturer.items.Product;
+
 import java.util.List;
 
 public class ManufacturerApp {
 
     public static void main(String[] args) {
-        //Inventories
-        ProductInventory productInventory = new ProductInventory();
-        ComponentInventory componentInventory = new ComponentInventory();
-        PartInventory partInventory = new PartInventory();
+        Component part = Manufacturer.newPart("part1");
+        Component part2 = Manufacturer.newPart("part2");
 
-        //All elements list
-        List<ObjectWithState> allElements = new ArrayList<>();
+        Component component1_1 = Manufacturer.newCompositeComponent("component1", null);
+        Component component1_2 = Manufacturer.newCompositeComponent("component1", null);
+        Component component2 = Manufacturer.newCompositeComponent("component2", null);
+        List<Component> components = Manufacturer.bundleOf(component1_1, component2, part);
 
-        //Components and products
-        Component part = new Part("part1", partInventory);
-        Component part2 = new Part("part2", partInventory);
+        Component component3 = Manufacturer.newCompositeComponent("component3", components);
 
-        ArrayList<Component> components = new ArrayList<>();
-        Component component1 = new CompositeComponent("component1", null, componentInventory);
-        Component component2 = new CompositeComponent("component2", null, componentInventory);
-        components.add(component1);
-        components.add(component2);
-        components.add(part);
-        Component component3 = new CompositeComponent("component3",components, componentInventory);
+        List<Component> productComponents = Manufacturer.bundleOf(component1_2, component3, part2);
+        Product product = Manufacturer.newProduct("product1", productComponents);
 
-        //Product
-        ArrayList<Component> productComponents = new ArrayList<>();
-        productComponents.add(component1);
-        productComponents.add(component3);
-        productComponents.add(part2);
-        Product product = new Product("product1", productComponents, productInventory);
-
-        allElements.add(part);
-        allElements.add(part2);
-        allElements.add(component1);
-        allElements.add(component2);
-        allElements.add(component3);
-        allElements.add(product);
-
-        for(int i= 1; i < 1000; i++){
-            if(allElements.size() == 0)
-                continue;
-
+        for(int i = 1; i < 50; ++i) {
             System.out.println("Day: " + i);
             System.out.println("----------------------------------------------------------------------------");
 
-            for(int counter = 0; counter <= 5 && counter < allElements.size(); counter++)
-            {
-                ObjectWithState object = allElements.get(counter);
-                System.out.println("Name: " + object.getAllComponentsName() + " class: " + object.getClass());
-                object.printState();
-                if(object.tick()){
-                    allElements.remove(counter);
-                }
-                System.out.println("---------------------------");
-                counter++;
-            }
+            product.tryProduce();
+            System.out.println(product.describe());
+            System.out.println(Manufacturer.stockStatus());
+            System.out.println("----------------------------------------------------------------------------");
+            Manufacturer.advanceDay();
         }
     }
 }
