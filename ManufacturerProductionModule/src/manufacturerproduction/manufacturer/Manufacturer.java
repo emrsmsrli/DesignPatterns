@@ -53,12 +53,11 @@ public class Manufacturer {
         return componentProducedCount != 2;
     }
 
-    public static boolean use(Producable producable) {
+    public static void use(Producable producable) {
         if(producable instanceof Part)
-            return partInventory.pop(producable.getName()) != null;
+            partInventory.pop(producable.getName());
         else if(producable instanceof CompositeComponent)
-            return componentInventory.pop(producable.getName()) != null;
-        return false;
+            componentInventory.pop(producable.getName());
     }
 
     public static void produce(Producable producable) {
