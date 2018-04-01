@@ -1,6 +1,6 @@
 package manufacturerproduction.states;
 
-import manufacturerproduction.util.Random;
+import manufacturerproduction.util.Utils;
 
 public class OrderedState extends LastingState {
     public OrderedState(int durationInDays) {
@@ -9,7 +9,7 @@ public class OrderedState extends LastingState {
 
     @Override
     protected State newNextState() {
-        return new InQualityControlState(Random.i(1, 4));
+        return new InQualityControlState(Utils.randomInt(1, 4));
     }
 
     @Override
