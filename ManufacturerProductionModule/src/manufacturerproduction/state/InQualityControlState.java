@@ -12,6 +12,6 @@ class InQualityControlState extends LastingState {
 
     @Override
     public String toString() {
-        return "In quality control";
+        return "In quality control " + super.toString();
     }
 }

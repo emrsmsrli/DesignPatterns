@@ -10,11 +10,11 @@ public abstract class LastingState extends WaitingState {
         this.durationInDays = durationInDays;
     }
 
-    public void advanceTime() {
+    private void advanceTime() {
         if(durationInDays > 0) durationInDays--;
     }
 
-    public boolean isFinished() {
+    private boolean isFinished() {
         return durationInDays == 0;
     }
 
@@ -27,4 +27,9 @@ public abstract class LastingState extends WaitingState {
     }
 
     protected abstract State newNextState();
+
+    @Override
+    public String toString() {
+        return durationInDays + " days to go";
+    }
 }

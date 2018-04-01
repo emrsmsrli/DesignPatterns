@@ -14,6 +14,6 @@ public class OrderedState extends LastingState {
 
     @Override
     public String toString() {
-        return "Ordered";
+        return "Ordered " + super.toString();
     }
 }
