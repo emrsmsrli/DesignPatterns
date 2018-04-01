@@ -21,6 +21,8 @@ public class ManufacturerApp {
         Product product = Manufacturer.newProduct("product1", productComponents);
 
         for(int i = 1; i < 50; ++i) {
+            if(product.isProduced())
+                break;
             System.out.println("Day: " + i + '\n');
 
             product.tryProduce();
