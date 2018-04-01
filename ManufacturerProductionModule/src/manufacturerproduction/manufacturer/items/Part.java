@@ -2,6 +2,7 @@ package manufacturerproduction.manufacturer.items;
 
 import manufacturerproduction.manufacturer.Manufacturer;
 import manufacturerproduction.states.State;
+import manufacturerproduction.util.Utils;
 
 public class Part extends Component {
     public Part(String name, State state) {
@@ -20,8 +21,7 @@ public class Part extends Component {
 
     @Override
     public void describe(StringBuilder builder, int depth) {
-        for(int i = 0; i < depth; ++i)
-            builder.append('\t');
+        Utils.indent(builder, depth);
         builder.append(this).append('\n');
     }
 

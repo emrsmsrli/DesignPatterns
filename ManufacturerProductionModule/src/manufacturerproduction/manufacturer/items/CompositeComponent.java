@@ -2,6 +2,7 @@ package manufacturerproduction.manufacturer.items;
 
 import manufacturerproduction.manufacturer.Manufacturer;
 import manufacturerproduction.states.State;
+import manufacturerproduction.util.Utils;
 
 public class CompositeComponent extends MultiComponent {
 
@@ -18,8 +19,7 @@ public class CompositeComponent extends MultiComponent {
 
     @Override
     public void describe(StringBuilder builder, int depth) {
-        for(int i = 0; i < depth; ++i)
-            builder.append('\t');
+        Utils.indent(builder, depth);
         super.describe(builder, depth);
     }
 
