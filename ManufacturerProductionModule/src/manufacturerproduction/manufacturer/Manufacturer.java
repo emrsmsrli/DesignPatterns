@@ -19,12 +19,7 @@ public class Manufacturer {
     private static int componentProducedCount = 0;
 
     public static Product newProduct(String name, List<Component> components) {
-        Product p = new Product(name);
-        if(components != null)
-            for(Component component : components) {
-                p.addComponent(component);
-            }
-        return p;
+        return new Product(name, components);
     }
 
     public static Part newPart(String name) {
@@ -32,12 +27,7 @@ public class Manufacturer {
     }
 
     public static CompositeComponent newCompositeComponent(String name, List<Component> subComponents) {
-        CompositeComponent c = new CompositeComponent(name, new WaitingState());
-        if(subComponents != null)
-            for(Component subComponent : subComponents) {
-                c.addComponent(subComponent);
-            }
-        return c;
+        return new CompositeComponent(name, subComponents);
     }
 
     public static void advanceDay() {

@@ -10,13 +10,11 @@ import java.util.List;
 public abstract class MultiComponent extends Component {
     private List<Component> subComponents;
 
-    public MultiComponent(String name, State state) {
+    public MultiComponent(String name, List<Component> subComponents, State state) {
         super(name, state);
-        subComponents = new ArrayList<>();
-    }
-
-    public void addComponent(Component component) {
-        subComponents.add(component);
+        if(subComponents == null)
+            this.subComponents = new ArrayList<>();
+        else this.subComponents = subComponents;
     }
 
     @Override
