@@ -20,15 +20,15 @@ public class ManufacturerApp {
         List<Component> productComponents = Manufacturer.bundleOf(component1_2, component3, part2);
         Product product = Manufacturer.newProduct("product1", productComponents);
 
-        for(int i = 1; i < 50; ++i) {
+        for(int i = 0; i < 50; ++i) {
             if(product.isProduced())
                 break;
             System.out.println("Day: " + i + '\n');
-
-            product.tryProduce();
             System.out.println(product.describe());
             System.out.println(Manufacturer.stockStatus());
             System.out.println("----------------------------------------------------------------------------");
+
+            product.tryProduce();
             Manufacturer.advanceDay();
         }
     }
