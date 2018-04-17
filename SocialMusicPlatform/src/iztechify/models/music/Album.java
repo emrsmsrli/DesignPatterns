@@ -15,11 +15,15 @@ public class Album extends Observable {
         this.songs = new ArrayList<>();
     }
 
-    public void addSongToAlbum(Song song){ // TODO save to json file
-        songs.add(song);
+    public boolean addSongToAlbum(Song song){ // TODO save to json file
+        boolean isSuccessful = songs.add(song);
+        notifyObservers();
+        return isSuccessful;
     }
 
     public boolean removeSong(Song song){ // TODO save to json file
-        return songs.remove(song);
+        boolean isSuccessful = songs.remove(song);
+        notifyObservers();
+        return isSuccessful;
     }
 }

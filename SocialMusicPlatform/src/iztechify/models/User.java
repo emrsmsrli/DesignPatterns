@@ -4,8 +4,9 @@ import iztechify.models.music.Playlist;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
-public class User {
+public class User extends Observable{
     private String username;
     private List<User> friends;
     private List<Playlist> playlists;
@@ -16,20 +17,22 @@ public class User {
         this.playlists = new ArrayList<>();
     }
 
-    public void createPlaylist(String name){
-        playlists.add(new Playlist(name));
+    public boolean createPlaylist(String name){
+        boolean isSuccessful = playlists.add(new Playlist(name));
+        notifyObservers();
+        return isSuccessful;
     }
 
-    public void addFriend(User user){
-        friends.add(user);
+    public boolean addFriend(User user){
+        boolean isSuccessful = friends.add(user);
+        notifyObservers();
+        return isSuccessful;
     }
 
     public boolean removeFriend(User user){
-        return friends.remove(user);
-    }
-
-    public List<Playlist> getPlaylistOfFriend(User user){
-        return friends.contains(user) ? user.getPlaylists(): null;
+        boolean isSuccessful = friends.remove(user);
+        notifyObservers();
+        return isSuccessful;
     }
 
     public List<Playlist> getPlaylists(){

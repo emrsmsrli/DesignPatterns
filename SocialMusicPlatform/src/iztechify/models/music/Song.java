@@ -15,6 +15,7 @@ public class Song extends Observable {
 
     public void setTitle(String newTitle){
         title = newTitle;
+        notifyObservers();
     }
 
     public int getPopularityLevel(){

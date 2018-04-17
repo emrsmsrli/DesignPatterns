@@ -6,18 +6,22 @@ import java.util.Observable;
 
 public class Playlist extends Observable {
     private String name;
-    private List<iztechify.models.music.Song> songs;
+    private List<Song> songs;
 
     public Playlist(String name){
         this.name = name;
         songs = new ArrayList<>();
     }
 
-    public boolean addSongToPlaylist(iztechify.models.music.Song song){ // TODO save to json file
-        return songs.add(song);
+    public boolean addSongToPlaylist(Song song){ // TODO save to json file
+        boolean isSuccessful = songs.add(song);
+        notifyObservers();
+        return isSuccessful;
     }
 
-    public boolean removeSongFromPlaylist(iztechify.models.music.Song song){ // TODO save to json file
-        return songs.remove(song);
+    public boolean removeSongFromPlaylist(Song song){ // TODO save to json file
+        boolean isSuccessful = songs.remove(song);
+        notifyObservers();
+        return isSuccessful;
     }
 }
