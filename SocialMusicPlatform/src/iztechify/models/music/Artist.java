@@ -17,4 +17,12 @@ public class Artist {
     private int getPopularityLevel(){
         return popularityLevel;
     }
+
+    public int incrementPopularityLevel(){
+        return ++popularityLevel;
+    }
+
+    public int decrementPopularityLevel(){
+        return --popularityLevel;
+    }
 }

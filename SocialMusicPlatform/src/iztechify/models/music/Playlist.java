@@ -12,11 +12,11 @@ public class Playlist {
         songs = new ArrayList<>();
     }
 
-    public boolean addSongToPlaylist(iztechify.models.music.Song song){
+    public boolean addSongToPlaylist(iztechify.models.music.Song song){ // TODO save to json file
         return songs.add(song);
     }
 
-    public boolean removeSongFromPlaylist(iztechify.models.music.Song song){
+    public boolean removeSongFromPlaylist(iztechify.models.music.Song song){ // TODO save to json file
         return songs.remove(song);
     }
 }
