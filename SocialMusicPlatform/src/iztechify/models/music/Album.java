@@ -10,17 +10,17 @@ public class Album extends Observable {
     private String description;
     private List<Song> songs;
 
-    protected Album(String title, String description) { // TODO add songs?
+    public Album(String title, String description) { // TODO add songs?
         this.title = title;
         this.description = description;
         this.songs = new ArrayList<>();
     }
 
-    protected void addSongToAlbum(Song song){ // TODO save to json file
+    public void addSongToAlbum(Song song){ // TODO save to json file
         songs.add(song);
     }
 
-    protected boolean removeSong(Song song){ // TODO save to json file
+    public boolean removeSong(Song song){ // TODO save to json file
         return songs.remove(song);
     }
 }

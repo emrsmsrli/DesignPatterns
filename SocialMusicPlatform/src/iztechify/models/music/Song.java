@@ -5,13 +5,13 @@ public class Song {
     private String length;
     private int popularityLevel;
 
-    protected Song(String title, String length) {
+    public Song(String title, String length) {
         this.title = title;
         this.length = length;
         popularityLevel = 0;
     }
 
-    protected void setTitle(String newTitle){
+    public void setTitle(String newTitle){
         title = newTitle;
     }
 
