@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-// TODO make other models observable as well
 public class Album extends Observable {
     private String title;
     private String description;
@@ -14,5 +13,17 @@ public class Album extends Observable {
         this.title = title;
         this.description = description;
         this.songs = new ArrayList<>();
+    }
+
+    public boolean addSongToAlbum(Song song){ // TODO save to json file
+        boolean isSuccessful = songs.add(song);
+        notifyObservers();
+        return isSuccessful;
+    }
+
+    public boolean removeSong(Song song){ // TODO save to json file
+        boolean isSuccessful = songs.remove(song);
+        notifyObservers();
+        return isSuccessful;
     }
 }
