@@ -2,8 +2,9 @@ package iztechify.models.music;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
-public class Playlist {
+public class Playlist extends Observable {
     private String name;
     private List<iztechify.models.music.Song> songs;
 

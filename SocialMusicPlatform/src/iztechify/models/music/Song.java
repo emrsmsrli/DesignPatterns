@@ -1,6 +1,8 @@
 package iztechify.models.music;
 
-public class Song {
+import java.util.Observable;
+
+public class Song extends Observable {
     private String title;
     private String length;
     private int popularityLevel;

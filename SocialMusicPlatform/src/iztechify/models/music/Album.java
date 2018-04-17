@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-// TODO make other models observable as well
 public class Album extends Observable {
     private String title;
     private String description;
