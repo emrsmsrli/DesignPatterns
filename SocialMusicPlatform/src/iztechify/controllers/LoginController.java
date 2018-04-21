@@ -1,17 +1,16 @@
 package iztechify.controllers;
 
-import iztechify.models.User;
-import iztechify.models.music.Music;
+import iztechify.models.Users;
+import iztechify.models.user.User;
+import iztechify.models.Music;
 import iztechify.views.AdminWindow;
 import iztechify.views.Window;
 
-import java.util.List;
-
 public class LoginController implements Controller {
     private Music music;
-    private List<User> users;
+    private Users users;
 
-    public LoginController(Music music, List<User> users) {
+    public LoginController(Music music, Users users) {
         this.music = music;
         this.users = users;
     }
@@ -33,7 +32,7 @@ public class LoginController implements Controller {
     }
 
     private User getUser(String username) {
-        for(User user : users)
+        for(User user : users.getUsers())
             if(user.getUsername().equals(username))
                 return user;
         return null;

@@ -1,4 +1,6 @@
-package iztechify.models.music;
+package iztechify.models;
+
+import iztechify.models.music.Artist;
 
 import java.util.List;
 import java.util.Observable;

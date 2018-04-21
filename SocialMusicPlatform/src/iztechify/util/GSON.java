@@ -1,7 +1,7 @@
 package iztechify.util;
 
 import com.google.gson.Gson;
-import iztechify.models.User;
+import iztechify.models.user.User;
 import iztechify.models.music.Artist;
 
 import java.io.File;

@@ -1,4 +1,4 @@
-package iztechify.models;
+package iztechify.models.user;
 
 import iztechify.models.music.Playlist;
 

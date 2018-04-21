@@ -1,6 +1,6 @@
 package iztechify.controllers;
 
-import iztechify.models.music.Music;
+import iztechify.models.Music;
 
 
 public class AdminController implements Controller {

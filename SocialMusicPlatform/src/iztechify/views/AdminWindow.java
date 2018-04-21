@@ -1,7 +1,7 @@
 package iztechify.views;
 
 import iztechify.controllers.Controller;
-import iztechify.models.music.Music;
+import iztechify.models.Music;
 
 import javax.swing.*;
 import java.util.Observable;
