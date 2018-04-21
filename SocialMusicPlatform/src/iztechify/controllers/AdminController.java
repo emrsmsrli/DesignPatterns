@@ -1,4 +1,4 @@
-package src.iztechify.controllers;
+package iztechify.controllers;
 
-public class AdminController implements iztechify.controllers.Controller {
+public class AdminController implements Controller {
 }
