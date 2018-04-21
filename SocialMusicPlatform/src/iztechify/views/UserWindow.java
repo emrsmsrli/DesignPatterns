@@ -4,8 +4,10 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import iztechify.controllers.UserController;
 import iztechify.models.music.Playlist;
+import iztechify.models.music.Song;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
@@ -19,9 +21,13 @@ public class UserWindow extends AbstractWindow {
     private JTextField friendNameField;
     private JButton addPlaylistButton;
     private JTextField playlistNameField;
+    private JTable songTable;
+    private JButton addSongButton;
 
     private DefaultListModel<String> friendListModel = new DefaultListModel<>();
     private DefaultListModel<String> playlistListModel = new DefaultListModel<>();
+    private DefaultTableModel songTableModel
+            = new DefaultTableModel(new Object[]{"Title", "Album", "Artist", "Duration"}, 0);
 
     private UserController userController;
 
@@ -29,6 +35,7 @@ public class UserWindow extends AbstractWindow {
         super("User " + username);
         this.userController = userController;
 
+        songTable.setModel(songTableModel);
         friendListModel.addElement("Me");
         friendList.setModel(friendListModel);
         playlistList.setModel(playlistListModel);
@@ -36,18 +43,21 @@ public class UserWindow extends AbstractWindow {
         friendList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(e.getClickCount() == 2)    // double click
+                if(e.getClickCount() != 2)    // double click
                     return;
 
                 int idx = friendList.locationToIndex(e.getPoint());
                 playlistListModel.clear();
+                songTableModel.setRowCount(0);
 
                 List<Playlist> playlists;
                 if(idx == 0) {      // my playlist
                     addPlaylistButton.setEnabled(true);
+                    addSongButton.setEnabled(true);
                     playlists = userController.getPlaylists();
                 } else {
                     addPlaylistButton.setEnabled(false);
+                    addSongButton.setEnabled(false);
                     String friend = friendListModel.get(idx);
                     playlists = userController.getFriendPlaylists(friend);
                 }
@@ -62,6 +72,11 @@ public class UserWindow extends AbstractWindow {
             public void mouseClicked(MouseEvent e) {
                 if(e.getClickCount() != 2)    // double click
                     return;
+
+                int idx = playlistList.locationToIndex(e.getPoint());
+                songTableModel.setRowCount(0);
+
+                List<Song> songs;
 
                 // todo open playlist view with appropriate permissions
                 // (if this user's, add and remove buttons are active)
@@ -89,7 +104,7 @@ public class UserWindow extends AbstractWindow {
     @Override
     public void showWindow() {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new Dimension(400, 600));
+        setPreferredSize(new Dimension(500, 600));
         setContentPane(root);
         pack();
         setVisible(true);
@@ -116,13 +131,14 @@ public class UserWindow extends AbstractWindow {
      */
     private void $$$setupUI$$$() {
         root = new JPanel();
-        root.setLayout(new GridLayoutManager(4, 2, new Insets(10, 10, 10, 10), -1, -1));
+        root.setLayout(new GridLayoutManager(4, 3, new Insets(10, 10, 10, 10), -1, -1));
+        root.setAutoscrolls(false);
         friendList = new JList();
         friendList.setSelectionMode(0);
-        root.add(friendList, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
+        root.add(friendList, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 300), null, 0, false));
         playlistList = new JList();
         playlistList.setSelectionMode(0);
-        root.add(playlistList, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
+        root.add(playlistList, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 300), null, 0, false));
         final JLabel label1 = new JLabel();
         label1.setText("Friends");
         root.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -139,6 +155,20 @@ public class UserWindow extends AbstractWindow {
         root.add(addPlaylistButton, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         playlistNameField = new JTextField();
         root.add(playlistNameField, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        final JLabel label3 = new JLabel();
+        label3.setText("Songs");
+        root.add(label3, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JScrollPane scrollPane1 = new JScrollPane();
+        root.add(scrollPane1, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        songTable = new JTable();
+        songTable.setAutoResizeMode(0);
+        songTable.setPreferredScrollableViewportSize(new Dimension(150, 300));
+        songTable.setShowHorizontalLines(true);
+        songTable.setShowVerticalLines(true);
+        scrollPane1.setViewportView(songTable);
+        addSongButton = new JButton();
+        addSongButton.setText("Button");
+        root.add(addSongButton, new GridConstraints(3, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
