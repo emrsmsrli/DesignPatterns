@@ -12,4 +12,8 @@ public class Artist extends Observable {
         this.name = name;
         this.albums = new ArrayList<>();
     }
+
+    public String getName() {
+        return name;
+    }
 }

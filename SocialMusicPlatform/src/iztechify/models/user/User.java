@@ -30,6 +30,12 @@ public class User extends Observable{
         notifyObservers();
     }
 
+    public void setUsername(String newName){
+        this.username = newName;
+        setChanged();
+        notifyObservers();
+    }
+
     public String getUsername() {
         return username;
     }
