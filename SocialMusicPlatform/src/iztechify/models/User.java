@@ -17,6 +17,10 @@ public class User extends Observable{
         this.playlists = new ArrayList<>();
     }
 
+    public String getUsername() {
+        return username;
+    }
+
     public boolean createPlaylist(String name){
         boolean isSuccessful = playlists.add(new Playlist(name));
         notifyObservers();
