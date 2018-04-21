@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-public class UserWindow extends AbstractWindow implements Observer {
+public class UserWindow extends AbstractWindow {
     private JList<String> friendList;
     private JList<String> playlistList;
     private JPanel root;
@@ -57,8 +57,9 @@ public class UserWindow extends AbstractWindow implements Observer {
                     playlists = userController.getFriendPlaylists(friend);
                 }
 
-                for(Playlist playlist : playlists)
+                for(Playlist playlist : playlists){
                     playlistListModel.addElement(playlist.getName());
+                }
             }
         });
 
@@ -157,7 +158,7 @@ public class UserWindow extends AbstractWindow implements Observer {
         if(arg instanceof User){
             System.out.println("New username: " + ((User) arg).getUsername());
         } else if(arg instanceof Music){
-            System.out.println("Music changed.");
+            System.out.println("Music changed.");        // todo update music.
         }
     }
 }

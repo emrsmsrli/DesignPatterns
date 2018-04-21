@@ -3,8 +3,9 @@ package iztechify.models.music;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
+import java.util.Observer;
 
-public class Album extends Observable {
+public class Album extends Observable implements Observer{
     private String title;
     private String description;
 
@@ -22,6 +23,7 @@ public class Album extends Observable {
 
     public boolean addSongToAlbum(Song song){ // TODO save to json file
         boolean isSuccessful = songs.add(song);
+        song.addObserver(this);
         setChanged();
         notifyObservers(this);
         return isSuccessful;
@@ -31,6 +33,12 @@ public class Album extends Observable {
         boolean isSuccessful = songs.remove(song);
         setChanged();
         notifyObservers(this);
+        song.deleteObserver(this);
         return isSuccessful;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+
     }
 }

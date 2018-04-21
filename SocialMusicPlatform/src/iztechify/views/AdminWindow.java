@@ -14,6 +14,7 @@ public class AdminWindow  extends AbstractWindow {
         super("Admin");
         this.adminController = adminController;
         this.music = music;
+        this.music.addObserver(this);           // todo check if usage true.
         setSize(400, 500);
         setLayout(null);
     }
@@ -26,6 +27,10 @@ public class AdminWindow  extends AbstractWindow {
 
     @Override
     public void update(Observable o, Object arg) {
-
+        if(arg == null)
+            return;
+        if(arg instanceof Music){
+            System.out.println("Music changed");        // todo update music.
+        }
     }
 }

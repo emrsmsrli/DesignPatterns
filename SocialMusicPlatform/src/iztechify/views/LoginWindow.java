@@ -34,7 +34,10 @@ public class LoginWindow extends AbstractWindow {
 
     @Override
     public void update(Observable o, Object arg) {
-
+        if(arg == null)
+            return;
+        if(arg instanceof Music)
+            System.out.println("Music changed");    // todo update music.
     }
 
     {
