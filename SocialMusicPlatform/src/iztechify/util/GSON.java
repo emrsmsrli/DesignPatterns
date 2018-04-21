@@ -16,7 +16,7 @@ public class GSON {
     public static Artist[] loadMusic() {
         try(FileReader fr = new FileReader(FILE_NAME_MUSIC)) {
             return _GSON.fromJson(fr, Artist[].class);
-        } catch(Exception e) { e.printStackTrace(); throw new RuntimeException(); }
+        } catch(Exception e) { e.printStackTrace(); throw new RuntimeException(); } // prevent "return null"
     }
 
     public static void saveMusic(Artist[] artists) {
