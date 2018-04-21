@@ -22,12 +22,14 @@ public class Album extends Observable {
 
     public boolean addSongToAlbum(Song song){ // TODO save to json file
         boolean isSuccessful = songs.add(song);
+        setChanged();
         notifyObservers(this);
         return isSuccessful;
     }
 
     public boolean removeSong(Song song){ // TODO save to json file
         boolean isSuccessful = songs.remove(song);
+        setChanged();
         notifyObservers(this);
         return isSuccessful;
     }

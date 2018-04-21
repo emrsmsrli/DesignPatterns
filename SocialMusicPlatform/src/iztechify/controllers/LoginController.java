@@ -40,7 +40,7 @@ public class LoginController implements Controller {
             return;
         }
         UserController userController = new UserController(users, user);
-        Window userWindow = new UserWindow(user.getUsername(), userController, new Observable(), new Observable()); // todo: get observables from where?
+        Window userWindow = new UserWindow(user.getUsername(), userController); // todo: get observables from where?
         userWindow.showWindow();
     }
 

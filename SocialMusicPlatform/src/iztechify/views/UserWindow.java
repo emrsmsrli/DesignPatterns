@@ -17,9 +17,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class UserWindow extends AbstractWindow implements Observer {
-    private Observable userObservable = null;
-    private Observable musicObservable = null;
-
     private JList<String> friendList;
     private JList<String> playlistList;
     private JPanel root;
@@ -158,7 +155,7 @@ public class UserWindow extends AbstractWindow implements Observer {
         if(arg == null)
             return;
         if(arg instanceof User){
-            System.out.println(((User) arg).getUsername());
+            System.out.println("New username: " + ((User) arg).getUsername());
         } else if(arg instanceof Music){
             System.out.println("Music changed.");
         }

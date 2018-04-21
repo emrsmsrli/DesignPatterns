@@ -18,13 +18,13 @@ public class Music extends Observable  {
     public void addArtistToMusic(Artist artist){
         artists.add(artist);
         setChanged();
-        notifyObservers();
+        notifyObservers(this);
     }
 
     public boolean removeArtistFromMusic(Artist artist){
         boolean isSuccessful = artists.remove(artist);
         setChanged();
-        notifyObservers();
+        notifyObservers(this);
         return isSuccessful;
     }
 

@@ -18,6 +18,6 @@ public class Song extends Observable {
     public void setTitle(String newTitle){
         title = newTitle;
         setChanged();
-        notifyObservers();
+        notifyObservers(this);
     }
 }
