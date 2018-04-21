@@ -5,11 +5,15 @@ import iztechify.models.music.Music;
 import iztechify.views.AdminWindow;
 import iztechify.views.Window;
 
+import java.util.List;
+
 public class LoginController implements Controller {
     private Music music;
+    private List<User> users;
 
-    public LoginController(Music music) {
+    public LoginController(Music music, List<User> users) {
         this.music = music;
+        this.users = users;
     }
 
     public void loginAdmin() {
@@ -20,12 +24,18 @@ public class LoginController implements Controller {
 
     public void loginUser(String username) {
         User user = getUser(username);
+        if(user == null) {
+            // todo alert dialog user does not exits
+            return;
+        }
 
+        // todo user controller and view
     }
 
     private User getUser(String username) {
-        // todo: search user on the database and return user object
-        return username == null ? new User("") : new User(username);
+        for(User user : users)
+            if(user.getUsername().equals(username))
+                return user;
+        return null;
     }
-
 }
