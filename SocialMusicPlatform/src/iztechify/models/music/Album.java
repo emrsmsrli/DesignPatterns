@@ -17,13 +17,13 @@ public class Album extends Observable {
 
     public boolean addSongToAlbum(Song song){ // TODO save to json file
         boolean isSuccessful = songs.add(song);
-        notifyObservers();
+        notifyObservers(this);
         return isSuccessful;
     }
 
     public boolean removeSong(Song song){ // TODO save to json file
         boolean isSuccessful = songs.remove(song);
-        notifyObservers();
+        notifyObservers(this);
         return isSuccessful;
     }
 }

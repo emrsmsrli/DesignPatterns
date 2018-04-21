@@ -27,15 +27,14 @@ public class Iztechify {
 
         //Windows
         Window loginWindow = new LoginWindow(music, loginController);
-        UserWindow w = new UserWindow("fafa" ,userController, user, music);
+        UserWindow w = new UserWindow("fafa" ,userController);
 
         //Adding observers to observables
         user.addObserver(w);
         music.addObserver(w);
 
-        user.setUsername("ajfskafkan");
+        user.setUsername("Bagator");
         music.addArtistToMusic(new Artist("fanfa"));
-
 
         loginWindow.showWindow();
     }

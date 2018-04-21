@@ -3,8 +3,10 @@ package iztechify.views;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import iztechify.controllers.UserController;
+import iztechify.models.Music;
 import iztechify.models.Users;
 import iztechify.models.music.Playlist;
+import iztechify.models.user.User;
 import javafx.beans.value.ObservableValue;
 
 import javax.swing.*;
@@ -31,10 +33,8 @@ public class UserWindow extends AbstractWindow implements Observer {
 
     private UserController userController;
 
-    public UserWindow(String username, UserController userController, Observable userObservable, Observable musicObservable) {
+    public UserWindow(String username, UserController userController) {
         super("User " + username);
-        this.userObservable = userObservable;
-        this.musicObservable = musicObservable;
         this.userController = userController;
 
         friendListModel.addElement("Me");
@@ -155,9 +155,12 @@ public class UserWindow extends AbstractWindow implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        if(userObservable == o)
-            System.out.println("User changed.");
-        else if(musicObservable == o)
+        if(arg == null)
+            return;
+        if(arg instanceof User){
+            System.out.println(((User) arg).getUsername());
+        } else if(arg instanceof Music){
             System.out.println("Music changed.");
+        }
     }
 }

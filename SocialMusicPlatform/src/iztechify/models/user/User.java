@@ -20,20 +20,20 @@ public class User extends Observable{
     public void addPlaylist(Playlist playlist){
         playlists.add(playlist);
         setChanged();
-        notifyObservers();
+        notifyObservers(this);
     }
 
     public void addFriend(User user){
         friends.add(user);
         user.friends.add(this);
         setChanged();
-        notifyObservers();
+        notifyObservers(this);
     }
 
     public void setUsername(String newName){
         this.username = newName;
         setChanged();
-        notifyObservers();
+        notifyObservers(this);
     }
 
     public String getUsername() {
