@@ -17,6 +17,14 @@ public class Album extends Observable implements Observer{
         this.songs = new ArrayList<>();
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
     public List<Song> getSongs() {
         return songs;
     }
