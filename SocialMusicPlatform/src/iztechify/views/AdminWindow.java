@@ -1,16 +1,16 @@
 package iztechify.views;
 
-import iztechify.controllers.Controller;
 import iztechify.models.Music;
+import iztechify.controllers.AdminController;
 
 import javax.swing.*;
 import java.util.Observable;
 
 public class AdminWindow  extends AbstractWindow {
-    private Controller adminController;
+    private AdminController adminController;
     private Music music;
 
-    public AdminWindow(Controller adminController, Music music){
+    public AdminWindow(AdminController adminController, Music music){
         super("Admin");
         this.adminController = adminController;
         this.music = music;

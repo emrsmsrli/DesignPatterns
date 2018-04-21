@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-public class User extends Observable{
+public class User extends Observable {
     private String username;
     private List<User> friends;
     private List<Playlist> playlists;
@@ -17,13 +17,13 @@ public class User extends Observable{
         this.playlists = new ArrayList<>();
     }
 
-    public void addPlaylist(Playlist playlist){
+    public void addPlaylist(Playlist playlist) {
         playlists.add(playlist);
         setChanged();
         notifyObservers();
     }
 
-    public void addFriend(User user){
+    public void addFriend(User user) {
         friends.add(user);
         user.friends.add(this);
         setChanged();
@@ -40,13 +40,13 @@ public class User extends Observable{
         return username;
     }
 
-    public List<Playlist> getPlaylists(){
+    public List<Playlist> getPlaylists() {
         return playlists;
     }
 
     public Playlist getPlaylist(String name) {
-        for(Playlist p : playlists)
-            if(p.getName().equals(name))
+        for (Playlist p : playlists)
+            if (p.getName().equals(name))
                 return p;
         return null;
     }
@@ -56,8 +56,8 @@ public class User extends Observable{
     }
 
     public User getFriend(String otherUsername) {
-        for(User u : friends)
-            if(u.getUsername().equals(otherUsername))
+        for (User u : friends)
+            if (u.getUsername().equals(otherUsername))
                 return u;
         return null;
     }

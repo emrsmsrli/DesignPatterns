@@ -15,12 +15,14 @@ public class Playlist extends Observable {
 
     public boolean addSongToPlaylist(Song song){ // TODO save to json file
         boolean isSuccessful = songs.add(song);
+        setChanged();
         notifyObservers();
         return isSuccessful;
     }
 
     public boolean removeSongFromPlaylist(Song song){ // TODO save to json file
         boolean isSuccessful = songs.remove(song);
+        setChanged();
         notifyObservers();
         return isSuccessful;
     }

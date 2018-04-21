@@ -10,7 +10,6 @@ import iztechify.util.GSON;
 import iztechify.views.LoginWindow;
 import iztechify.views.UserWindow;
 import iztechify.views.Window;
-import javafx.beans.value.ObservableValue;
 
 import java.util.Arrays;
 

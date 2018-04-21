@@ -16,4 +16,12 @@ public class Artist extends Observable {
     public String getName() {
         return name;
     }
+
+    public List<Song> getSongs() {
+        List<Song> songs = new ArrayList<>();
+        for (Album album : albums) {
+            songs.addAll(album.getSongs());
+        }
+        return songs;
+    }
 }
