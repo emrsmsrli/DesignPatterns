@@ -15,4 +15,12 @@ public class Song extends Observable {
         title = newTitle;
         notifyObservers();
     }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getLength() {
+        return length;
+    }
 }
