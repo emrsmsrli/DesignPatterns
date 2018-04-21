@@ -1,6 +1,7 @@
 package iztechify.views;
 
 import javax.swing.*;
+import java.util.Observable;
 
 public class UserWindow extends AbstractWindow {
     private int counterU = 0, counterM = 0;
@@ -34,8 +35,6 @@ public class UserWindow extends AbstractWindow {
        add(searchMusic);
        add(addMusic);
        setSize(800, 800);
-       setLayout(null);
-       setVisible(true);
     }
 
     public void addNewUser(String username) {
@@ -119,6 +118,12 @@ public class UserWindow extends AbstractWindow {
 
     @Override
     public void showWindow() {
+        setLayout(null);
+        setVisible(true);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
 
     }
 }

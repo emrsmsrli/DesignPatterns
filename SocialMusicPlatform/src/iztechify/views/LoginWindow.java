@@ -1,10 +1,18 @@
 package iztechify.views;
 
+import iztechify.controllers.Controller;
+import iztechify.controllers.LoginController;
+import iztechify.models.music.Music;
+
 import javax.swing.*;
+import java.util.Observable;
 
 public class LoginWindow extends AbstractWindow {
-    public LoginWindow() {
+    private LoginController loginController; // todo: Controller or LoginController ?
+
+    public LoginWindow(Music music, LoginController loginController) {
         super("Login");
+        this.loginController = loginController;
 
         JTextField username = new JTextField();
         username.setBounds(50, 230, 200, 40);
@@ -13,7 +21,7 @@ public class LoginWindow extends AbstractWindow {
 
         loginB.addActionListener(e -> {
             if (username.getText().equals("admin")) {
-                new AdminWindow(); // todo register windows to admin controller
+                this.loginController.loginAdmin(); // todo register windows to admin controller
             } else {
                 new UserWindow(username.getText());
             }
@@ -28,5 +36,10 @@ public class LoginWindow extends AbstractWindow {
     public void showWindow() {
         setLayout(null);
         setVisible(true);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+
     }
 }
