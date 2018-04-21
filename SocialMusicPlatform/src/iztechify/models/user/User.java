@@ -17,29 +17,42 @@ public class User extends Observable{
         this.playlists = new ArrayList<>();
     }
 
+    public void addPlaylist(Playlist playlist){
+        playlists.add(playlist);
+        setChanged();
+        notifyObservers();
+    }
+
+    public void addFriend(User user){
+        friends.add(user);
+        user.friends.add(this);
+        setChanged();
+        notifyObservers();
+    }
+
     public String getUsername() {
         return username;
     }
 
-    public boolean createPlaylist(String name){
-        boolean isSuccessful = playlists.add(new Playlist(name));
-        notifyObservers();
-        return isSuccessful;
-    }
-
-    public boolean addFriend(User user){
-        boolean isSuccessful = friends.add(user);
-        notifyObservers();
-        return isSuccessful;
-    }
-
-    public boolean removeFriend(User user){
-        boolean isSuccessful = friends.remove(user);
-        notifyObservers();
-        return isSuccessful;
-    }
-
     public List<Playlist> getPlaylists(){
         return playlists;
+    }
+
+    public Playlist getPlaylist(String name) {
+        for(Playlist p : playlists)
+            if(p.getName().equals(name))
+                return p;
+        return null;
+    }
+
+    public List<User> getFriends() {
+        return friends;
+    }
+
+    public User getFriend(String otherUsername) {
+        for(User u : friends)
+            if(u.getUsername().equals(otherUsername))
+                return u;
+        return null;
     }
 }

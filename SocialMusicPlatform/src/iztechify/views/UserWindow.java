@@ -1,129 +1,150 @@
 package iztechify.views;
 
+import com.intellij.uiDesigner.core.GridConstraints;
+import com.intellij.uiDesigner.core.GridLayoutManager;
+import iztechify.controllers.UserController;
+import iztechify.models.music.Playlist;
+
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.List;
 import java.util.Observable;
 
 public class UserWindow extends AbstractWindow {
-    private int counterU = 0, counterM = 0;
+    private JList<String> friendList;
+    private JList<String> playlistList;
+    private JPanel root;
+    private JButton addFriendButton;
+    private JTextField friendNameField;
+    private JButton addPlaylistButton;
+    private JTextField playlistNameField;
 
-    public UserWindow(String username) {
-        // todo: check is the user exist before show the profile
-        super(username + " Profile");
+    private DefaultListModel<String> friendListModel = new DefaultListModel<>();
+    private DefaultListModel<String> playlistListModel = new DefaultListModel<>();
 
-        JTextField searchUser = new JTextField();
-        searchUser.setBounds(0, 0, 280, 40);
-        JButton addUser = new JButton("Add User");
-        addUser.setBounds(280, 0, 100, 40);
+    private UserController userController;
 
-        addUser.addActionListener(e -> {
-            addNewUser(searchUser.getText());
-            counterU++;
+    public UserWindow(String username, UserController userController) {
+        super("User " + username);
+        this.userController = userController;
+
+        friendListModel.addElement("Me");
+        friendList.setModel(friendListModel);
+        playlistList.setModel(playlistListModel);
+
+        friendList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(e.getClickCount() == 2)    // double click
+                    return;
+
+                int idx = friendList.locationToIndex(e.getPoint());
+                playlistListModel.clear();
+
+                List<Playlist> playlists;
+                if(idx == 0) {      // my playlist
+                    addPlaylistButton.setEnabled(true);
+                    playlists = userController.getPlaylists();
+                } else {
+                    addPlaylistButton.setEnabled(false);
+                    String friend = friendListModel.get(idx);
+                    playlists = userController.getFriendPlaylists(friend);
+                }
+
+                for(Playlist playlist : playlists)
+                    playlistListModel.addElement(playlist.getName());
+            }
         });
 
-        JTextField searchMusic = new JTextField();
-        searchMusic.setBounds(500, 0, 200, 40);
-        JButton addMusic = new JButton("Add Music");
-        addMusic.setBounds(700, 0, 100, 40);
+        playlistList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(e.getClickCount() != 2)    // double click
+                    return;
 
-        addMusic.addActionListener(e -> {
-            addNewMusic(searchMusic.getText());
-            counterM++;
+                // todo open playlist view with appropriate permissions
+                // (if this user's, add and remove buttons are active)
+            }
         });
 
-       add(searchUser);
-       add(addUser);
-       add(searchMusic);
-       add(addMusic);
-       setSize(800, 800);
+        addFriendButton.addActionListener(e -> addNewFriend(friendNameField.getText()));
+        addPlaylistButton.addActionListener(e -> addNewPlaylist(playlistNameField.getText()));
     }
 
-    public void addNewUser(String username) {
-        // todo: check if user exists
-        JLabel user = new JLabel();
-        user.setBounds(0, 40 + (counterU * 20), 200, 20);
-        user.setText("- " + username);
+    private void addNewFriend(String username) {
+        if(!userController.addFriend(username))
+            return;
 
-        JButton showPlaylist = new JButton("Show Playlist");
-        showPlaylist.setBounds(200, 40 + (counterU * 20), 100, 20);
-        showPlaylist.addActionListener(e -> {
-            showUserPlaylist(user);
-        });
-
-        JButton remove = new JButton("Remove");
-        remove.setBounds(300, 40 + (counterU * 20), 80, 20);
-        remove.addActionListener(e -> {
-            removeUser(user, remove, showPlaylist);
-        });
-
-        add(user);
-        add(showPlaylist);
-        add(remove);
-        revalidate();
-        repaint();
+        friendListModel.addElement(username);
     }
 
-    public void removeUser(JLabel user, JButton removeButton, JButton showPlaylist) {
-        // todo: remove the user who deletes from the deleted user's friends list
-        remove(user);
-        remove(showPlaylist);
-        remove(removeButton);
-        revalidate();
-        repaint();
-    }
+    private void addNewPlaylist(String playlistName) {
+        if(!userController.addPlaylist(playlistName))
+            return;
 
-    public void addNewMusic(String musicName) {
-        // todo: check if music exists
-        JLabel music = new JLabel();
-        music.setBounds(500, 40 + (counterM * 20), 220, 20);
-        music.setText("- " + musicName);
-
-        JButton remove = new JButton("Remove");
-        remove.setBounds(720, 40 + (counterM * 20), 80, 20);
-        remove.addActionListener(e -> {
-            // todo: remove music click
-            removeMusic(music, remove);
-        });
-
-        add(music);
-        add(remove);
-        revalidate();
-        repaint();
-    }
-
-    public void removeMusic(JLabel music, JButton removeButton) {
-        // Call if music deleted from json
-        remove(music);
-        remove(removeButton);
-        revalidate();
-        repaint();
-    }
-
-    public void showUserPlaylist(JLabel user) {
-        // todo: get user's playlist show
-        /*
-        JFrame playlist = new JFrame(user + "'s Playlist")
-        Label music;
-        // loop for user's playlist to add musics as labels on frame
-        music = new JLabel();
-        music.setBounds(0, 40 + (counterM * 20), 220, 20);
-        music.setText("- " + musicName);
-        playlist.add(music)
-        //finish loop
-        fu.setSize(300, 500);
-        fu.setLayout(null);
-        fu.setVisible(true);
-        */
-
+        playlistListModel.addElement(playlistName);
     }
 
     @Override
     public void showWindow() {
-        setLayout(null);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setPreferredSize(new Dimension(400, 600));
+        setContentPane(root);
+        pack();
         setVisible(true);
     }
 
     @Override
     public void update(Observable o, Object arg) {
 
+    }
+
+    {
+// GUI initializer generated by IntelliJ IDEA GUI Designer
+// >>> IMPORTANT!! <<<
+// DO NOT EDIT OR ADD ANY CODE HERE!
+        $$$setupUI$$$();
+    }
+
+    /**
+     * Method generated by IntelliJ IDEA GUI Designer
+     * >>> IMPORTANT!! <<<
+     * DO NOT edit this method OR call it in your code!
+     *
+     * @noinspection ALL
+     */
+    private void $$$setupUI$$$() {
+        root = new JPanel();
+        root.setLayout(new GridLayoutManager(4, 2, new Insets(10, 10, 10, 10), -1, -1));
+        friendList = new JList();
+        friendList.setSelectionMode(0);
+        root.add(friendList, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
+        playlistList = new JList();
+        playlistList.setSelectionMode(0);
+        root.add(playlistList, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
+        final JLabel label1 = new JLabel();
+        label1.setText("Friends");
+        root.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label2 = new JLabel();
+        label2.setText("Playlists");
+        root.add(label2, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        friendNameField = new JTextField();
+        root.add(friendNameField, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        addFriendButton = new JButton();
+        addFriendButton.setText("Add Friend");
+        root.add(addFriendButton, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        addPlaylistButton = new JButton();
+        addPlaylistButton.setText("Add Playlist");
+        root.add(addPlaylistButton, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        playlistNameField = new JTextField();
+        root.add(playlistNameField, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+    }
+
+    /**
+     * @noinspection ALL
+     */
+    public JComponent $$$getRootComponent$$$() {
+        return root;
     }
 }

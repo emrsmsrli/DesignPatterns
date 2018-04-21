@@ -24,4 +24,8 @@ public class Playlist extends Observable {
         notifyObservers();
         return isSuccessful;
     }
+
+    public String getName() {
+        return name;
+    }
 }

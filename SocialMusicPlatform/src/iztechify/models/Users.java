@@ -15,4 +15,11 @@ public class Users extends Observable {
     public List<User> getUsers() {
         return users;
     }
+
+    public User getUser(String username) {
+        for(User u : users)
+            if(u.getUsername().equals(username))
+                return u;
+        return null;
+    }
 }
