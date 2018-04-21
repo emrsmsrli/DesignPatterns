@@ -8,7 +8,6 @@ import iztechify.views.UserWindow;
 import iztechify.views.Window;
 
 import javax.swing.*;
-import java.util.Observable;
 
 public class LoginController implements Controller {
     private Music music;
