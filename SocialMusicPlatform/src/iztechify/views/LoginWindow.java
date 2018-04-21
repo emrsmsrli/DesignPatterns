@@ -23,7 +23,7 @@ public class LoginWindow extends AbstractWindow {
             if (username.getText().equals("admin")) {
                 this.loginController.loginAdmin(); // todo register windows to admin controller
             } else {
-                new UserWindow(username.getText());
+                this.loginController.loginUser(username.getText());
             }
         });
 
