@@ -7,6 +7,7 @@ import java.util.Observable;
 public class Album extends Observable {
     private String title;
     private String description;
+
     private List<Song> songs;
 
     public Album(String title, String description) { // TODO add songs?
@@ -15,15 +16,21 @@ public class Album extends Observable {
         this.songs = new ArrayList<>();
     }
 
+    public List<Song> getSongs() {
+        return songs;
+    }
+
     public boolean addSongToAlbum(Song song){ // TODO save to json file
         boolean isSuccessful = songs.add(song);
-        notifyObservers();
+        setChanged();
+        notifyObservers(this);
         return isSuccessful;
     }
 
     public boolean removeSong(Song song){ // TODO save to json file
         boolean isSuccessful = songs.remove(song);
-        notifyObservers();
+        setChanged();
+        notifyObservers(this);
         return isSuccessful;
     }
 

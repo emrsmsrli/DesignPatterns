@@ -11,9 +11,14 @@ public class Song extends Observable {
         this.length = length;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
     public void setTitle(String newTitle){
         title = newTitle;
-        notifyObservers();
+        setChanged();
+        notifyObservers(this);
     }
 
     public String getTitle() {

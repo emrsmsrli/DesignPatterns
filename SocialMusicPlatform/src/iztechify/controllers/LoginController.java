@@ -4,7 +4,11 @@ import iztechify.models.Users;
 import iztechify.models.user.User;
 import iztechify.models.Music;
 import iztechify.views.AdminWindow;
+import iztechify.views.UserWindow;
 import iztechify.views.Window;
+
+import javax.swing.*;
+import java.util.Observable;
 
 public class LoginController implements Controller {
     private Music music;
@@ -15,25 +19,34 @@ public class LoginController implements Controller {
         this.users = users;
     }
 
-    public void loginAdmin() {
-        Controller adminController = new AdminController(music);
+    public void login(String username) {
+        if (username.equals("admin")) {
+            loginAdmin();
+        } else {
+            loginUser(username);
+        }
+    }
+
+    private void loginAdmin() {
+        AdminController adminController = new AdminController(music);
         Window adminWindow = new AdminWindow(adminController, music);
         adminWindow.showWindow();
     }
 
-    public void loginUser(String username) {
+    private void loginUser(String username) {
         User user = getUser(username);
-        if(user == null) {
-            // todo alert dialog user does not exits
+        if (user == null) {
+            JOptionPane.showMessageDialog(null, "User does not exist!");
             return;
         }
-
-        // todo user controller and view
+        UserController userController = new UserController(users, user);
+        Window userWindow = new UserWindow(user.getUsername(), userController); // todo: get observables from where?
+        userWindow.showWindow();
     }
 
     private User getUser(String username) {
-        for(User user : users.getUsers())
-            if(user.getUsername().equals(username))
+        for (User user : users.getUsers())
+            if (user.getUsername().equals(username))
                 return user;
         return null;
     }

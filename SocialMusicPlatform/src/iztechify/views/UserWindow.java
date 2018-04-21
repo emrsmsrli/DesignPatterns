@@ -3,8 +3,12 @@ package iztechify.views;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import iztechify.controllers.UserController;
+import iztechify.models.Music;
+import iztechify.models.Users;
 import iztechify.models.music.Playlist;
 import iztechify.models.music.Song;
+import iztechify.models.user.User;
+import javafx.beans.value.ObservableValue;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -112,7 +116,13 @@ public class UserWindow extends AbstractWindow {
 
     @Override
     public void update(Observable o, Object arg) {
-
+        if(arg == null) // fixme wtf?
+            return;
+        if(arg instanceof User){
+            System.out.println("New username: " + ((User) arg).getUsername());
+        } else if(arg instanceof Music){
+            System.out.println("Music changed.");
+        }
     }
 
     {
