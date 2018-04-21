@@ -1,5 +1,7 @@
 package iztechify.views;
 
-public interface Window {
+import java.util.Observer;
+
+public interface Window extends Observer {
     void showWindow();
 }
