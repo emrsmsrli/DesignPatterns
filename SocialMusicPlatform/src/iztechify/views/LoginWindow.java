@@ -27,6 +27,7 @@ public class LoginWindow extends AbstractWindow {
     @Override
     public void showWindow() {
         setLayout(null);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
     }
 }
