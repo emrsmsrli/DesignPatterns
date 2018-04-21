@@ -26,4 +26,12 @@ public class Album extends Observable {
         notifyObservers();
         return isSuccessful;
     }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }
