@@ -3,13 +3,11 @@ package iztechify.views;
 import javax.swing.*;
 
 public class UserWindow extends AbstractWindow {
-    private JFrame fu;
     private int counterU = 0, counterM = 0;
 
     public UserWindow(String username) {
         // todo: check is the user exist before show the profile
         super(username + " Profile");
-        fu = new JFrame(username + " Profile");
 
         JTextField searchUser = new JTextField();
         searchUser.setBounds(0, 0, 280, 40);
@@ -31,13 +29,13 @@ public class UserWindow extends AbstractWindow {
             counterM++;
         });
 
-        fu.add(searchUser);
-        fu.add(addUser);
-        fu.add(searchMusic);
-        fu.add(addMusic);
-        fu.setSize(800, 800);
-        fu.setLayout(null);
-        fu.setVisible(true);
+       add(searchUser);
+       add(addUser);
+       add(searchMusic);
+       add(addMusic);
+       setSize(800, 800);
+       setLayout(null);
+       setVisible(true);
     }
 
     public void addNewUser(String username) {
@@ -58,20 +56,20 @@ public class UserWindow extends AbstractWindow {
             removeUser(user, remove, showPlaylist);
         });
 
-        fu.add(user);
-        fu.add(showPlaylist);
-        fu.add(remove);
-        fu.revalidate();
-        fu.repaint();
+        add(user);
+        add(showPlaylist);
+        add(remove);
+        revalidate();
+        repaint();
     }
 
     public void removeUser(JLabel user, JButton removeButton, JButton showPlaylist) {
         // todo: remove the user who deletes from the deleted user's friends list
-        fu.remove(user);
-        fu.remove(showPlaylist);
-        fu.remove(removeButton);
-        fu.revalidate();
-        fu.repaint();
+        remove(user);
+        remove(showPlaylist);
+        remove(removeButton);
+        revalidate();
+        repaint();
     }
 
     public void addNewMusic(String musicName) {
@@ -87,18 +85,18 @@ public class UserWindow extends AbstractWindow {
             removeMusic(music, remove);
         });
 
-        fu.add(music);
-        fu.add(remove);
-        fu.revalidate();
-        fu.repaint();
+        add(music);
+        add(remove);
+        revalidate();
+        repaint();
     }
 
     public void removeMusic(JLabel music, JButton removeButton) {
         // Call if music deleted from json
-        fu.remove(music);
-        fu.remove(removeButton);
-        fu.revalidate();
-        fu.repaint();
+        remove(music);
+        remove(removeButton);
+        revalidate();
+        repaint();
     }
 
     public void showUserPlaylist(JLabel user) {
@@ -116,6 +114,11 @@ public class UserWindow extends AbstractWindow {
         fu.setLayout(null);
         fu.setVisible(true);
         */
+
+    }
+
+    @Override
+    public void showWindow() {
 
     }
 }

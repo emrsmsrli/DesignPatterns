@@ -4,10 +4,14 @@ import javax.swing.*;
 
 public class AdminWindow  extends AbstractWindow {
     public AdminWindow(){
-        super("Admin Profile");
-        JFrame admin = new JFrame("Admin Profile");
-        admin.setSize(400, 500);
-        admin.setLayout(null);
-        admin.setVisible(true);
+        super("Admin");
+        setSize(400, 500);
+        setLayout(null);
+    }
+
+    @Override
+    public void showWindow() {
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setVisible(true);
     }
 }

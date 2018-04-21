@@ -3,11 +3,8 @@ package iztechify.views;
 import javax.swing.*;
 
 public class LoginWindow extends AbstractWindow {
-    private JFrame login;
-
     public LoginWindow() {
         super("Login");
-        login = new JFrame("Login");
 
         JTextField username = new JTextField();
         username.setBounds(50, 230, 200, 40);
@@ -16,19 +13,20 @@ public class LoginWindow extends AbstractWindow {
 
         loginB.addActionListener(e -> {
             if (username.getText().equals("admin")) {
-                new AdminWindow();
-                login.setVisible(false);
+                new AdminWindow(); // todo register windows to admin controller
             } else {
                 new UserWindow(username.getText());
             }
         });
 
-        login.add(username);
-        login.add(loginB);
-        login.setSize(400, 500);
-        login.setLayout(null);
-        login.setVisible(true);
-
+        add(username);
+        add(loginB);
+        setSize(400, 500);
     }
 
+    @Override
+    public void showWindow() {
+        setLayout(null);
+        setVisible(true);
+    }
 }
