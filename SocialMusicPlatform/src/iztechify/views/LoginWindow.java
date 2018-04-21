@@ -21,7 +21,7 @@ public class LoginWindow extends AbstractWindow {
         super("Login");
         this.loginController = loginController;
 
-        loginButton.addActionListener(e -> loginController.loginUser(usernameField.getText()));
+        loginButton.addActionListener(e -> loginController.login(usernameField.getText()));
     }
 
     @Override

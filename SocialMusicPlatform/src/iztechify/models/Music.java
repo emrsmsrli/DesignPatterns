@@ -1,6 +1,7 @@
 package iztechify.models;
 
 import iztechify.models.music.Artist;
+import iztechify.models.music.Song;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,18 +15,25 @@ public class Music extends Observable  {
         this.artists.addAll(artists);
     }
 
-    public boolean addArtistToMusic(Artist artist){
-        boolean isSuccessful = artists.add(artist);
+    public void addArtistToMusic(Artist artist){
+        artists.add(artist);
         setChanged();
-        notifyObservers(this);
-        return isSuccessful;
+        notifyObservers();
     }
 
     public boolean removeArtistFromMusic(Artist artist){
         boolean isSuccessful = artists.remove(artist);
         setChanged();
-        notifyObservers(this);
+        notifyObservers();
         return isSuccessful;
+    }
+
+    public List<Song> getSongs() {
+        List<Song> songs = new ArrayList<>();
+        for(Artist artist : artists){
+            songs.addAll(artist.getSongs());
+        }
+        return songs;
     }
 
     public void read() { // TODO read from json file
