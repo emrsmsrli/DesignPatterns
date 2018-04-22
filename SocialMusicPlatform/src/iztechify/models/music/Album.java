@@ -40,6 +40,14 @@ public class Album {
         return songs;
     }
 
+    public Song getSong(String name) {
+        for(Song song : songs) {
+            if(song.getTitle().equals(name))
+                return song;
+        }
+        return null;
+    }
+
     public void addSong(Song song) {
         songs.add(song);
     }

@@ -4,7 +4,6 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import iztechify.controllers.UserController;
 import iztechify.models.user.Playlist;
-import iztechify.models.user.PlaylistEntry;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
