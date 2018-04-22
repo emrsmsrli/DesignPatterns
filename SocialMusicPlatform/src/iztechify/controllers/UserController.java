@@ -2,6 +2,8 @@ package iztechify.controllers;
 
 import iztechify.models.Music;
 import iztechify.models.Users;
+import iztechify.models.music.Artist;
+import iztechify.models.music.Song;
 import iztechify.models.user.Playlist;
 import iztechify.models.user.User;
 import iztechify.views.ChooseSongDialog;
@@ -21,6 +23,11 @@ public class UserController {
         this.music = music;
         this.allUsers = allUsers;
         this.thisUser = thisUser;
+
+        List<Song> top3S = allUsers.getTop3Songs();
+        List<Artist> top3A = allUsers.getTop3Artists();
+        JOptionPane.showMessageDialog(null, "Top 3 Songs: \n" + top3S);
+        JOptionPane.showMessageDialog(null, "Top 3 Artists: \n" + top3A);
     }
 
     public void addFriend() {
