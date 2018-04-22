@@ -1,5 +1,6 @@
 package iztechify.models;
 
+import iztechify.models.music.Album;
 import iztechify.models.music.Artist;
 import iztechify.models.music.Song;
 
@@ -15,18 +16,28 @@ public class Music extends Observable {
         this.artists.addAll(artists);
     }
 
-    public boolean addArtistToMusic(Artist artist){
-        boolean isSuccessful = artists.add(artist);
+    public void addArtistToMusic(Artist artist){
+        artists.add(artist);
         setChanged();
         notifyObservers(this);
-        return isSuccessful;
     }
 
-    public boolean removeArtistFromMusic(Artist artist){
-        boolean isSuccessful = artists.remove(artist);
+    public void removeArtistFromMusic(Artist artist){
+        artists.remove(artist);
         setChanged();
         notifyObservers(this);
-        return isSuccessful;
+    }
+
+    public List<Artist> getArtists() {
+        return artists;
+    }
+
+    public List<Album> getAlbums(String artistName) {
+        for(Artist artist : artists) {
+            if(artistName.equals(artist.getName()))
+                return artist.getAlbums();
+        }
+        return null;
     }
 
     public List<Song> getSongs() {
@@ -37,11 +48,10 @@ public class Music extends Observable {
         return songs;
     }
 
-    public void read() { // TODO read from json file
-
-    }
-
-    public void write() { // TODO write changes to json file
-
+    public List<Song> getSongs(String artist, String album) {
+        for(Artist a : artists)
+            if(a.getName().equals(artist))
+                return a.getSongs(album);
+        return null;
     }
 }
