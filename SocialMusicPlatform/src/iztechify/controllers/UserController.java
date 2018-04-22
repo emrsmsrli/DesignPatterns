@@ -5,9 +5,9 @@ import iztechify.models.user.Playlist;
 import iztechify.models.user.User;
 
 import javax.swing.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import java.util.stream.Collectors;
 
 import static javax.swing.JOptionPane.CLOSED_OPTION;
 
@@ -21,11 +21,15 @@ public class UserController {
     }
 
     public void addFriend() {
-        List<User> users = new ArrayList<>(allUsers.getUsers());
-        users.remove(thisUser);
-        Object[] options = new Object[users.size()];
-        for(int i = 0; i < options.length; i++)
-            options[i] = users.get(i).getUsername();
+        List<String> usernames = allUsers.getUsers().stream()
+                .map(User::getUsername).collect(Collectors.toList());
+        usernames.remove(thisUser.getUsername());
+        usernames.removeAll(thisUser.getFriends());
+
+        if(usernames.isEmpty())
+            return;
+
+        Object[] options = usernames.toArray();
 
         int selection = JOptionPane.showOptionDialog(null,
                 "Select a user",
