@@ -19,6 +19,9 @@ public class LoginController {
     }
 
     public void signup(String username) {
+        if(username.equals("admin"))
+            return;
+
         User user = users.getUser(username);
         if(user != null) {
             JOptionPane.showMessageDialog(null,
