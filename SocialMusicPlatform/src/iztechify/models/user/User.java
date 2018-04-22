@@ -14,8 +14,8 @@ public class User {
         this.playlists = new ArrayList<>();
     }
 
-    public void addPlaylist(Playlist playlist) {
-        playlists.add(playlist);
+    public void addPlaylist(String name) {
+        playlists.add(new Playlist(name));
     }
 
     public void addFriend(String user) {

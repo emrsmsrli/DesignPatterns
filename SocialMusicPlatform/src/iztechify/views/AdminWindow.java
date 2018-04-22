@@ -54,7 +54,7 @@ public class AdminWindow extends AbstractWindow {
         artistList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(e.getClickCount() != 2)
+                if (e.getClickCount() != 2)
                     return;
                 loadAlbums();
             }
@@ -63,7 +63,7 @@ public class AdminWindow extends AbstractWindow {
         albumList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(e.getClickCount() != 2)
+                if (e.getClickCount() != 2)
                     return;
                 loadSongs();
             }
@@ -73,7 +73,7 @@ public class AdminWindow extends AbstractWindow {
     private void addDeleteListeners() {
         artistDeleteButton.addActionListener(e -> {
             String artist = artistList.getSelectedValue();
-            if(artist == null)
+            if (artist == null)
                 return;
             adminController.remove(artist);
             artistListModel.removeElement(artist);
@@ -81,7 +81,7 @@ public class AdminWindow extends AbstractWindow {
         albumDeleteButton.addActionListener(e -> {
             String artist = artistList.getSelectedValue();
             String album = albumList.getSelectedValue();
-            if(album == null)
+            if (album == null)
                 return;
             adminController.remove(artist, album);
             albumListModel.removeElement(album);
@@ -90,7 +90,7 @@ public class AdminWindow extends AbstractWindow {
             String artist = artistList.getSelectedValue();
             String album = albumList.getSelectedValue();
             String song = songList.getSelectedValue();
-            if(song == null)
+            if (song == null)
                 return;
             adminController.remove(artist, album, song);
             songListModel.removeElement(song);
@@ -118,20 +118,20 @@ public class AdminWindow extends AbstractWindow {
         artistListModel.clear();
         albumListModel.clear();
         songListModel.clear();
-        for(Artist artist : music.getArtists())
+        for (Artist artist : music.getArtists())
             artistListModel.addElement(artist.getName());
     }
 
     private void loadAlbums() {
         albumListModel.clear();
         songListModel.clear();
-        for(Album album : music.getAlbums(artistList.getSelectedValue()))
+        for (Album album : music.getAlbums(artistList.getSelectedValue()))
             albumListModel.addElement(album.getTitle());
     }
 
     private void loadSongs() {
         songListModel.clear();
-        for(Song song : music.getSongs(artistList.getSelectedValue(),
+        for (Song song : music.getSongs(artistList.getSelectedValue(),
                 albumList.getSelectedValue()))
             songListModel.addElement(song.getTitle());
     }
