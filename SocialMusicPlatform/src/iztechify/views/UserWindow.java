@@ -30,12 +30,13 @@ public class UserWindow extends AbstractWindow {
             = new DefaultTableModel(new Object[]{"Title", "Album", "Artist"}, 0);
 
     private UserController userController;
+    private int currentPlaylist = -1;
 
     public UserWindow(String username, UserController userController) {
         super("User " + username);
         this.userController = userController;
         songTable.setModel(songTableModel);
-        friendListModel.addElement("Me");
+        friendListModel.addElement("-- Me --");
         friendList.setModel(friendListModel);
         playlistList.setModel(playlistListModel);
 
@@ -61,7 +62,12 @@ public class UserWindow extends AbstractWindow {
 
                 if(e.getClickCount() != 2)    // double click
                     return;
+                if(currentPlaylist != -1)
+                    userController.getThisUser()
+                            .getPlaylist(playlistListModel.elementAt(currentPlaylist))
+                            .deleteObserver(UserWindow.this);
                 int idx = playlistList.locationToIndex(e.getPoint());
+                currentPlaylist = idx;
                 if(idx == -1)
                     return;
                 onPlaylistSelected(idx);
@@ -69,12 +75,7 @@ public class UserWindow extends AbstractWindow {
         });
 
         addFriendButton.addActionListener(e -> userController.addFriend());
-        addPlaylistButton.addActionListener(e -> {
-            String name = userController.addPlaylist();
-            if(name != null){
-                this.userController.getThisUser().getPlaylist(name).addObserver(this);
-            }
-        });
+        addPlaylistButton.addActionListener(e -> userController.addPlaylist());
         addSongButton.addActionListener(e -> userController.addSong());
         removeSongButton.addActionListener(e -> {
             int selectedRow = songTable.getSelectedRow();
@@ -116,7 +117,7 @@ public class UserWindow extends AbstractWindow {
                     playlistListModel.get(playlistIndex))
                     .getEntries();
         }
-
+        //todo playlist.addObserver(this)
         for(PlaylistEntry e : entries)
             songTableModel.addRow(new Object[]{e.getSongName(), e.getAlbumName(), e.getArtistName()});*/
     }
