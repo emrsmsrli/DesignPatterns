@@ -20,7 +20,7 @@ public class GSON {
         } catch(Exception e) { e.printStackTrace(); throw new RuntimeException(); } // prevent "return null"
     }
 
-    public static void saveMusic(Artist[] artists) {
+    public static void saveMusic(List<Artist> artists) {
         try(FileWriter fw = new FileWriter(FILE_NAME_MUSIC)) {
             fw.write(_GSON.toJson(artists));
         } catch(Exception e) { e.printStackTrace(); }

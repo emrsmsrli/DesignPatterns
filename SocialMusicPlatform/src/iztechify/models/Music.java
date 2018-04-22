@@ -16,14 +16,48 @@ public class Music extends Observable {
         this.artists.addAll(artists);
     }
 
-    public void addArtistToMusic(Artist artist){
-        artists.add(artist);
+    public void remove(Artist artist) {
+        artists.remove(artist);
         setChanged();
         notifyObservers(this);
     }
 
-    public void removeArtistFromMusic(Artist artist){
-        artists.remove(artist);
+    public void remove(String artist, String album) {
+        for (Artist a : artists) {
+            if (a.getName().equals(artist)) {
+                for (Album al : a.getAlbums()) {
+                    if (al.getTitle().equals(album)) {
+                        a.remove(al);
+                        setChanged();
+                        notifyObservers(this);
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+    public void remove(String artist, String album, String song) {
+        for (Artist a : artists) {
+            if (a.getName().equals(artist)) {
+                for (Album al : a.getAlbums()) {
+                    if (al.getTitle().equals(album)) {
+                        for (Song s : al.getSongs()) {
+                            if (s.getTitle().equals(song)) {
+                                al.remove(s);
+                                setChanged();
+                                notifyObservers(this);
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void addArtistToMusic(Artist artist) {
+        artists.add(artist);
         setChanged();
         notifyObservers(this);
     }
@@ -33,24 +67,17 @@ public class Music extends Observable {
     }
 
     public List<Album> getAlbums(String artistName) {
-        for(Artist artist : artists) {
-            if(artistName.equals(artist.getName()))
+        for (Artist artist : artists) {
+            if (artistName.equals(artist.getName()))
                 return artist.getAlbums();
         }
         return null;
     }
 
-    public List<Song> getSongs() {
-        List<Song> songs = new ArrayList<>();
-        for(Artist artist : artists){
-            songs.addAll(artist.getSongs());
-        }
-        return songs;
-    }
 
     public List<Song> getSongs(String artist, String album) {
-        for(Artist a : artists)
-            if(a.getName().equals(artist))
+        for (Artist a : artists)
+            if (a.getName().equals(artist))
                 return a.getSongs(album);
         return null;
     }
