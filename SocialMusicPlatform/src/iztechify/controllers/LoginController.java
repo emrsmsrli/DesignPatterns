@@ -25,7 +25,7 @@ public class LoginController {
         User user = users.getUser(username);
         if(user != null) {
             JOptionPane.showMessageDialog(null,
-                    "User already exist!",
+                    "User already exists",
                     "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -53,7 +53,7 @@ public class LoginController {
         User user = users.getUser(username);
         if (user == null) {
             JOptionPane.showMessageDialog(null,
-                    "User does not exist!",
+                    "User does not exist",
                     "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
