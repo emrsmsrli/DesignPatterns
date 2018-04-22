@@ -130,6 +130,7 @@ public class UserWindow extends AbstractWindow {
 
     private void loadFriends() {
         friendListModel.clear();
+        friendListModel.addElement("-- Me --");
         for(String s : userController.getFriends()) {
             friendListModel.addElement(s);
         }
