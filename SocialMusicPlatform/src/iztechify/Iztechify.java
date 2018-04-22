@@ -28,7 +28,7 @@ public class Iztechify {
         UserController userController = new UserController(users, new User("fafa"));
 
         //Windows
-        Window loginWindow = new LoginWindow(music, loginController);
+        Window loginWindow = new LoginWindow(loginController);
         UserWindow w = new UserWindow("fafa" ,userController);
 
         //Adding observers to observables

@@ -1,36 +1,207 @@
 package iztechify.views;
 
+import com.intellij.uiDesigner.core.GridConstraints;
+import com.intellij.uiDesigner.core.GridLayoutManager;
 import iztechify.models.Music;
 import iztechify.controllers.AdminController;
+import iztechify.models.music.Album;
+import iztechify.models.music.Artist;
+import iztechify.models.music.Song;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Observable;
 
-public class AdminWindow  extends AbstractWindow {
+public class AdminWindow extends AbstractWindow {
     private AdminController adminController;
+    private JList<String> artistList;
+    private JList<String> albumList;
+    private JList<String> songList;
+    private JButton artistDeleteButton;
+    private JButton albumDeleteButton;
+    private JButton songDeleteButton;
+    private JPanel root;
+    private JButton artistCreateButton;
+    private JButton albumCreateButton;
+    private JButton newSongButton;
 
-    public AdminWindow(AdminController adminController, Music music){
+    private DefaultListModel<String> artistListModel = new DefaultListModel<>();
+    private DefaultListModel<String> albumListModel = new DefaultListModel<>();
+    private DefaultListModel<String> songListModel = new DefaultListModel<>();
+
+    private Music music;
+
+    public AdminWindow(AdminController adminController, Music music) {
         super("Admin");
         this.adminController = adminController;
-        music.addObserver(this);           // todo check if usage true.
-        setSize(400, 500);
-        setLayout(null);
+        this.music = music;
+
+        artistList.setModel(artistListModel);
+        albumList.setModel(albumListModel);
+        songList.setModel(songListModel);
+
+        addSelectListeners();
+        addDeleteListeners();
+        addCreateListeners();
+
+        loadArtists();
+
+        music.addObserver(this);
     }
 
-    // todo: admin window should show all musics inside music.json and all users inside user.json
+    private void addSelectListeners() {
+        artistList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(e.getClickCount() != 2)
+                    return;
+                loadAlbums();
+            }
+        });
+
+        albumList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(e.getClickCount() != 2)
+                    return;
+                loadSongs();
+            }
+        });
+    }
+
+    private void addDeleteListeners() {
+        artistDeleteButton.addActionListener(e -> {
+            String name = artistList.getSelectedValue();
+            if(name == null)
+                return;
+            adminController.removeArtist(name);
+            artistListModel.removeElement(name);
+            loadAlbums();
+        });
+        albumDeleteButton.addActionListener(e -> {
+            String name = albumList.getSelectedValue();
+            if(name == null)
+                return;
+            adminController.removeAlbum(name);
+            albumListModel.removeElement(name);
+            loadSongs();
+        });
+        songDeleteButton.addActionListener(e -> {
+            String name = songList.getSelectedValue();
+            if(name == null)
+                return;
+            adminController.removeSong(name);
+            songListModel.removeElement(name);
+        });
+    }
+
+    private void addCreateListeners() {
+        // todo controller should create a dialog that asks for relevant info then update the model.
+        // since this view is an observer, changes will be reflected.
+        artistCreateButton.addActionListener(e -> adminController.newArtist());
+        albumCreateButton.addActionListener(e -> adminController.newAlbum());
+        newSongButton.addActionListener(e -> adminController.newSong());
+    }
+
+    private void loadArtists() {
+        artistListModel.clear();
+        albumListModel.clear();
+        songListModel.clear();
+        for(Artist artist : music.getArtists())
+            artistListModel.addElement(artist.getName());
+    }
+
+    private void loadAlbums() {
+        albumListModel.clear();
+        songListModel.clear();
+        for(Album album : music.getAlbums(artistList.getSelectedValue()))
+            albumListModel.addElement(album.getTitle());
+    }
+
+    private void loadSongs() {
+        songListModel.clear();
+        for(Song song : music.getSongs(artistList.getSelectedValue(),
+                albumList.getSelectedValue()))
+            songListModel.addElement(song.getTitle());
+    }
 
     @Override
     public void showWindow() {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setContentPane(root);
+        pack();
         setVisible(true);
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        if(arg == null)
-            return;
-        if(arg instanceof Music){
-            System.out.println("Music changed");        // todo update music.
-        }
+        // todo use load*() methods when model changes
+    }
+
+    {
+// GUI initializer generated by IntelliJ IDEA GUI Designer
+// >>> IMPORTANT!! <<<
+// DO NOT EDIT OR ADD ANY CODE HERE!
+        $$$setupUI$$$();
+    }
+
+    /**
+     * Method generated by IntelliJ IDEA GUI Designer
+     * >>> IMPORTANT!! <<<
+     * DO NOT edit this method OR call it in your code!
+     *
+     * @noinspection ALL
+     */
+    private void $$$setupUI$$$() {
+        root = new JPanel();
+        root.setLayout(new GridLayoutManager(4, 3, new Insets(10, 10, 10, 10), -1, -1));
+        final JLabel label1 = new JLabel();
+        label1.setText("Artists");
+        root.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label2 = new JLabel();
+        label2.setText("Albums");
+        root.add(label2, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label3 = new JLabel();
+        label3.setText("Songs");
+        root.add(label3, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JScrollPane scrollPane1 = new JScrollPane();
+        root.add(scrollPane1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        artistList = new JList();
+        scrollPane1.setViewportView(artistList);
+        final JScrollPane scrollPane2 = new JScrollPane();
+        root.add(scrollPane2, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        albumList = new JList();
+        scrollPane2.setViewportView(albumList);
+        final JScrollPane scrollPane3 = new JScrollPane();
+        root.add(scrollPane3, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        songList = new JList();
+        scrollPane3.setViewportView(songList);
+        artistDeleteButton = new JButton();
+        artistDeleteButton.setText("Delete");
+        root.add(artistDeleteButton, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        albumDeleteButton = new JButton();
+        albumDeleteButton.setText("Delete");
+        root.add(albumDeleteButton, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        songDeleteButton = new JButton();
+        songDeleteButton.setText("Delete");
+        root.add(songDeleteButton, new GridConstraints(3, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        artistCreateButton = new JButton();
+        artistCreateButton.setText("New Artist");
+        root.add(artistCreateButton, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        albumCreateButton = new JButton();
+        albumCreateButton.setText("New Album");
+        root.add(albumCreateButton, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        newSongButton = new JButton();
+        newSongButton.setText("New Song");
+        root.add(newSongButton, new GridConstraints(2, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+    }
+
+    /**
+     * @noinspection ALL
+     */
+    public JComponent $$$getRootComponent$$$() {
+        return root;
     }
 }

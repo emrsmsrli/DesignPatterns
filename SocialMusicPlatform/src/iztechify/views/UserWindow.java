@@ -16,14 +16,12 @@ import java.util.List;
 import java.util.Observable;
 
 public class UserWindow extends AbstractWindow {
+    private JPanel root;
     private JList<String> friendList;
     private JList<String> playlistList;
-    private JPanel root;
-    private JButton addFriendButton;
-    private JTextField friendNameField;
-    private JButton addPlaylistButton;
-    private JTextField playlistNameField;
     private JTable songTable;
+    private JButton addFriendButton;
+    private JButton addPlaylistButton;
     private JButton addSongButton;
 
     private DefaultListModel<String> friendListModel = new DefaultListModel<>();
@@ -47,25 +45,8 @@ public class UserWindow extends AbstractWindow {
             public void mouseClicked(MouseEvent e) {
                 if(e.getClickCount() != 2)    // double click
                     return;
-
                 int idx = friendList.locationToIndex(e.getPoint());
-                playlistListModel.clear();
-                songTableModel.setRowCount(0);
-
-                List<Playlist> playlists;
-                if(idx == 0) {      // my playlist
-                    addPlaylistButton.setEnabled(true);
-                    addSongButton.setEnabled(true);
-                    playlists = userController.getPlaylists();
-                } else {
-                    addPlaylistButton.setEnabled(false);
-                    addSongButton.setEnabled(false);
-                    String friend = friendListModel.get(idx);
-                    playlists = userController.getFriendPlaylists(friend);
-                }
-
-                for(Playlist playlist : playlists)
-                    playlistListModel.addElement(playlist.getName());
+                onFriendSelected(idx);
             }
         });
 
@@ -74,33 +55,54 @@ public class UserWindow extends AbstractWindow {
             public void mouseClicked(MouseEvent e) {
                 if(e.getClickCount() != 2)    // double click
                     return;
-
                 int idx = playlistList.locationToIndex(e.getPoint());
-                songTableModel.setRowCount(0);
-
-                List<Song> songs;
-
-                // todo open playlist view with appropriate permissions
-                // (if this user's, add and remove buttons are active)
+                onPlaylistSelected(idx);
             }
         });
 
-        addFriendButton.addActionListener(e -> addNewFriend(friendNameField.getText()));
-        addPlaylistButton.addActionListener(e -> addNewPlaylist(playlistNameField.getText()));
+        addFriendButton.addActionListener(e -> userController.addFriend());
+        addPlaylistButton.addActionListener(e -> userController.addPlaylist());
+        addSongButton.addActionListener(e -> userController.addNewSong());
     }
 
-    private void addNewFriend(String username) {
-        if(!userController.addFriend(username))
-            return;
+    private void onFriendSelected(int friendIndex) {
+        playlistListModel.clear();
+        songTableModel.setRowCount(0);
 
-        friendListModel.addElement(username);
+        List<Playlist> playlists;
+        if(friendIndex == 0) {      // my playlist
+            addPlaylistButton.setEnabled(true);
+            addSongButton.setEnabled(true);
+            playlists = userController.getPlaylists();
+        } else {
+            addPlaylistButton.setEnabled(false);
+            addSongButton.setEnabled(false);
+            String friend = friendListModel.get(friendIndex);
+            playlists = userController.getFriendPlaylists(friend);
+        }
+
+        for(Playlist playlist : playlists)
+            playlistListModel.addElement(playlist.getName());
     }
 
-    private void addNewPlaylist(String playlistName) {
-        if(!userController.addPlaylist(playlistName))
-            return;
+    private void onPlaylistSelected(int playlistIndex) {
+        songTableModel.setRowCount(0);
 
-        playlistListModel.addElement(playlistName);
+        List<Song> songs;
+        if(friendList.getSelectedIndex() == 0) {
+            songs = userController.getPlaylist(playlistListModel.get(playlistIndex)).getSongs();
+        } else {
+            songs = userController.getFriendPlaylist(friendList.getSelectedValue(),
+                    playlistListModel.get(playlistIndex))
+                    .getSongs();
+        }
+
+        for(Song song : songs) {
+            songTableModel.addRow(new Object[]{song.getTitle() /* todo add album and artist */, song.getLength()});
+        }
+
+        // todo open playlist view with appropriate permissions
+        // (if this user's, add and remove buttons are active)
     }
 
     @Override
@@ -114,13 +116,7 @@ public class UserWindow extends AbstractWindow {
 
     @Override
     public void update(Observable o, Object arg) {
-        if(arg == null) // fixme wtf?
-            return;
-        if(arg instanceof User) {
-            System.out.println("New username: " + ((User) arg).getUsername());
-        } else if(arg instanceof Music) {
-            System.out.println("Music changed.");
-        }
+        // todo update friends, playlists and songs if and update happens
     }
 
     {
@@ -139,7 +135,7 @@ public class UserWindow extends AbstractWindow {
      */
     private void $$$setupUI$$$() {
         root = new JPanel();
-        root.setLayout(new GridLayoutManager(4, 3, new Insets(10, 10, 10, 10), -1, -1));
+        root.setLayout(new GridLayoutManager(3, 3, new Insets(10, 10, 10, 10), -1, -1));
         root.setAutoscrolls(false);
         friendList = new JList();
         friendList.setSelectionMode(0);
@@ -153,16 +149,12 @@ public class UserWindow extends AbstractWindow {
         final JLabel label2 = new JLabel();
         label2.setText("Playlists");
         root.add(label2, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        friendNameField = new JTextField();
-        root.add(friendNameField, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         addFriendButton = new JButton();
         addFriendButton.setText("Add Friend");
-        root.add(addFriendButton, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        root.add(addFriendButton, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         addPlaylistButton = new JButton();
         addPlaylistButton.setText("Add Playlist");
-        root.add(addPlaylistButton, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        playlistNameField = new JTextField();
-        root.add(playlistNameField, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        root.add(addPlaylistButton, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label3 = new JLabel();
         label3.setText("Songs");
         root.add(label3, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -175,8 +167,8 @@ public class UserWindow extends AbstractWindow {
         songTable.setShowVerticalLines(true);
         scrollPane1.setViewportView(songTable);
         addSongButton = new JButton();
-        addSongButton.setText("Button");
-        root.add(addSongButton, new GridConstraints(3, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        addSongButton.setText("Add Song");
+        root.add(addSongButton, new GridConstraints(2, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
