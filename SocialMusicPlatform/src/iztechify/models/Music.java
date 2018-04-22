@@ -79,6 +79,28 @@ public class Music extends Observable {
         if(aa == null)
             return;
         aa.addSong(new Song(aa, title, length));
+        setChanged();
+        notifyObservers();
+    }
+
+    public void editArtist(String artist, String newName) {
+        getArtist(artist).setName(newName);
+        setChanged();
+        notifyObservers();
+    }
+
+    public void editAlbum(String artist, String album, String newName, String newDesc) {
+        getArtist(artist).getAlbum(album).setTitle(newName);
+        getArtist(artist).getAlbum(newName).setDescription(newDesc);
+        setChanged();
+        notifyObservers();
+    }
+
+    public void editSong(String artist, String album, String song, String newName, String newLength) {
+        getArtist(artist).getAlbum(album).getSong(song).setTitle(newName);
+        getArtist(artist).getAlbum(album).getSong(newName).setLength(newLength);
+        setChanged();
+        notifyObservers();
     }
 
     public Artist getArtist(String name) {
@@ -86,7 +108,6 @@ public class Music extends Observable {
             if(artist.getName().equals(name))
                 return artist;
         }
-
         return null;
     }
 

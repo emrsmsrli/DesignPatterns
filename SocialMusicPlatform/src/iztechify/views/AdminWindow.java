@@ -121,7 +121,7 @@ public class AdminWindow extends AbstractWindow {
             String song = songList.getSelectedValue();
             if(artist == null || album == null || song == null)
                 return;
-            adminController.editAlbum(artist, album, song);
+            adminController.editSong(artist, album, song);
         });
     }
 
