@@ -29,23 +29,9 @@ public class Album extends Observable implements Observer{
         return songs;
     }
 
-    // todo: adding songs to album should be inside the update method because adding songs belongs to admin
-
-//    public boolean addSongToAlbum(Song song){ // TODO save to json file
-//        boolean isSuccessful = songs.add(song);
-//        song.addObserver(this);
-//        setChanged();
-//        notifyObservers(this);
-//        return isSuccessful;
-//    }
-//
-//    public boolean removeSong(Song song){ // TODO save to json file
-//        boolean isSuccessful = songs.remove(song);
-//        setChanged();
-//        notifyObservers(this);
-//        song.deleteObserver(this);
-//        return isSuccessful;
-//    }
+    public void remove(Song song){
+        songs.remove(song);
+    }
 
     @Override
     public void update(Observable o, Object arg) {

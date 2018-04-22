@@ -1,7 +1,8 @@
 package iztechify.controllers;
 
 import iztechify.models.Music;
-import iztechify.models.music.Song;
+import iztechify.models.music.Artist;
+import iztechify.util.GSON;
 
 
 public class AdminController implements Controller {
@@ -11,15 +12,34 @@ public class AdminController implements Controller {
         this.music = music;
     }
 
-    public boolean addNewSongToGSON(Song song) {
-        return true;
+    public void remove(String artist) {
+        for (Artist a : music.getArtists()) {
+            if (a.getName().equals(artist)) {
+                music.remove(a);
+                GSON.saveMusic(music.getArtists());
+                return;
+            }
+        }
     }
 
-    public boolean removeSongFromGGSON(Song song) {
-        return true;
+    public void remove(String artist, String album) {
+        music.remove(artist, album);
+        GSON.saveMusic(music.getArtists());
     }
 
-    public boolean editMusicInGGSON(Song song) {
-        return true;
+    public void remove(String artist, String album, String song) {
+        music.remove(artist, album, song);
+        GSON.saveMusic(music.getArtists());
+
+    }
+
+    public void newArtist() {
+    }
+
+    public void newAlbum() {
+    }
+
+    public void newSong() {
+
     }
 }

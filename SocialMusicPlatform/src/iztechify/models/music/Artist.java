@@ -25,6 +25,10 @@ public class Artist extends Observable implements Observer {
         notifyObservers();
     }
 
+    public void remove(Album album){
+        this.albums.remove(album);
+    }
+
     public List<Song> getSongs() {
         List<Song> songs = new ArrayList<>();
         for(Album album : albums)
