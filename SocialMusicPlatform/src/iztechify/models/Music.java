@@ -25,14 +25,10 @@ public class Music extends Observable {
     public void remove(String artist, String album) {
         for (Artist a : artists) {
             if (a.getName().equals(artist)) {
-                for (Album al : a.getAlbums()) {
-                    if (al.getTitle().equals(album)) {
-                        a.remove(al);
-                        setChanged();
-                        notifyObservers(this);
-                        return;
-                    }
-                }
+                a.removeAlbum(album);
+                setChanged();
+                notifyObservers();
+                return;
             }
         }
     }
@@ -42,14 +38,10 @@ public class Music extends Observable {
             if (a.getName().equals(artist)) {
                 for (Album al : a.getAlbums()) {
                     if (al.getTitle().equals(album)) {
-                        for (Song s : al.getSongs()) {
-                            if (s.getTitle().equals(song)) {
-                                al.remove(s);
-                                setChanged();
-                                notifyObservers(this);
-                                return;
-                            }
-                        }
+                        al.removeSong(song);
+                        setChanged();
+                        notifyObservers();
+                        return;
                     }
                 }
             }

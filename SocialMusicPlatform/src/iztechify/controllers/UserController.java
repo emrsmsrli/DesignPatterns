@@ -4,7 +4,9 @@ import iztechify.models.Users;
 import iztechify.models.user.Playlist;
 import iztechify.models.user.User;
 
+import javax.swing.*;
 import java.util.List;
+import java.util.Vector;
 
 public class UserController implements Controller {
     private Users allUsers;
@@ -13,6 +15,25 @@ public class UserController implements Controller {
     public UserController(Users allUsers, User thisUser) {
         this.allUsers = allUsers;
         this.thisUser = thisUser;
+    }
+
+    public void addFriend() {
+        /*JOptionPane.showOptionDialog(null,
+                "Select a user",
+                "Add new friend",
+                )*/
+    }
+
+    public void addPlaylist() {
+
+    }
+
+    public void addSong() {
+
+    }
+
+    public void removeSong(String playlist, Vector songData) {
+
     }
 
     /* todo change these to create dialogs and ask info

@@ -67,11 +67,11 @@ public class UserWindow extends AbstractWindow {
 
         addFriendButton.addActionListener(e -> userController.addFriend());
         addPlaylistButton.addActionListener(e -> userController.addPlaylist());
-        addSongButton.addActionListener(e -> userController.addNewSong());
+        addSongButton.addActionListener(e -> userController.addSong());
         removeSongButton.addActionListener(e -> {
             int selectedRow = songTable.getSelectedRow();
             Vector songData = (Vector) songTableModel.getDataVector().get(selectedRow);
-            userController.removeSongFromPlaylist(songData);
+            userController.removeSong(playlistList.getSelectedValue(), songData);
             songTableModel.removeRow(selectedRow);
         });
     }
