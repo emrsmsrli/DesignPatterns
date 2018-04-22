@@ -34,22 +34,22 @@ public class AdminController {
 
     public void newArtist() {
         // todo: new window to ask artist name
-        music.addArtist(new Artist(name));
+        //music.addArtist(new Artist(name));
     }
 
     public void newAlbum() {
         // todo: new window to ask album title and description and return with artist name
-        for (Artist a : music.getArtists()) {
+        /*for (Artist a : music.getArtists()) {
             if (a.getName().equals(artistName)) {
                 a.addAlbum(new Album(title, description));
                 return;
             }
-        }
+        }*/
     }
 
     public void newSong() {
         // todo: new window to ask song title and length return with artistName and albumTitle
-        for (Artist a : music.getArtists()) {
+        /*for (Artist a : music.getArtists()) {
             if (a.getName().equals(artistName)) {
                 for (Album al : a.getAlbums()) {
                     if (al.getTitle().equals(albumTitle)) {
@@ -58,6 +58,6 @@ public class AdminController {
                 }
             }
         }
-
+*/
     }
 }

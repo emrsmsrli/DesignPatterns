@@ -104,7 +104,7 @@ public class UserWindow extends AbstractWindow {
     }
 
     private void onPlaylistSelected(int playlistIndex) {
-        List<PlaylistEntry> entries;
+        /*List<PlaylistEntry> entries;
         if(friendList.getSelectedIndex() == 0) {
             entries = userController.getPlaylist(playlistListModel.get(playlistIndex)).getEntries();
         } else {
@@ -114,7 +114,7 @@ public class UserWindow extends AbstractWindow {
         }
 
         for(PlaylistEntry e : entries)
-            songTableModel.addRow(new Object[]{e.getSongName(), e.getAlbumName(), e.getArtistName()});
+            songTableModel.addRow(new Object[]{e.getSongName(), e.getAlbumName(), e.getArtistName()});*/
     }
 
     @Override
