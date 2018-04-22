@@ -3,8 +3,10 @@ package iztechify.views;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import iztechify.controllers.UserController;
+import iztechify.models.Users;
+import iztechify.models.music.Song;
 import iztechify.models.user.Playlist;
-import iztechify.models.user.PlaylistEntry;
+import iztechify.util.Utility;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -40,6 +42,13 @@ public class UserWindow extends AbstractWindow {
         friendList.setModel(friendListModel);
         playlistList.setModel(playlistListModel);
 
+        addDoubleClickListeners();
+        addActionListeners();
+
+        loadFriends();
+    }
+
+    private void addDoubleClickListeners() {
         friendList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -73,7 +82,9 @@ public class UserWindow extends AbstractWindow {
                 onPlaylistSelected(idx);
             }
         });
+    }
 
+    private void addActionListeners() {
         addFriendButton.addActionListener(e -> userController.addFriend());
         addPlaylistButton.addActionListener(e -> userController.addPlaylist());
         addSongButton.addActionListener(e -> userController.addSong());
@@ -83,10 +94,6 @@ public class UserWindow extends AbstractWindow {
             userController.removeSong(playlistList.getSelectedValue(), songData);
             songTableModel.removeRow(selectedRow);
         });
-
-        for(String s : userController.getFriends()) {
-            friendListModel.addElement(s);
-        }
     }
 
     private void onFriendSelected(int friendIndex) {
@@ -109,17 +116,32 @@ public class UserWindow extends AbstractWindow {
     }
 
     private void onPlaylistSelected(int playlistIndex) {
-        /*List<PlaylistEntry> entries;
+        userController.getPlaylist(playlistList.getSelectedValue()).addObserver(this);
+        List<Song> songs;
         if(friendList.getSelectedIndex() == 0) {
-            entries = userController.getPlaylist(playlistListModel.get(playlistIndex)).getEntries();
+            songs = userController.getPlaylist(playlistListModel.get(playlistIndex)).getSongs();
         } else {
-            entries = userController.getFriendPlaylist(friendList.getSelectedValue(),
+            songs = userController.getFriendPlaylist(friendList.getSelectedValue(),
                     playlistListModel.get(playlistIndex))
-                    .getEntries();
+                    .getSongs();
         }
-        //todo playlist.addObserver(this)
-        for(PlaylistEntry e : entries)
-            songTableModel.addRow(new Object[]{e.getSongName(), e.getAlbumName(), e.getArtistName()});*/
+        loadSongs(songs);
+    }
+
+    private void loadFriends() {
+        friendListModel.clear();
+        for(String s : userController.getFriends()) {
+            friendListModel.addElement(s);
+        }
+    }
+
+    private void loadSongs(List<Song> songs) {
+        songTableModel.setRowCount(0);
+        for(Song song : songs) {
+            songTableModel.addRow(new Object[]{song.getTitle(),
+                    song.getAlbum().getTitle(),
+                    song.getAlbum().getArtist().getName()});
+        }
     }
 
     @Override
@@ -133,7 +155,28 @@ public class UserWindow extends AbstractWindow {
 
     @Override
     public void update(Observable o, Object arg) {
-        // todo update friends, playlists and songs if and update happens
+        if(o instanceof Playlist) {
+            songTableModel.setRowCount(0);
+            loadSongs(((Playlist) o).getSongs());
+        } else if(o instanceof Users) {
+            int selectedFriend = friendList.getSelectedIndex();
+            int selectedPlaylist = playlistList.getSelectedIndex();
+
+            if(selectedPlaylist != -1)
+                userController.getThisUser()
+                        .getPlaylist(playlistListModel.elementAt(currentPlaylist))
+                        .deleteObserver(this);
+
+            loadFriends();
+            if(selectedFriend != -1) {
+                friendList.setSelectedIndex(Utility.clamp(0, selectedFriend, friendListModel.size()));
+                if(selectedPlaylist != 1) {
+                    playlistListModel.clear();
+                    songTableModel.setRowCount(0);
+                    onPlaylistSelected(selectedPlaylist);
+                }
+            }
+        }
     }
 
     {
