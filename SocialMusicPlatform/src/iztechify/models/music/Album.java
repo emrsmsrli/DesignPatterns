@@ -4,14 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Album {
+    private Artist artist;
     private String title;
     private String description;
     private List<Song> songs;
 
-    public Album(String title, String description) {
+    public Album(String title, String description, Artist artist) {
         this.title = title;
         this.description = description;
+        this.artist = artist;
         this.songs = new ArrayList<>();
+    }
+
+    public Artist getArtist() {
+        return artist;
     }
 
     public void setTitle(String title) {

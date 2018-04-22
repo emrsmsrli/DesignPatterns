@@ -1,46 +1,40 @@
 package iztechify.models.user;
 
-import iztechify.models.Music;
+import iztechify.models.music.Song;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
-public class Playlist extends Observable implements Observer {
+public class Playlist {
     private String name;
-    private List<PlaylistEntry> entries;
+    private List<Song> songs;
 
     public Playlist(String name) {
         this.name = name;
-        entries = new ArrayList<>();
+        songs = new ArrayList<>();
     }
 
-    public List<PlaylistEntry> getEntries() {
-        return entries;
+    public List<Song> getSongs() {
+        return songs;
     }
 
-    public void addSong(Music music, String artist, String album, String song) {
-        entries.add(new PlaylistEntry(artist, album, song));
-        music.addObserver(this);
-        setChanged();
-        notifyObservers();
+    public void addSong(Song song) {
+        songs.add(song);
+        /*entries.add(new PlaylistEntry(artist, album, song));
+        music.addObserver(this);*/
     }
 
-    public void removeEntry(String artist, String album, String song) {
+    public void removeSong(Song song) {
+        songs.remove(song);
+    }
+
+    /*public void removeEntry(String artist, String album, String song) {
         entries.removeIf(e -> artist.equals(e.getArtistName())
                 && album.equals(e.getAlbumName())
                 && song.equals(e.getSongName()));
-        setChanged();
-        notifyObservers();
-    }
+    }*/
 
     public String getName() {
         return name;
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        // todo check music, ideally through `arg`, change oneself and notify observers if changed
     }
 }
