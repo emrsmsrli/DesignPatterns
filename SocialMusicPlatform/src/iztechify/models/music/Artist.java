@@ -27,10 +27,20 @@ public class Artist extends Observable implements Observer {
 
     public List<Song> getSongs() {
         List<Song> songs = new ArrayList<>();
-        for (Album album : albums) {
+        for(Album album : albums)
             songs.addAll(album.getSongs());
-        }
         return songs;
+    }
+
+    public List<Song> getSongs(String album) {
+        for (Album a : albums)
+            if(a.getTitle().equals(album))
+                return a.getSongs();
+        return null;
+    }
+
+    public List<Album> getAlbums() {
+        return albums;
     }
 
     @Override
