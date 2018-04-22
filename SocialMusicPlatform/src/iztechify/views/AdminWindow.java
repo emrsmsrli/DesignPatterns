@@ -73,27 +73,30 @@ public class AdminWindow extends AbstractWindow {
 
     private void addDeleteListeners() {
         artistDeleteButton.addActionListener(e -> {
-            String name = artistList.getSelectedValue();
-            if(name == null)
+            String artist = artistList.getSelectedValue();
+            if(artist == null)
                 return;
-            adminController.removeArtist(name);
-            artistListModel.removeElement(name);
+            adminController.remove(artist);
+            artistListModel.removeElement(artist);
             loadAlbums();
         });
         albumDeleteButton.addActionListener(e -> {
-            String name = albumList.getSelectedValue();
-            if(name == null)
+            String artist = artistList.getSelectedValue();
+            String album = albumList.getSelectedValue();
+            if(album == null)
                 return;
-            adminController.removeAlbum(name);
-            albumListModel.removeElement(name);
+            adminController.remove(artist, album);
+            albumListModel.removeElement(album);
             loadSongs();
         });
         songDeleteButton.addActionListener(e -> {
-            String name = songList.getSelectedValue();
-            if(name == null)
+            String artist = artistList.getSelectedValue();
+            String album = albumList.getSelectedValue();
+            String song = songList.getSelectedValue();
+            if(song == null)
                 return;
-            adminController.removeSong(name);
-            songListModel.removeElement(name);
+            adminController.remove(artist, album, song);
+            songListModel.removeElement(song);
         });
     }
 
