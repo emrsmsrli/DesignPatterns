@@ -140,9 +140,7 @@ public class AdminWindow extends AbstractWindow {
 
     @Override
     public void update(Observable o, Object arg) {
-        loadArtists();
-        loadAlbums();
-        loadSongs();
+        // todo use load*() methods when model changes
     }
 
     {
