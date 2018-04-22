@@ -3,11 +3,8 @@ package iztechify.views;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import iztechify.controllers.UserController;
-import iztechify.models.Music;
-import iztechify.models.music.Playlist;
-import iztechify.models.music.PlaylistEntry;
-import iztechify.models.music.Song;
-import iztechify.models.user.User;
+import iztechify.models.user.Playlist;
+import iztechify.models.user.PlaylistEntry;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -30,7 +27,7 @@ public class UserWindow extends AbstractWindow {
     private DefaultListModel<String> friendListModel = new DefaultListModel<>();
     private DefaultListModel<String> playlistListModel = new DefaultListModel<>();
     private DefaultTableModel songTableModel
-            = new DefaultTableModel(new Object[]{"Title", "Album", "Artist", "Duration"}, 0);
+            = new DefaultTableModel(new Object[]{"Title", "Album", "Artist"}, 0);
 
     private UserController userController;
 
@@ -46,6 +43,9 @@ public class UserWindow extends AbstractWindow {
         friendList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                playlistListModel.clear();
+                songTableModel.setRowCount(0);
+
                 if(e.getClickCount() != 2)    // double click
                     return;
                 int idx = friendList.locationToIndex(e.getPoint());
@@ -56,6 +56,8 @@ public class UserWindow extends AbstractWindow {
         playlistList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                songTableModel.setRowCount(0);
+
                 if(e.getClickCount() != 2)    // double click
                     return;
                 int idx = playlistList.locationToIndex(e.getPoint());
@@ -75,17 +77,16 @@ public class UserWindow extends AbstractWindow {
     }
 
     private void onFriendSelected(int friendIndex) {
-        playlistListModel.clear();
-        songTableModel.setRowCount(0);
-
         List<Playlist> playlists;
         if(friendIndex == 0) {      // my playlist
             addPlaylistButton.setEnabled(true);
             addSongButton.setEnabled(true);
+            removeSongButton.setEnabled(true);
             playlists = userController.getPlaylists();
         } else {
             addPlaylistButton.setEnabled(false);
             addSongButton.setEnabled(false);
+            removeSongButton.setEnabled(false);
             String friend = friendListModel.get(friendIndex);
             playlists = userController.getFriendPlaylists(friend);
         }
@@ -95,23 +96,17 @@ public class UserWindow extends AbstractWindow {
     }
 
     private void onPlaylistSelected(int playlistIndex) {
-        songTableModel.setRowCount(0);
-
-        List<Song> songs;
+        List<PlaylistEntry> entries;
         if(friendList.getSelectedIndex() == 0) {
-            songs = userController.getPlaylist(playlistListModel.get(playlistIndex)).getSongs();
+            entries = userController.getPlaylist(playlistListModel.get(playlistIndex)).getEntries();
         } else {
-            songs = userController.getFriendPlaylist(friendList.getSelectedValue(),
+            entries = userController.getFriendPlaylist(friendList.getSelectedValue(),
                     playlistListModel.get(playlistIndex))
-                    .getSongs();
+                    .getEntries();
         }
 
-        for(Song song : songs) {
-            songTableModel.addRow(new Object[]{song.getTitle() /* todo add album and artist */, song.getLength()});
-        }
-
-        // todo open playlist view with appropriate permissions
-        // (if this user's, add and remove buttons are active)
+        for(PlaylistEntry e : entries)
+            songTableModel.addRow(new Object[]{e.getSongName(), e.getAlbumName(), e.getArtistName()});
     }
 
     @Override
