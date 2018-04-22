@@ -9,7 +9,7 @@ public class Album {
     private String description;
     private List<Song> songs;
 
-    public Album(String title, String description, Artist artist) {
+    public Album(Artist artist, String title, String description) {
         this.title = title;
         this.description = description;
         this.artist = artist;
