@@ -23,8 +23,6 @@ public class Playlist extends Observable {
         songs.add(song);
         setChanged();
         notifyObservers();
-        /*entries.add(new PlaylistEntry(artist, album, song));
-        music.addObserver(this);*/
     }
 
     public void removeSong(Song song) {
@@ -32,12 +30,6 @@ public class Playlist extends Observable {
         setChanged();
         notifyObservers();
     }
-
-    /*public void removeEntry(String artist, String album, String song) {
-        entries.removeIf(e -> artist.equals(e.getArtistName())
-                && album.equals(e.getAlbumName())
-                && song.equals(e.getSongName()));
-    }*/
 
     public String getName() {
         return name;
