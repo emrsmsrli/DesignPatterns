@@ -15,7 +15,7 @@ public class Song {
         return album;
     }
 
-    public void setTitle(String newTitle){
+    public void setTitle(String newTitle) {
         title = newTitle;
     }
 

@@ -34,7 +34,6 @@ public class UserWindow extends AbstractWindow {
     public UserWindow(String username, UserController userController) {
         super("User " + username);
         this.userController = userController;
-
         songTable.setModel(songTableModel);
         friendListModel.addElement("Me");
         friendList.setModel(friendListModel);
@@ -70,7 +69,12 @@ public class UserWindow extends AbstractWindow {
         });
 
         addFriendButton.addActionListener(e -> userController.addFriend());
-        addPlaylistButton.addActionListener(e -> userController.addPlaylist());
+        addPlaylistButton.addActionListener(e -> {
+            String name = userController.addPlaylist();
+            if(name != null){
+                this.userController.getThisUser().getPlaylist(name).addObserver(this);
+            }
+        });
         addSongButton.addActionListener(e -> userController.addSong());
         removeSongButton.addActionListener(e -> {
             int selectedRow = songTable.getSelectedRow();

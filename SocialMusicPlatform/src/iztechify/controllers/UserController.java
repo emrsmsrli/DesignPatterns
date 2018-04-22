@@ -50,17 +50,18 @@ public class UserController {
         return thisUser.getFriends();
     }
 
-    public void addPlaylist() {
+    public String addPlaylist() {
         String name = JOptionPane.showInputDialog("Select playlist name");
         if(name == null)
-            return;
+            return null;
 
         if(thisUser.getPlaylist(name) != null) {
             JOptionPane.showMessageDialog(null, "Playlist already exists");
-            return;
+            return null;
         }
 
         allUsers.addPlaylist(thisUser, name);
+        return name;
     }
 
     public void addSong() {
@@ -69,6 +70,10 @@ public class UserController {
 
     public void removeSong(String playlist, Vector songData) {
 
+    }
+
+    public User getThisUser() {
+        return thisUser;
     }
 
     public List<Playlist> getPlaylists() {

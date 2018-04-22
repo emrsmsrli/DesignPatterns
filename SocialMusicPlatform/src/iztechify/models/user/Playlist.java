@@ -4,8 +4,9 @@ import iztechify.models.music.Song;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
-public class Playlist {
+public class Playlist extends Observable {
     private String name;
     private List<Song> songs;
 
@@ -20,12 +21,16 @@ public class Playlist {
 
     public void addSong(Song song) {
         songs.add(song);
+        setChanged();
+        notifyObservers();
         /*entries.add(new PlaylistEntry(artist, album, song));
         music.addObserver(this);*/
     }
 
     public void removeSong(Song song) {
         songs.remove(song);
+        setChanged();
+        notifyObservers();
     }
 
     /*public void removeEntry(String artist, String album, String song) {
@@ -37,4 +42,5 @@ public class Playlist {
     public String getName() {
         return name;
     }
+
 }
