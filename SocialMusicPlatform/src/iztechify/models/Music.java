@@ -48,7 +48,7 @@ public class Music extends Observable {
         }
     }
 
-    public void addArtistToMusic(Artist artist) {
+    public void addArtist(Artist artist) {
         artists.add(artist);
         setChanged();
         notifyObservers(this);
