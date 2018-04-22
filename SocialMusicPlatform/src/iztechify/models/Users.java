@@ -51,32 +51,54 @@ public class Users extends Observable {
         notifyObservers();
     }
 
-    public List<Song> getAllSongsInPlaylists() {
-        List<Playlist> allPlaylists = new ArrayList<>();
+    public List<Song> getTop3Songs() {
         List<Song> allSongs = new ArrayList<>();
         for (User user : users) {
-            allPlaylists.addAll(user.getPlaylists());
+            for(Playlist playlist : user.getPlaylists()) {
+                allSongs.addAll(playlist.getSongs());
+            }
         }
-        for (Playlist playlist : allPlaylists) {
-            allSongs.addAll(playlist.getSongs());
-        }
-        return allSongs;
+
+        if(allSongs.size() < 3)
+            return new ArrayList<>();
+
+        Map<Song, Integer> countMap = findFrequencies(allSongs);
+        Song first = Collections.max(countMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getKey();
+        countMap.remove(first);
+        Song second = Collections.max(countMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getKey();
+        countMap.remove(second);
+        Song third = Collections.max(countMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getKey();
+        List<Song> top3 = new ArrayList<>();
+        top3.add(first);
+        top3.add(second);
+        top3.add(third);
+        return top3;
     }
 
-    public List<Artist> getAllArtistInPlaylists() {
-        List<Playlist> allPlaylists = new ArrayList<>();
-        List<Song> allSongs = new ArrayList<>();
+    public List<Artist> getTop3Artists() {
         List<Artist> allArtist = new ArrayList<>();
         for (User user : users) {
-            allPlaylists.addAll(user.getPlaylists());
+            for(Playlist playlist : user.getPlaylists()) {
+                for(Song song : playlist.getSongs()) {
+                    allArtist.add(song.getAlbum().getArtist());
+                }
+            }
         }
-        for (Playlist playlist : allPlaylists) {
-            allSongs.addAll(playlist.getSongs());
-        }
-        for (Song song : allSongs) {
-            allArtist.add(song.getAlbum().getArtist());
-        }
-        return allArtist;
+
+        if(allArtist.size() < 3)
+            return new ArrayList<>();
+
+        Map<Artist, Integer> countMap = findFrequencies(allArtist);
+        Artist first = Collections.max(countMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getKey();
+        countMap.remove(first);
+        Artist second = Collections.max(countMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getKey();
+        countMap.remove(second);
+        Artist third = Collections.max(countMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getKey();
+        List<Artist> top3 = new ArrayList<>();
+        top3.add(first);
+        top3.add(second);
+        top3.add(third);
+        return top3;
     }
 
     private <T> Map<T, Integer> findFrequencies(List<T> list) {
