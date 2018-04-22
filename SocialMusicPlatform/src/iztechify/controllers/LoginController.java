@@ -9,7 +9,7 @@ import iztechify.views.Window;
 
 import javax.swing.*;
 
-public class LoginController implements Controller {
+public class LoginController {
     private Music music;
     private Users users;
 

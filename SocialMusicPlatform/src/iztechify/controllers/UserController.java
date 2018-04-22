@@ -10,7 +10,7 @@ import java.util.Vector;
 
 import static javax.swing.JOptionPane.CLOSED_OPTION;
 
-public class UserController implements Controller {
+public class UserController {
     private Users allUsers;
     private User thisUser;
 

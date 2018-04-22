@@ -7,7 +7,7 @@ import iztechify.models.music.Song;
 import iztechify.util.GSON;
 
 
-public class AdminController implements Controller {
+public class AdminController {
     private Music music;
 
     public AdminController(Music music) {
