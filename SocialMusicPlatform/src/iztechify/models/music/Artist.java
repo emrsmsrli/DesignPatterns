@@ -60,4 +60,9 @@ public class Artist {
         }
         return null;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

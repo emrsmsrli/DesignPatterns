@@ -30,4 +30,9 @@ public class Song {
     public String getLength() {
         return length;
     }
+
+    @Override
+    public String toString() {
+        return title + " by " + getAlbum().getArtist().getName();
+    }
 }
