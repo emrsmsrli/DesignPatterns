@@ -19,8 +19,7 @@ public class User {
     }
 
     public void addFriend(User user) {
-        friends.add(user); // if user A added user B as a friend
-        user.friends.add(this); // user B should have user A as a friend too
+        friends.add(user);
     }
 
     public void setUsername(String newName){

@@ -1,5 +1,6 @@
 package iztechify.models;
 
+import iztechify.models.user.Playlist;
 import iztechify.models.user.User;
 
 import java.util.*;
@@ -28,18 +29,17 @@ public class Users extends Observable {
         notifyObservers();
     }
 
-    public void removeUser(String username) {
-        User u = null;
-        for(User user : users)
-            if(user.getUsername().equals(username)) {
-                u = user;
-                break;
-            }
-        if(u != null) {
-            users.remove(u);
-            setChanged();
-            notifyObservers();
-        }
+    public void befriend(User u1, User u2) {
+        u1.addFriend(u2);
+        u2.addFriend(u1);
+        setChanged();
+        notifyObservers();
+    }
+
+    public void addPlaylist(User user, String name) {
+        user.addPlaylist(new Playlist(name));
+        setChanged();
+        notifyObservers();
     }
 
    /* fixme public List<Song> getAllSongsInPlaylists() {

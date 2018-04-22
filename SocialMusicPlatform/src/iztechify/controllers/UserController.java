@@ -8,6 +8,8 @@ import javax.swing.*;
 import java.util.List;
 import java.util.Vector;
 
+import static javax.swing.JOptionPane.CLOSED_OPTION;
+
 public class UserController implements Controller {
     private Users allUsers;
     private User thisUser;
@@ -18,14 +20,33 @@ public class UserController implements Controller {
     }
 
     public void addFriend() {
-        /*JOptionPane.showOptionDialog(null,
+        List<User> users = allUsers.getUsers();
+        Object[] options = new Object[users.size()];
+        for(int i = 0; i < options.length; i++)
+            options[i] = users.get(i).getUsername();
+
+        int selection = JOptionPane.showOptionDialog(null,
                 "Select a user",
                 "Add new friend",
-                )*/
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                options,
+                options[0]
+        );
+        if(selection == CLOSED_OPTION)
+            return;
+
+        User friend = allUsers.getUser((String) options[selection]);
+        allUsers.befriend(thisUser, friend);
     }
 
     public void addPlaylist() {
+        String name = JOptionPane.showInputDialog("Select playlist name");
+        if(name == null)
+            return;
 
+        allUsers.addPlaylist(thisUser, name);
     }
 
     public void addSong() {
