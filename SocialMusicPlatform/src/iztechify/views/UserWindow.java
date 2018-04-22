@@ -90,7 +90,7 @@ public class UserWindow extends AbstractWindow {
         removeSongButton.addActionListener(e -> {
             int selectedRow = songTable.getSelectedRow();
             Vector songData = (Vector) songTableModel.getDataVector().get(selectedRow);
-            userController.removeSong(playlistList.getSelectedValue(), songData);
+            userController.removeSong(playlistList.getSelectedValue(), songData.toArray());
             songTableModel.removeRow(selectedRow);
         });
     }

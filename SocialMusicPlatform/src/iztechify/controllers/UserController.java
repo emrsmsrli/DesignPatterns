@@ -67,8 +67,8 @@ public class UserController {
         
     }
 
-    public void removeSong(String playlist, Vector songData) {
-
+    public void removeSong(String playlist, Object[] songData) {
+        thisUser.getPlaylist(playlist).removeSong(songData);
     }
 
     public User getThisUser() {

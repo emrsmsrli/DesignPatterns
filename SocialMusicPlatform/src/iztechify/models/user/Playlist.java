@@ -25,10 +25,21 @@ public class Playlist extends Observable {
         notifyObservers();
     }
 
-    public void removeSong(Song song) {
-        songs.remove(song);
-        setChanged();
-        notifyObservers();
+    public void removeSong(Object[] data) {
+        Song s = null;
+        for(Song song : songs) {
+            if(song.getTitle().equals(data[0])
+                    && song.getAlbum().getTitle().equals(data[1])
+                    && song.getAlbum().getArtist().getName().equals(data[2])) {
+                s = song;
+                break;
+            }
+        }
+        if(s != null) {
+            songs.remove(s);
+            setChanged();
+            notifyObservers();
+        }
     }
 
     public String getName() {
