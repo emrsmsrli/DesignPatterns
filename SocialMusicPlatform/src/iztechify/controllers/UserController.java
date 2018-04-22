@@ -1,7 +1,7 @@
 package iztechify.controllers;
 
 import iztechify.models.Users;
-import iztechify.models.music.Playlist;
+import iztechify.models.user.Playlist;
 import iztechify.models.user.User;
 
 import java.util.List;

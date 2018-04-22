@@ -1,7 +1,5 @@
 package iztechify.models;
 
-import iztechify.models.music.Playlist;
-import iztechify.models.music.Song;
 import iztechify.models.user.User;
 
 import java.util.*;
@@ -24,11 +22,27 @@ public class Users extends Observable {
         return null;
     }
 
-    public void addUser(String username){
+    public void addUser(String username) {
         users.add(new User(username));
+        setChanged();
+        notifyObservers();
     }
 
-    public List<Song> getAllSongsInPlaylists(){
+    public void removeUser(String username) {
+        User u = null;
+        for(User user : users)
+            if(user.getUsername().equals(username)) {
+                u = user;
+                break;
+            }
+        if(u != null) {
+            users.remove(u);
+            setChanged();
+            notifyObservers();
+        }
+    }
+
+   /* fixme public List<Song> getAllSongsInPlaylists() {
         List<Playlist> allPlaylists = new ArrayList<Playlist>();
         List<Song> allSongs = new ArrayList<Song>();
         for(User user: users){
@@ -47,5 +61,5 @@ public class Users extends Observable {
             counterMap.put(element, frequency + 1);
         }
         return counterMap;
-    }
+    }*/
 }

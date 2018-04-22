@@ -2,13 +2,10 @@ package iztechify.models.music;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
-public class Album extends Observable implements Observer{
+public class Album {
     private String title;
     private String description;
-
     private List<Song> songs;
 
     public Album(String title, String description) {
@@ -17,8 +14,16 @@ public class Album extends Observable implements Observer{
         this.songs = new ArrayList<>();
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getTitle() {
         return title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getDescription() {
@@ -29,26 +34,18 @@ public class Album extends Observable implements Observer{
         return songs;
     }
 
-    // todo: adding songs to album should be inside the update method because adding songs belongs to admin
+    public void addSong(Song song) {
+        songs.add(song);
+    }
 
-//    public boolean addSongToAlbum(Song song){ // TODO save to json file
-//        boolean isSuccessful = songs.add(song);
-//        song.addObserver(this);
-//        setChanged();
-//        notifyObservers(this);
-//        return isSuccessful;
-//    }
-//
-//    public boolean removeSong(Song song){ // TODO save to json file
-//        boolean isSuccessful = songs.remove(song);
-//        setChanged();
-//        notifyObservers(this);
-//        song.deleteObserver(this);
-//        return isSuccessful;
-//    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        //todo: add song to songs list here
+    public void removeSong(String name) {
+        Song s = null;
+        for(Song song : songs)
+            if(song.getTitle().equals(name)) {
+                s = song;
+                break;
+            }
+        if(s != null)
+            songs.remove(s);
     }
 }
