@@ -19,7 +19,7 @@ public class Music extends Observable {
     public void remove(Artist artist) {
         artists.remove(artist);
         setChanged();
-        notifyObservers(this);
+        notifyObservers();
     }
 
     public void remove(String artist, String album) {
@@ -51,7 +51,7 @@ public class Music extends Observable {
     public void addArtist(Artist artist) {
         artists.add(artist);
         setChanged();
-        notifyObservers(this);
+        notifyObservers();
     }
 
     public List<Artist> getArtists() {
