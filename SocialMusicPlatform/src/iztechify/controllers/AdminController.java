@@ -1,6 +1,7 @@
 package iztechify.controllers;
 
 import iztechify.models.Music;
+import iztechify.models.music.Song;
 
 
 public class AdminController implements Controller {
@@ -10,15 +11,15 @@ public class AdminController implements Controller {
         this.music = music;
     }
 
-    public boolean addNewMusicToGSON(Music music) {
+    public boolean addNewSongToGSON(Song song) {
         return true;
     }
 
-    public boolean removeMusicFromGGSON() {
+    public boolean removeSongFromGGSON(Song song) {
         return true;
     }
 
-    public boolean editMusicInGGSON(Music music) {
+    public boolean editMusicInGGSON(Song song) {
         return true;
     }
 }

@@ -3,6 +3,7 @@ package iztechify.controllers;
 import iztechify.models.Users;
 import iztechify.models.user.User;
 import iztechify.models.Music;
+import iztechify.util.GSON;
 import iztechify.views.AdminWindow;
 import iztechify.views.UserWindow;
 import iztechify.views.Window;
@@ -19,7 +20,8 @@ public class LoginController implements Controller {
     }
 
     public void createUser(String username){
-        // todo: add user to json
+        users.addUser(username);
+        GSON.saveUsers(users.getUsers());
     }
 
     public void login(String username) {
@@ -33,24 +35,20 @@ public class LoginController implements Controller {
     private void loginAdmin() {
         AdminController adminController = new AdminController(music);
         Window adminWindow = new AdminWindow(adminController, music);
+        music.addObserver(adminWindow);
         adminWindow.showWindow();
     }
 
     private void loginUser(String username) {
-        User user = getUser(username);
+        User user = users.getUser(username);
         if (user == null) {
             JOptionPane.showMessageDialog(null, "User does not exist!");
             return;
         }
         UserController userController = new UserController(users, user);
-        Window userWindow = new UserWindow(user.getUsername(), userController); // todo: get observables from where?
+        Window userWindow = new UserWindow(user.getUsername(), userController);
+        user.addObserver(userWindow);
+        users.addObserver(userWindow);
         userWindow.showWindow();
-    }
-
-    private User getUser(String username) {
-        for (User user : users.getUsers())
-            if (user.getUsername().equals(username))
-                return user;
-        return null;
     }
 }

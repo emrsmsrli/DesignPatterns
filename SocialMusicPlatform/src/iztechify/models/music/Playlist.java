@@ -26,21 +26,21 @@ public class Playlist extends Observable implements Observer {
         return songs;
     }
 
-//    public boolean addEntry(PlaylistEntry entry) {
-//        boolean isSuccessful = entries.add(entry);
-//        entry.addObserver(this);
-//        setChanged();
-//        notifyObservers(this);
-//        return isSuccessful;
-//    }
-//
-//    public boolean removeEntry(PlaylistEntry entry) {
-//        boolean isSuccessful = entries.remove(entry);
-//        setChanged();
-//        notifyObservers(this);
-//        entry.deleteObserver(this);
-//        return isSuccessful;
-//    }
+    public boolean addEntry(PlaylistEntry entry) {
+        boolean isSuccessful = entries.add(entry);
+        entry.addObserver(this);
+        setChanged();
+        notifyObservers(this);
+        return isSuccessful;
+    }
+
+    public boolean removeEntry(PlaylistEntry entry) {
+        boolean isSuccessful = entries.remove(entry);
+        setChanged();
+        notifyObservers(this);
+        entry.deleteObserver(this);
+        return isSuccessful;
+    }
 
     public String getName() {
         return name;
@@ -48,6 +48,6 @@ public class Playlist extends Observable implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-
+        
     }
 }

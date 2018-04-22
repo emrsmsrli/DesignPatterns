@@ -7,6 +7,7 @@ import iztechify.models.music.Artist;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.List;
 
 public class GSON {
     private static final Gson _GSON = new Gson();
@@ -35,7 +36,7 @@ public class GSON {
         } catch(Exception e) { e.printStackTrace(); throw new RuntimeException(); }
     }
 
-    public static void saveUsers(User[] users) {
+    public static void saveUsers(List<User> users) {
         try(FileWriter fw = new FileWriter(FILE_NAME_USER)) {
             fw.write(_GSON.toJson(users));
         } catch(Exception e) { e.printStackTrace(); }
