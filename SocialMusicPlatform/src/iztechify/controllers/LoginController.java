@@ -28,6 +28,7 @@ public class LoginController {
         }
 
         users.addUser(username);
+        JOptionPane.showMessageDialog(null, username + " registered");
     }
 
     public void login(String username) {
