@@ -15,12 +15,7 @@ public class AdminController {
     }
 
     public void remove(String artist) {
-        for (Artist a : music.getArtists()) {
-            if (a.getName().equals(artist)) {
-                music.remove(a);
-                return;
-            }
-        }
+        music.remove(artist);
     }
 
     public void remove(String artist, String album) {
