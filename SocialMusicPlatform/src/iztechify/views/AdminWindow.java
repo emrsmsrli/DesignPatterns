@@ -48,6 +48,7 @@ public class AdminWindow extends AbstractWindow {
 
         addSelectListeners();
         addDeleteListeners();
+        addEditListeners();
         addCreateListeners();
 
         loadArtists();
