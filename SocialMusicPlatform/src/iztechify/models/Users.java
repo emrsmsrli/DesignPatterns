@@ -29,9 +29,9 @@ public class Users extends Observable {
         notifyObservers();
     }
 
-    public void befriend(User u1, User u2) {
-        u1.addFriend(u2);
-        u2.addFriend(u1);
+    public void befriend(String u1, String u2) {
+        getUser(u1).addFriend(u2);
+        getUser(u2).addFriend(u1);
         setChanged();
         notifyObservers();
     }

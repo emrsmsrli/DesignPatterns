@@ -49,6 +49,8 @@ public class UserWindow extends AbstractWindow {
                 if(e.getClickCount() != 2)    // double click
                     return;
                 int idx = friendList.locationToIndex(e.getPoint());
+                if(idx == -1)
+                    return;
                 onFriendSelected(idx);
             }
         });
@@ -61,6 +63,8 @@ public class UserWindow extends AbstractWindow {
                 if(e.getClickCount() != 2)    // double click
                     return;
                 int idx = playlistList.locationToIndex(e.getPoint());
+                if(idx == -1)
+                    return;
                 onPlaylistSelected(idx);
             }
         });
@@ -74,6 +78,10 @@ public class UserWindow extends AbstractWindow {
             userController.removeSong(playlistList.getSelectedValue(), songData);
             songTableModel.removeRow(selectedRow);
         });
+
+        for(String s : userController.getFriends()) {
+            friendListModel.addElement(s);
+        }
     }
 
     private void onFriendSelected(int friendIndex) {

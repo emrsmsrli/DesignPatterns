@@ -5,7 +5,7 @@ import java.util.List;
 
 public class User {
     private String username;
-    private List<User> friends;
+    private List<String> friends;
     private List<Playlist> playlists;
 
     public User(String username) {
@@ -18,7 +18,7 @@ public class User {
         playlists.add(playlist);
     }
 
-    public void addFriend(User user) {
+    public void addFriend(String user) {
         friends.add(user);
     }
 
@@ -41,14 +41,7 @@ public class User {
         return null;
     }
 
-    public List<User> getFriends() {
+    public List<String> getFriends() {
         return friends;
-    }
-
-    public User getFriend(String otherUsername) {
-        for (User u : friends)
-            if (u.getUsername().equals(otherUsername))
-                return u;
-        return null;
     }
 }

@@ -5,6 +5,7 @@ import iztechify.models.user.Playlist;
 import iztechify.models.user.User;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -20,7 +21,8 @@ public class UserController {
     }
 
     public void addFriend() {
-        List<User> users = allUsers.getUsers();
+        List<User> users = new ArrayList<>(allUsers.getUsers());
+        users.remove(thisUser);
         Object[] options = new Object[users.size()];
         for(int i = 0; i < options.length; i++)
             options[i] = users.get(i).getUsername();
@@ -37,8 +39,11 @@ public class UserController {
         if(selection == CLOSED_OPTION)
             return;
 
-        User friend = allUsers.getUser((String) options[selection]);
-        allUsers.befriend(thisUser, friend);
+        allUsers.befriend(thisUser.getUsername(), (String) options[selection]);
+    }
+
+    public List<String> getFriends() {
+        return thisUser.getFriends();
     }
 
     public void addPlaylist() {
@@ -87,10 +92,10 @@ public class UserController {
     }
 
     public List<Playlist> getFriendPlaylists(String username) {
-        return thisUser.getFriend(username).getPlaylists();
+        return allUsers.getUser(username).getPlaylists();
     }
 
     public Playlist getFriendPlaylist(String username, String playlistName) {
-        return thisUser.getFriend(username).getPlaylist(playlistName);
+        return allUsers.getUser(username).getPlaylist(playlistName);
     }
 }
