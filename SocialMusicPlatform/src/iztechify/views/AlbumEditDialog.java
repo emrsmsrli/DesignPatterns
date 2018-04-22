@@ -8,7 +8,7 @@ public class AlbumEditDialog extends JDialog {
     private JButton buttonOK;
     private JButton buttonCancel;
 
-    public AlbumEditDialog(ActionListener actionListener) {
+    private AlbumEditDialog(ActionListener actionListener) {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -29,10 +29,9 @@ public class AlbumEditDialog extends JDialog {
                 KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
-    public static void main(String[] args) {
-        AlbumEditDialog dialog = new AlbumEditDialog(null);
+    public static void create(ActionListener actionListener) {
+        AlbumEditDialog dialog = new AlbumEditDialog(actionListener);
         dialog.pack();
         dialog.setVisible(true);
-        System.exit(0);
     }
 }

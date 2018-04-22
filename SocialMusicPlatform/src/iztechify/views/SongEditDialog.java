@@ -8,7 +8,7 @@ public class SongEditDialog extends JDialog {
     private JButton buttonOK;
     private JButton buttonCancel;
 
-    public SongEditDialog(ActionListener okListener) {
+    private SongEditDialog(ActionListener okListener) {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -29,10 +29,9 @@ public class SongEditDialog extends JDialog {
                 KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
-    public static void main(String[] args) {
-        SongEditDialog dialog = new SongEditDialog(null);
+    public static void create(ActionListener actionListener) {
+        SongEditDialog dialog = new SongEditDialog(actionListener);
         dialog.pack();
         dialog.setVisible(true);
-        System.exit(0);
     }
 }
