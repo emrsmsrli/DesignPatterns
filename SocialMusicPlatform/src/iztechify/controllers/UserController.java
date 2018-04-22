@@ -50,18 +50,17 @@ public class UserController {
         return thisUser.getFriends();
     }
 
-    public String addPlaylist() {
+    public void addPlaylist() {
         String name = JOptionPane.showInputDialog("Select playlist name");
         if(name == null)
-            return null;
+            return;
 
         if(thisUser.getPlaylist(name) != null) {
             JOptionPane.showMessageDialog(null, "Playlist already exists");
-            return null;
+            return;
         }
 
         allUsers.addPlaylist(thisUser, name);
-        return name;
     }
 
     public void addSong() {
