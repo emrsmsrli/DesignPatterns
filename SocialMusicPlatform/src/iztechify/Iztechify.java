@@ -11,10 +11,13 @@ import iztechify.views.LoginWindow;
 import iztechify.views.UserWindow;
 import iztechify.views.Window;
 
+import javax.swing.*;
 import java.util.Arrays;
 
 public class Iztechify {
-    public static void main(String... args) {
+    public static void main(String... args) throws Exception {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+
         //Models
         Music music = new Music(Arrays.asList(GSON.loadMusic()));
         Users users = new Users(Arrays.asList(GSON.loadUsers()));
