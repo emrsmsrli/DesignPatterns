@@ -13,11 +13,11 @@ import java.util.Arrays;
 public class Iztechify {
     public static void main(String... args) throws Exception {
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-
         //Models
         Music music = new Music(Arrays.asList(GSON.loadMusic()));
         Users users = new Users(Arrays.asList(GSON.loadUsers()));
 
+        music.addObserver(new GSON()); // fixme how to add gson as an observer
         //Controllers
         LoginController loginController = new LoginController(music, users);
 
