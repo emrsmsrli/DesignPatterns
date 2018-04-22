@@ -24,6 +24,10 @@ public class Users extends Observable {
         return null;
     }
 
+    public void addUser(String username){
+        users.add(new User(username));
+    }
+
     public List<Song> getAllSongsInPlaylists(){
         List<Playlist> allPlaylists = new ArrayList<Playlist>();
         List<Song> allSongs = new ArrayList<Song>();

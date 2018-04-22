@@ -36,12 +36,4 @@ public class Music extends Observable {
         }
         return songs;
     }
-
-    public void read() { // TODO read from json file
-
-    }
-
-    public void write() { // TODO write changes to json file
-
-    }
 }
