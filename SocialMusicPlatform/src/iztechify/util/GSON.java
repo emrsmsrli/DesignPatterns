@@ -19,7 +19,7 @@ public class GSON implements Observer {
 
     public List<Artist> loadMusic() {
         try(FileReader fr = new FileReader(FILE_NAME_MUSIC)) {
-            return Arrays.asList(_GSON.fromJson(fr, Artist[].class));
+            return new ArrayList<>(Arrays.asList(_GSON.fromJson(fr, Artist[].class)));
         } catch(Exception e) { e.printStackTrace(); throw new RuntimeException(); } // prevent "return null"
     }
 
@@ -29,7 +29,7 @@ public class GSON implements Observer {
             return new ArrayList<>();
 
         try(FileReader fr = new FileReader(FILE_NAME_USER)) {
-            return Arrays.asList(_GSON.fromJson(fr, User[].class));
+            return new ArrayList<>(Arrays.asList(_GSON.fromJson(fr, User[].class)));
         } catch(Exception e) { e.printStackTrace(); throw new RuntimeException(); }
     }
 
