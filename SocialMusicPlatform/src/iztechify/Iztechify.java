@@ -18,7 +18,6 @@ public class Iztechify {
         music.addObserver(GSON.get());
         users.addObserver(GSON.get());
 
-        music.addObserver(new GSON()); // fixme how to add gson as an observer
         //Controllers
         LoginController loginController = new LoginController(music, users);
 
