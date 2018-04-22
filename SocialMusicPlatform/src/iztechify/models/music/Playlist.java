@@ -27,6 +27,10 @@ public class Playlist extends Observable {
         return isSuccessful;
     }
 
+    public List<Song> getSongs() {
+        return songs;
+    }
+
     public String getName() {
         return name;
     }
