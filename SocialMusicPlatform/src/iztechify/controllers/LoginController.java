@@ -58,7 +58,7 @@ public class LoginController {
             return;
         }
 
-        UserController userController = new UserController(users, user);
+        UserController userController = new UserController(music, users, user);
         Window userWindow = new UserWindow(user.getUsername(), userController);
         users.addObserver(userWindow);
         userWindow.showWindow();

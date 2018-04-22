@@ -123,6 +123,13 @@ public class Music extends Observable {
         return null;
     }
 
+    public List<Song> getSongs() {
+        List<Song> songs = new ArrayList<>();
+        for(Artist artist : artists) {
+            songs.addAll(artist.getSongs());
+        }
+        return songs;
+    }
 
     public List<Song> getSongs(String artist, String album) {
         for(Artist a : artists)

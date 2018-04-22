@@ -1,5 +1,6 @@
 package iztechify.models;
 
+import iztechify.models.music.Song;
 import iztechify.models.user.User;
 
 import java.util.*;
@@ -37,6 +38,13 @@ public class Users extends Observable {
 
     public void addPlaylist(User user, String name) {
         user.addPlaylist(name);
+        setChanged();
+        notifyObservers();
+    }
+
+    public void addSongToPlaylist(Music music, User user, String playlist, Object[] data) {
+        Song s = music.getArtist((String)data[2]).getAlbum((String)data[1]).getSong((String)data[0]);
+        user.getPlaylist(playlist).addSong(s);
         setChanged();
         notifyObservers();
     }

@@ -1,21 +1,24 @@
 package iztechify.controllers;
 
+import iztechify.models.Music;
 import iztechify.models.Users;
 import iztechify.models.user.Playlist;
 import iztechify.models.user.User;
+import iztechify.views.ChooseSongDialog;
 
 import javax.swing.*;
 import java.util.List;
-import java.util.Vector;
 import java.util.stream.Collectors;
 
 import static javax.swing.JOptionPane.CLOSED_OPTION;
 
 public class UserController {
+    private Music music;
     private Users allUsers;
     private User thisUser;
 
-    public UserController(Users allUsers, User thisUser) {
+    public UserController(Music music, Users allUsers, User thisUser) {
+        this.music = music;
         this.allUsers = allUsers;
         this.thisUser = thisUser;
     }
@@ -63,8 +66,12 @@ public class UserController {
         allUsers.addPlaylist(thisUser, name);
     }
 
-    public void addSong() {
-        
+    public void addSong(String playlist) {
+        ChooseSongDialog dialog = new ChooseSongDialog(music.getSongs(), data -> {
+            allUsers.addSongToPlaylist(music, thisUser, playlist, data);
+        });
+        dialog.pack();
+        dialog.setVisible(true);
     }
 
     public void removeSong(String playlist, Object[] songData) {
