@@ -55,10 +55,39 @@ public class Music extends Observable {
         }
     }
 
-    public void addArtist(Artist artist) {
-        artists.add(artist);
+    public void addArtist(String artist) {
+        artists.add(new Artist(artist));
         setChanged();
         notifyObservers();
+    }
+
+    public void addAlbum(String artist, String album, String description) {
+        Artist a = getArtist(artist);
+        if(a == null)
+            return;
+
+        a.addAlbum(new Album(a, album, description));
+        setChanged();
+        notifyObservers();
+    }
+
+    public void addSong(String artist, String album, String title, String length) {
+        Artist a = getArtist(artist);
+        if(a == null)
+            return;
+        Album aa = a.getAlbum(album);
+        if(aa == null)
+            return;
+        aa.addSong(new Song(aa, title, length));
+    }
+
+    public Artist getArtist(String name) {
+        for(Artist artist : artists) {
+            if(artist.getName().equals(name))
+                return artist;
+        }
+
+        return null;
     }
 
     public List<Artist> getArtists() {

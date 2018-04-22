@@ -52,4 +52,12 @@ public class Artist {
     public List<Album> getAlbums() {
         return albums;
     }
+
+    public Album getAlbum(String name) {
+        for(Album album : albums) {
+            if(album.getTitle().equals(name))
+                return album;
+        }
+        return null;
+    }
 }

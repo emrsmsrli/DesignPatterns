@@ -98,11 +98,20 @@ public class AdminWindow extends AbstractWindow {
     }
 
     private void addCreateListeners() {
-        // todo controller should create a dialog that asks for relevant info then update the model.
-        // since this view is an observer, changes will be reflected.
         artistCreateButton.addActionListener(e -> adminController.newArtist());
-        albumCreateButton.addActionListener(e -> adminController.newAlbum());
-        newSongButton.addActionListener(e -> adminController.newSong());
+        albumCreateButton.addActionListener(e -> {
+            String artist = artistList.getSelectedValue();
+            if(artist == null)
+                return;
+            adminController.newAlbum(artist);
+        });
+        newSongButton.addActionListener(e -> {
+            String artist = artistList.getSelectedValue();
+            String album = albumList.getSelectedValue();
+            if(artist == null || album == null)
+                return;
+            adminController.newSong(artist, album);
+        });
     }
 
     private void loadArtists() {
