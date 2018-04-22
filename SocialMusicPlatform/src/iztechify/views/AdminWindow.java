@@ -7,6 +7,7 @@ import iztechify.controllers.AdminController;
 import iztechify.models.music.Album;
 import iztechify.models.music.Artist;
 import iztechify.models.music.Song;
+import iztechify.util.Utility;
 
 import javax.swing.*;
 import java.awt.*;
@@ -47,8 +48,6 @@ public class AdminWindow extends AbstractWindow {
         addCreateListeners();
 
         loadArtists();
-
-        music.addObserver(this);
     }
 
     private void addSelectListeners() {
@@ -78,7 +77,6 @@ public class AdminWindow extends AbstractWindow {
                 return;
             adminController.remove(artist);
             artistListModel.removeElement(artist);
-            loadAlbums();
         });
         albumDeleteButton.addActionListener(e -> {
             String artist = artistList.getSelectedValue();
@@ -87,7 +85,6 @@ public class AdminWindow extends AbstractWindow {
                 return;
             adminController.remove(artist, album);
             albumListModel.removeElement(album);
-            loadSongs();
         });
         songDeleteButton.addActionListener(e -> {
             String artist = artistList.getSelectedValue();
@@ -140,7 +137,22 @@ public class AdminWindow extends AbstractWindow {
 
     @Override
     public void update(Observable o, Object arg) {
-        // todo use load*() methods when model changes
+        int artistSelected = artistList.getSelectedIndex();
+        int albumSelected = albumList.getSelectedIndex();
+        int songSelected = songList.getSelectedIndex();
+
+        loadArtists();
+        if(artistSelected != -1) {
+            artistList.setSelectedIndex(Utility.clamp(0, artistSelected, artistListModel.size()));
+            loadAlbums();
+            if(albumSelected != -1) {
+                albumList.setSelectedIndex(Utility.clamp(0, albumSelected, albumListModel.size()));
+                loadSongs();
+                if(songSelected != -1) {
+                    songList.setSelectedIndex(Utility.clamp(0, songSelected, songListModel.size()));
+                }
+            }
+        }
     }
 
     {
