@@ -5,6 +5,7 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import iztechify.controllers.UserController;
 import iztechify.models.Music;
 import iztechify.models.music.Playlist;
+import iztechify.models.music.PlaylistEntry;
 import iztechify.models.music.Song;
 import iztechify.models.user.User;
 
@@ -14,6 +15,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
 import java.util.Observable;
+import java.util.Vector;
 
 public class UserWindow extends AbstractWindow {
     private JPanel root;
@@ -23,6 +25,7 @@ public class UserWindow extends AbstractWindow {
     private JButton addFriendButton;
     private JButton addPlaylistButton;
     private JButton addSongButton;
+    private JButton removeSongButton;
 
     private DefaultListModel<String> friendListModel = new DefaultListModel<>();
     private DefaultListModel<String> playlistListModel = new DefaultListModel<>();
@@ -63,6 +66,12 @@ public class UserWindow extends AbstractWindow {
         addFriendButton.addActionListener(e -> userController.addFriend());
         addPlaylistButton.addActionListener(e -> userController.addPlaylist());
         addSongButton.addActionListener(e -> userController.addNewSong());
+        removeSongButton.addActionListener(e -> {
+            int selectedRow = songTable.getSelectedRow();
+            Vector songData = (Vector) songTableModel.getDataVector().get(selectedRow);
+            userController.removeSongFromPlaylist(songData);
+            songTableModel.removeRow(selectedRow);
+        });
     }
 
     private void onFriendSelected(int friendIndex) {
@@ -135,7 +144,7 @@ public class UserWindow extends AbstractWindow {
      */
     private void $$$setupUI$$$() {
         root = new JPanel();
-        root.setLayout(new GridLayoutManager(3, 3, new Insets(10, 10, 10, 10), -1, -1));
+        root.setLayout(new GridLayoutManager(4, 3, new Insets(10, 10, 10, 10), -1, -1));
         root.setAutoscrolls(false);
         friendList = new JList();
         friendList.setSelectionMode(0);
@@ -169,6 +178,9 @@ public class UserWindow extends AbstractWindow {
         addSongButton = new JButton();
         addSongButton.setText("Add Song");
         root.add(addSongButton, new GridConstraints(2, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        removeSongButton = new JButton();
+        removeSongButton.setText("Remove Song");
+        root.add(removeSongButton, new GridConstraints(3, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
