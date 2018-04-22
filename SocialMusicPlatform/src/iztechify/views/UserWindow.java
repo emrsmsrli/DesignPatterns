@@ -38,7 +38,6 @@ public class UserWindow extends AbstractWindow {
         super("User " + username);
         this.userController = userController;
         songTable.setModel(songTableModel);
-        friendListModel.addElement("-- Me --");
         friendList.setModel(friendListModel);
         playlistList.setModel(playlistListModel);
 
