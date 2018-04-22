@@ -18,7 +18,6 @@ public class AdminController implements Controller {
         for (Artist a : music.getArtists()) {
             if (a.getName().equals(artist)) {
                 music.remove(a);
-                GSON.saveMusic(music.getArtists());
                 return;
             }
         }
@@ -26,12 +25,10 @@ public class AdminController implements Controller {
 
     public void remove(String artist, String album) {
         music.remove(artist, album);
-        GSON.saveMusic(music.getArtists());
     }
 
     public void remove(String artist, String album, String song) {
         music.remove(artist, album, song);
-        GSON.saveMusic(music.getArtists());
 
     }
 
