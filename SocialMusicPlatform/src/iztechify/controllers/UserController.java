@@ -55,37 +55,21 @@ public class UserController {
         if(name == null)
             return;
 
+        if(thisUser.getPlaylist(name) != null) {
+            JOptionPane.showMessageDialog(null, "Playlist already exists");
+            return;
+        }
+
         allUsers.addPlaylist(thisUser, name);
     }
 
     public void addSong() {
-
+        
     }
 
     public void removeSong(String playlist, Vector songData) {
 
     }
-
-    /* todo change these to create dialogs and ask info
-    public boolean addFriend(String username) {
-        if(thisUser.getFriend(username) != null)
-            return false;
-
-        User u = allUsers.getUser(username);
-        if(u == null)
-            return false;
-
-        thisUser.addFriend(u);
-        return true;
-    }
-
-    public boolean addPlaylist(String name) {
-        if(thisUser.getPlaylist(name) != null)
-            return false;
-
-        thisUser.addPlaylist(new Playlist(name));
-        return true;
-    }*/
 
     public List<Playlist> getPlaylists() {
         return thisUser.getPlaylists();
