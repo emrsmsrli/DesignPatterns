@@ -5,8 +5,9 @@ import iztechify.models.music.Playlist;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
+import java.util.Observer;
 
-public class User extends Observable {
+public class User extends Observable implements Observer {
     private String username;
     private List<User> friends;
     private List<Playlist> playlists;
@@ -19,6 +20,7 @@ public class User extends Observable {
 
     public void addPlaylist(Playlist playlist) {
         playlists.add(playlist);
+        playlist.addObserver(this);
         setChanged();
         notifyObservers(this);
     }
@@ -60,5 +62,14 @@ public class User extends Observable {
             if (u.getUsername().equals(otherUsername))
                 return u;
         return null;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if(arg == null)
+            return;
+        if(arg instanceof Playlist){
+            System.out.println("Playlist changed");     //todo do playlist change.
+        }
     }
 }

@@ -15,14 +15,13 @@ public class LoginWindow extends AbstractWindow {
     private JPanel root;
     private JButton loginButton;
 
-    private LoginController loginController;
-
     public LoginWindow(Music music, LoginController loginController) {
         super("Login");
-        this.loginController = loginController;
 
         loginButton.addActionListener(e -> loginController.login(usernameField.getText()));
     }
+
+    // todo: create user view will be added
 
     @Override
     public void showWindow() {
@@ -34,7 +33,10 @@ public class LoginWindow extends AbstractWindow {
 
     @Override
     public void update(Observable o, Object arg) {
-
+        if(arg == null)
+            return;
+        if(arg instanceof Music)
+            System.out.println("Music changed");    // todo update music.
     }
 
     {

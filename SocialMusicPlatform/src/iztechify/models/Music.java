@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-public class Music extends Observable  {
+public class Music extends Observable {
     private List<Artist> artists;
 
     public Music(List<Artist> artists) {
@@ -15,10 +15,11 @@ public class Music extends Observable  {
         this.artists.addAll(artists);
     }
 
-    public void addArtistToMusic(Artist artist){
-        artists.add(artist);
+    public boolean addArtistToMusic(Artist artist){
+        boolean isSuccessful = artists.add(artist);
         setChanged();
         notifyObservers(this);
+        return isSuccessful;
     }
 
     public boolean removeArtistFromMusic(Artist artist){
