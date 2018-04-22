@@ -39,7 +39,15 @@ public class UserController implements Controller {
         return thisUser.getPlaylists();
     }
 
+    public Playlist getPlaylist(String name) {
+        return thisUser.getPlaylist(name);
+    }
+
     public List<Playlist> getFriendPlaylists(String username) {
         return thisUser.getFriend(username).getPlaylists();
+    }
+
+    public Playlist getFriendPlaylist(String username, String playlistName) {
+        return thisUser.getFriend(username).getPlaylist(playlistName);
     }
 }
