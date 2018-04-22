@@ -7,6 +7,7 @@ import iztechify.controllers.AdminController;
 import iztechify.models.music.Album;
 import iztechify.models.music.Artist;
 import iztechify.models.music.Song;
+import iztechify.util.Utility;
 
 import javax.swing.*;
 import java.awt.*;
@@ -76,7 +77,6 @@ public class AdminWindow extends AbstractWindow {
                 return;
             adminController.remove(artist);
             artistListModel.removeElement(artist);
-            loadAlbums();
         });
         albumDeleteButton.addActionListener(e -> {
             String artist = artistList.getSelectedValue();
@@ -85,7 +85,6 @@ public class AdminWindow extends AbstractWindow {
                 return;
             adminController.remove(artist, album);
             albumListModel.removeElement(album);
-            loadSongs();
         });
         songDeleteButton.addActionListener(e -> {
             String artist = artistList.getSelectedValue();
@@ -99,11 +98,20 @@ public class AdminWindow extends AbstractWindow {
     }
 
     private void addCreateListeners() {
-        // todo controller should create a dialog that asks for relevant info then update the model.
-        // since this view is an observer, changes will be reflected.
         artistCreateButton.addActionListener(e -> adminController.newArtist());
-        albumCreateButton.addActionListener(e -> adminController.newAlbum());
-        newSongButton.addActionListener(e -> adminController.newSong());
+        albumCreateButton.addActionListener(e -> {
+            String artist = artistList.getSelectedValue();
+            if(artist == null)
+                return;
+            adminController.newAlbum(artist);
+        });
+        newSongButton.addActionListener(e -> {
+            String artist = artistList.getSelectedValue();
+            String album = albumList.getSelectedValue();
+            if(artist == null || album == null)
+                return;
+            adminController.newSong(artist, album);
+        });
     }
 
     private void loadArtists() {
@@ -138,7 +146,22 @@ public class AdminWindow extends AbstractWindow {
 
     @Override
     public void update(Observable o, Object arg) {
-        // todo use load*() methods when model changes
+        int artistSelected = artistList.getSelectedIndex();
+        int albumSelected = albumList.getSelectedIndex();
+        int songSelected = songList.getSelectedIndex();
+
+        loadArtists();
+        if(artistSelected != -1) {
+            artistList.setSelectedIndex(Utility.clamp(0, artistSelected, artistListModel.size()));
+            loadAlbums();
+            if(albumSelected != -1) {
+                albumList.setSelectedIndex(Utility.clamp(0, albumSelected, albumListModel.size()));
+                loadSongs();
+                if(songSelected != -1) {
+                    songList.setSelectedIndex(Utility.clamp(0, songSelected, songListModel.size()));
+                }
+            }
+        }
     }
 
     {

@@ -1,11 +1,8 @@
 package iztechify.controllers;
 
 import iztechify.models.Music;
-import iztechify.models.music.Album;
-import iztechify.models.music.Artist;
-import iztechify.models.music.Song;
-import iztechify.util.GSON;
 
+import javax.swing.*;
 
 public class AdminController {
     private Music music;
@@ -15,12 +12,7 @@ public class AdminController {
     }
 
     public void remove(String artist) {
-        for (Artist a : music.getArtists()) {
-            if (a.getName().equals(artist)) {
-                music.remove(a);
-                return;
-            }
-        }
+        music.remove(artist);
     }
 
     public void remove(String artist, String album) {
@@ -29,34 +21,32 @@ public class AdminController {
 
     public void remove(String artist, String album, String song) {
         music.remove(artist, album, song);
-
     }
 
     public void newArtist() {
-        // todo: new window to ask artist name
-        music.addArtist(new Artist(name));
+        String name = JOptionPane.showInputDialog("Enter artist name");
+        if(name == null)
+            return;
+        music.addArtist(name);
     }
 
-    public void newAlbum() {
-        // todo: new window to ask album title and description and return with artist name
-        for (Artist a : music.getArtists()) {
-            if (a.getName().equals(artistName)) {
-                a.addAlbum(new Album(title, description));
-                return;
-            }
-        }
+    public void newAlbum(String artist) {
+        String name = JOptionPane.showInputDialog("Enter album name for " + artist);
+        if(name == null)
+            return;
+        String description = JOptionPane.showInputDialog("Enter description for " + name);
+        if(description == null)
+            return;
+        music.addAlbum(artist, name, description);
     }
 
-    public void newSong() {
-        // todo: new window to ask song title and length return with artistName and albumTitle
-        for (Artist a : music.getArtists()) {
-            if (a.getName().equals(artistName)) {
-                for (Album al : a.getAlbums()) {
-                    if (al.getTitle().equals(albumTitle)) {
-                        al.addSong(new Song(title, length));
-                    }
-                }
-            }
-        }
+    public void newSong(String artist, String album) {
+        String name = JOptionPane.showInputDialog("Enter song name for " + album + " by " + artist);
+        if(name == null)
+            return;
+        String length = JOptionPane.showInputDialog("Enter length for " + name + " - (mm:ss)");
+        if(length == null || !length.matches("\\d{2}:\\d{2}"))
+            return;
+        music.addSong(artist, album, name, length);
     }
 }
