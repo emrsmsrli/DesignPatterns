@@ -86,7 +86,7 @@ public class UserWindow extends AbstractWindow {
     private void addActionListeners() {
         addFriendButton.addActionListener(e -> userController.addFriend());
         addPlaylistButton.addActionListener(e -> userController.addPlaylist());
-        addSongButton.addActionListener(e -> userController.addSong());
+        addSongButton.addActionListener(e -> userController.addSong(playlistList.getSelectedValue()));
         removeSongButton.addActionListener(e -> {
             int selectedRow = songTable.getSelectedRow();
             Vector songData = (Vector) songTableModel.getDataVector().get(selectedRow);
@@ -115,7 +115,10 @@ public class UserWindow extends AbstractWindow {
     }
 
     private void onPlaylistSelected(int playlistIndex) {
-        userController.getPlaylist(playlistList.getSelectedValue()).addObserver(this);
+        String selected = playlistList.getSelectedValue();
+        if(selected == null)
+            return;
+        userController.getPlaylist(selected).addObserver(this);
         List<Song> songs;
         if(friendList.getSelectedIndex() == 0) {
             songs = userController.getPlaylist(playlistListModel.get(playlistIndex)).getSongs();
