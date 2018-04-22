@@ -18,6 +18,10 @@ public class LoginController implements Controller {
         this.users = users;
     }
 
+    public void createUser(String username){
+        // todo: add user to json
+    }
+
     public void login(String username) {
         if (username.equals("admin")) {
             loginAdmin();

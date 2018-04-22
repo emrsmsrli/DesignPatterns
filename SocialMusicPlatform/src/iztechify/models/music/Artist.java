@@ -18,7 +18,7 @@ public class Artist extends Observable implements Observer {
         return name;
     }
 
-    public void addAlbums(Album album){
+    public void addAlbum(Album album){
         this.albums.add(album);
         album.addObserver(this);
         setChanged();

@@ -8,16 +8,16 @@ import java.util.Observable;
 
 public class AdminWindow  extends AbstractWindow {
     private AdminController adminController;
-    private Music music;
 
     public AdminWindow(AdminController adminController, Music music){
         super("Admin");
         this.adminController = adminController;
-        this.music = music;
-        this.music.addObserver(this);           // todo check if usage true.
+        music.addObserver(this);           // todo check if usage true.
         setSize(400, 500);
         setLayout(null);
     }
+
+    // todo: admin window should show all musics inside music.json and all users inside user.json
 
     @Override
     public void showWindow() {

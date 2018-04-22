@@ -2,7 +2,7 @@ package iztechify.models.music;
 
 import java.util.Observable;
 
-public class Song extends Observable {
+public class Song extends Observable{
     private String title;
     private String length;
 
@@ -17,6 +17,12 @@ public class Song extends Observable {
         notifyObservers(this);
     }
 
+    public void setLength(String length) {
+        this.length = length;
+        setChanged();
+        notifyObservers(this);
+    }
+
     public String getTitle() {
         return title;
     }
@@ -24,4 +30,5 @@ public class Song extends Observable {
     public String getLength() {
         return length;
     }
+
 }
