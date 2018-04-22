@@ -6,7 +6,6 @@ import iztechify.models.user.User;
 
 import javax.swing.*;
 import java.util.List;
-import java.util.Vector;
 import java.util.stream.Collectors;
 
 import static javax.swing.JOptionPane.CLOSED_OPTION;
@@ -64,7 +63,7 @@ public class UserController {
     }
 
     public void addSong() {
-        
+
     }
 
     public void removeSong(String playlist, Object[] songData) {
