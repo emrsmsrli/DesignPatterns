@@ -1,6 +1,8 @@
 package iztechify.models;
 
 import iztechify.models.music.Song;
+import iztechify.models.music.Artist;
+import iztechify.models.user.Playlist;
 import iztechify.models.user.User;
 
 import java.util.*;
@@ -49,24 +51,40 @@ public class Users extends Observable {
         notifyObservers();
     }
 
-   /* fixme public List<Song> getAllSongsInPlaylists() {
-        List<Playlist> allPlaylists = new ArrayList<Playlist>();
-        List<Song> allSongs = new ArrayList<Song>();
-        for(User user: users){
+    public List<Song> getAllSongsInPlaylists() {
+        List<Playlist> allPlaylists = new ArrayList<>();
+        List<Song> allSongs = new ArrayList<>();
+        for (User user : users) {
             allPlaylists.addAll(user.getPlaylists());
         }
-        for(Playlist playlist: allPlaylists){
+        for (Playlist playlist : allPlaylists) {
             allSongs.addAll(playlist.getSongs());
         }
         return allSongs;
     }
 
-    private <T> Map<T, Integer> findFrequencies(List<T> list){
+    public List<Artist> getAllArtistInPlaylists() {
+        List<Playlist> allPlaylists = new ArrayList<>();
+        List<Song> allSongs = new ArrayList<>();
+        List<Artist> allArtist = new ArrayList<>();
+        for (User user : users) {
+            allPlaylists.addAll(user.getPlaylists());
+        }
+        for (Playlist playlist : allPlaylists) {
+            allSongs.addAll(playlist.getSongs());
+        }
+        for (Song song : allSongs) {
+            allArtist.add(song.getAlbum().getArtist());
+        }
+        return allArtist;
+    }
+
+    private <T> Map<T, Integer> findFrequencies(List<T> list) {
         Map<T, Integer> counterMap = new HashMap<>();
         for(T element: list){
             Integer frequency = counterMap.getOrDefault(element, 0);
             counterMap.put(element, frequency + 1);
         }
         return counterMap;
-    }*/
+    }
 }
