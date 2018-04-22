@@ -15,6 +15,7 @@ public class UserController implements Controller {
         this.thisUser = thisUser;
     }
 
+    /* todo change these to create dialogs and ask info
     public boolean addFriend(String username) {
         if(thisUser.getFriend(username) != null)
             return false;
@@ -33,7 +34,7 @@ public class UserController implements Controller {
 
         thisUser.addPlaylist(new Playlist(name));
         return true;
-    }
+    }*/
 
     public List<Playlist> getPlaylists() {
         return thisUser.getPlaylists();
