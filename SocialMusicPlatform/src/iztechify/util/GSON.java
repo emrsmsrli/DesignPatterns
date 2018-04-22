@@ -1,6 +1,8 @@
 package iztechify.util;
 
 import com.google.gson.Gson;
+import iztechify.models.Music;
+import iztechify.models.Users;
 import iztechify.models.user.User;
 import iztechify.models.music.Artist;
 
@@ -8,8 +10,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
-public class GSON {
+public class GSON implements Observer {
     private static final Gson _GSON = new Gson();
     private static final String FILE_NAME_MUSIC = "music.json";
     private static final String FILE_NAME_USER = "user.json";
@@ -40,5 +44,13 @@ public class GSON {
         try(FileWriter fw = new FileWriter(FILE_NAME_USER)) {
             fw.write(_GSON.toJson(users));
         } catch(Exception e) { e.printStackTrace(); }
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if(o instanceof Music)
+            saveMusic(((Music) o).getArtists());
+        else if(o instanceof Users)
+            saveUsers(((Users) o).getUsers());
     }
 }
