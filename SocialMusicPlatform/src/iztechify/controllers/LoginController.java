@@ -19,7 +19,7 @@ public class LoginController {
     }
 
     public void signup(String username) {
-        if(username.equals("admin"))
+        if(username.equals("admin") || username.equals("-- Me --"))
             return;
 
         User user = users.getUser(username);
