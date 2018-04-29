@@ -13,6 +13,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.*;
 
+// TODO make this load and write psuedo beans
 @SuppressWarnings("all")
 public class GSON implements Observer {
     private static class _Artist {
@@ -45,6 +46,17 @@ public class GSON implements Observer {
             this.length = length;
         }
     }
+    private static class _User {
+        String username;
+        List<String> friends;
+        List<_Song> playlist;
+        public _User() {}
+    }
+    private static class _Playlist {
+        String name;
+        List<String> songs;
+        public _Playlist() {}
+    }
 
     private static final Gson _GSON = new Gson();
     private static final String FILE_NAME_MUSIC = "music.json";
@@ -71,12 +83,30 @@ public class GSON implements Observer {
         } catch(Exception e) { e.printStackTrace(); throw new RuntimeException(); } // prevent "return null"
     }
 
-    public List<User> loadUsers() {
+    public List<User> loadUsers(Music music) {
         File userFile = new File(FILE_NAME_USER);
         if(!userFile.exists())
             return new ArrayList<>();
 
         try(FileReader fr = new FileReader(FILE_NAME_USER)) {
+            List<_User> loadedUsers = new ArrayList<>(Arrays.asList(_GSON.fromJson(fr, _User[].class)));
+
+            List<User> users = new ArrayList<>();
+            for(_User loadedUser : loadedUsers) {
+                User user = new User(loadedUser.username);
+            }
+            for(_User loadedUser : loadedUsers) {
+                for(String friend : loadedUser.friends) {
+                    for(User user : users) {
+                        if(user.getUsername().equals(friend)) {
+
+                        }
+                    }
+                }
+            }
+
+
+
             return new ArrayList<>(Arrays.asList(_GSON.fromJson(fr, User[].class)));
         } catch(Exception e) { e.printStackTrace(); throw new RuntimeException(); }
     }
