@@ -14,7 +14,7 @@ public class Iztechify {
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         //Models
         Music music = new Music(GSON.get().loadMusic());
-        Users users = new Users(GSON.get().loadUsers());
+        Users users = new Users(GSON.get().loadUsers(music));
         music.addObserver(GSON.get());
         users.addObserver(GSON.get());
 
