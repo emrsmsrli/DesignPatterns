@@ -1,29 +1,28 @@
 package cjxy;
 
-import cjxy.IDataExchangeFile;
+public class XmlFile extends DataExchangeFile {
 
-public class XmlFile implements IDataExchangeFile {
-
-    private String filePath;
-    private String content;
+    public XmlFile(String filePath, String content) {
+        super(filePath, content);
+    }
 
     @Override
-    public IDataExchangeFile convertToCSV() {
+    public DataExchangeFile convertToCSV() {
         return null;
     }
 
     @Override
-    public IDataExchangeFile convertToJSON() {
+    public DataExchangeFile convertToJSON() {
         return null;
     }
 
     @Override
-    public IDataExchangeFile convertToXML() {
+    public DataExchangeFile convertToXML() {
         return null;
     }
 
     @Override
-    public IDataExchangeFile convertToYAML() {
+    public DataExchangeFile convertToYAML() {
         return null;
     }
 }
