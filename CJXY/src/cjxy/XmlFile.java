@@ -1,3 +1,7 @@
+package cjxy;
+
+import cjxy.IDataExchangeFile;
+
 public class XmlFile implements IDataExchangeFile {
 
     private String filePath;

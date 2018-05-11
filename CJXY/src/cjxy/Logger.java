@@ -1,9 +1,12 @@
+package cjxy;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class Logger {
     private static Logger instance = null;
     private static Calendar cal;
+    private static SimpleDateFormat dateFormat = new SimpleDateFormat("[yyyy.MM.dd, HH:mm:ss]");
 
     private Logger(){
         cal = Calendar.getInstance();
@@ -16,7 +19,12 @@ public class Logger {
     }
 
     public void logInfoWithTime(String info){
-        SimpleDateFormat sdf = new SimpleDateFormat("[yyyy.mm.dd, HH:mm:ss]");
-        System.out.println(sdf.format(cal.getTime()) + " " + info);
+        String log = dateFormat.format(cal.getTime()) + " [" +  info + "]" + " [SUCCESSFUL]";
+        System.out.println(log);
+    }
+
+    public void logErrorWithTime(String info){
+        String log = dateFormat.format(cal.getTime()) + " [" +  info + "]" + " [FAILED]";
+        System.out.println(log);
     }
 }
