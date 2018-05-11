@@ -1,6 +1,6 @@
 package cjxy;
 
-public class YamlFile extends DataExchangeFile{
+public class YamlFile extends DataExchangeFile {
     public YamlFile(String filePath, String content) {
         super(filePath, content);
     }

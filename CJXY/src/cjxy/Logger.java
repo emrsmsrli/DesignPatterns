@@ -8,23 +8,23 @@ public class Logger {
     private static Calendar cal;
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("[yyyy.MM.dd, HH:mm:ss]");
 
-    private Logger(){
+    private Logger() {
         cal = Calendar.getInstance();
     }
 
-    public static Logger getInstance(){
+    public static Logger getInstance() {
         if(instance == null)
             instance = new Logger();
         return instance;
     }
 
-    public void logInfoWithTime(String info){
-        String log = dateFormat.format(cal.getTime()) + " [" +  info + "]" + " [SUCCESSFUL]";
+    public void logInfoWithTime(String info) {
+        String log = dateFormat.format(cal.getTime()) + " [" + info + "]" + " [SUCCESSFUL]";
         System.out.println(log);
     }
 
-    public void logErrorWithTime(String info){
-        String log = dateFormat.format(cal.getTime()) + " [" +  info + "]" + " [FAILED]";
+    public void logErrorWithTime(String info) {
+        String log = dateFormat.format(cal.getTime()) + " [" + info + "]" + " [FAILED]";
         System.out.println(log);
     }
 }

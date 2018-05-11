@@ -1,6 +1,6 @@
 package cjxy;
 
-public class JsonFile extends DataExchangeFile{
+public class JsonFile extends DataExchangeFile {
     public JsonFile(String filePath, String content) {
         super(filePath, content);
     }
