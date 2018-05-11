@@ -1,7 +1,8 @@
-package cjxy;
+package cjxy.datatypes;
 
-public class CsvFile extends DataExchangeFile {
-    public CsvFile(String filePath, String content) {
+public class XmlFile extends DataExchangeFile {
+
+    public XmlFile(String filePath, String content) {
         super(filePath, content);
     }
 

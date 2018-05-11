@@ -1,8 +1,7 @@
-package cjxy;
+package cjxy.datatypes;
 
-public class XmlFile extends DataExchangeFile {
-
-    public XmlFile(String filePath, String content) {
+public class YamlFile extends DataExchangeFile {
+    public YamlFile(String filePath, String content) {
         super(filePath, content);
     }
 

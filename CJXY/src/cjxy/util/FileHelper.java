@@ -1,4 +1,4 @@
-package cjxy;
+package cjxy.util;
 
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;

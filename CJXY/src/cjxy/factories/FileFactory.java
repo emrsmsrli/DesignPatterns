@@ -1,4 +1,11 @@
-package cjxy;
+package cjxy.factories;
+
+import cjxy.datatypes.DataExchangeFile;
+import cjxy.util.FileHelper;
+import cjxy.datatypes.CsvFile;
+import cjxy.datatypes.JsonFile;
+import cjxy.datatypes.XmlFile;
+import cjxy.datatypes.YamlFile;
 
 public class FileFactory {
 

@@ -1,4 +1,4 @@
-package cjxy;
+package cjxy.datatypes;
 
 public class JsonFile extends DataExchangeFile {
     public JsonFile(String filePath, String content) {

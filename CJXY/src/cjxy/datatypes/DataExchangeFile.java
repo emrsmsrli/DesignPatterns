@@ -1,4 +1,6 @@
-package cjxy;
+package cjxy.datatypes;
+
+import cjxy.util.FileHelper;
 
 public abstract class DataExchangeFile {
     private String filePath;

@@ -1,4 +1,4 @@
-package cjxy;
+package cjxy.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
