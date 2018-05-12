@@ -1,27 +1,27 @@
 package cjxy.datatypes;
 
-public class CsvFile extends DataExchangeFile {
+public class CsvFile extends AbstractDataFormat {
     public CsvFile(String filePath, String content) {
         super(filePath, content);
     }
 
     @Override
-    public DataExchangeFile convertToCSV() {
+    public IDataFormat toCsv() {
+        return this;
+    }
+
+    @Override
+    public IDataFormat toYaml(YamlExtensionType type) {
         return null;
     }
 
     @Override
-    public DataExchangeFile convertToJSON() {
+    public IDataFormat toJson() {
         return null;
     }
 
     @Override
-    public DataExchangeFile convertToXML() {
-        return null;
-    }
-
-    @Override
-    public DataExchangeFile convertToYAML() {
+    public IDataFormat toXml() {
         return null;
     }
 }
