@@ -7,7 +7,7 @@ public class JsonFactory implements IDataFormatFactory {
     JsonFactory() {}
 
     @Override
-    public DataFormat createDataFormat(String path, String contents) {
-        return new Json(path, contents);
+    public DataFormat createDataFormat(String contents) {
+        return new Json(contents);
     }
 }

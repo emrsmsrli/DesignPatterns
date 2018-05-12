@@ -6,8 +6,8 @@ import cjxy.converters.XmlConverter;
 import cjxy.converters.YamlConverter;
 
 public class Csv extends DataFormat {
-    public Csv(String filePath, String content) {
-        super(filePath, content);
+    public Csv(String content) {
+        super(content);
     }
 
     @Override

@@ -6,8 +6,8 @@ import cjxy.converters.XmlConverter;
 import cjxy.converters.YamlConverter;
 
 public class Json extends DataFormat {
-    public Json(String filePath, String content) {
-        super(filePath, content);
+    public Json(String content) {
+        super(content);
     }
 
     @Override

@@ -19,24 +19,24 @@ public class DataFormatFactory {
         ymlFactory = new YmlFactory();
     }
 
-    public DataFormat newJson(String path, String contents) {
-        return jsonFactory.createDataFormat(path, contents);
+    public DataFormat newJson(String contents) {
+        return jsonFactory.createDataFormat(contents);
     }
 
-    public DataFormat newXml(String path, String contents) {
-        return xmlFactory.createDataFormat(path, contents);
+    public DataFormat newXml(String contents) {
+        return xmlFactory.createDataFormat(contents);
     }
 
-    public DataFormat newCsv(String path, String contents) {
-        return csvFactory.createDataFormat(path, contents);
+    public DataFormat newCsv(String contents) {
+        return csvFactory.createDataFormat(contents);
     }
 
-    public DataFormat newYaml(String path, String contents, Yaml.Extension extension) {
+    public DataFormat newYaml(String contents, Yaml.Extension extension) {
         switch(extension) {
             case YAML:
-                return yamlFactory.createDataFormat(path, contents);
+                return yamlFactory.createDataFormat(contents);
             case YML:
-                return ymlFactory.createDataFormat(path, contents);
+                return ymlFactory.createDataFormat(contents);
         }
         return null;
     }

@@ -6,8 +6,8 @@ import cjxy.converters.XmlConverter;
 import cjxy.converters.YamlConverter;
 
 public class Xml extends DataFormat {
-    public Xml(String filePath, String content) {
-        super(filePath, content);
+    public Xml(String content) {
+        super(content);
     }
 
     @Override

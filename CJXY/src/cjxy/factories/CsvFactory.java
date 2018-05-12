@@ -7,7 +7,7 @@ public class CsvFactory implements IDataFormatFactory {
     CsvFactory() {}
 
     @Override
-    public DataFormat createDataFormat(String path, String contents) {
-        return new Csv(path, contents);
+    public DataFormat createDataFormat(String contents) {
+        return new Csv(contents);
     }
 }

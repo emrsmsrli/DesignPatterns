@@ -11,15 +11,8 @@ public class Yaml extends DataFormat {
         YML
     }
 
-    private Extension extension;
-
-    public Yaml(String filePath, String content, Extension extension) {
-        super(filePath, content);
-        this.extension = extension;
-    }
-
-    public Extension getExtension() {
-        return extension;
+    public Yaml(String content) {
+        super(content);
     }
 
     @Override

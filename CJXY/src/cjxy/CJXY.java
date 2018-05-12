@@ -6,7 +6,8 @@ import cjxy.factories.DataFormatFactory;
 import cjxy.util.IO;
 import cjxy.util.Logger;
 
-import java.nio.file.Paths;
+import java.io.File;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class CJXY {
@@ -22,19 +23,27 @@ public class CJXY {
 
             if(path.equals("quit"))
                 break;
-            content = IO.get().readFile(path);
 
-            System.out.println("Enter file type: ");
-            String typeFrom = scanner.next();
+            File f = new File(path);
+            if(!f.exists() && f.isDirectory()) {
+                Logger.get().error(f.getPath() + " does not exists or a directory");
+                continue;
+            }
+
+            content = IO.get().readFile(f.getPath());
+
+            String[] tokens = f.getName().split("\\.");
+            String fileNameWithoutExtension = String.join(".", Arrays.copyOfRange(tokens, 0, tokens.length - 1));
+            String typeFrom = tokens[tokens.length - 1];
+
+            DataFormat file = createDataFormat(typeFrom, content);
+            if(file == null) {
+                Logger.get().error("wrong type to convert from: " + typeFrom + " for " + f.getName());
+                continue;
+            }
 
             System.out.println("Enter file type to convert: ");
             String typeTo = scanner.next();
-
-            DataFormat file = createDataFormat(typeFrom, path, content);
-            if(file == null) {
-                Logger.get().error("wrong type to convert from: " + typeFrom + " for " + path);
-                continue;
-            }
 
             switch (typeTo.toLowerCase()) {
                 case "csv":
@@ -61,28 +70,28 @@ public class CJXY {
             }
 
             try {
-                path = Paths.get(path).toString().split("\\.")[0] + "." + typeTo;
+                path = f.getParent() + File.separator + fileNameWithoutExtension + "." + typeTo;
                 IO.get().writeFile(path ,content);
                 Logger.get().info(typeFrom + " -> " + typeTo);
             } catch (Exception e) {
-                Logger.get().error(typeFrom + " -> " + typeTo);
+                Logger.get().error(typeFrom + " -> " + typeTo + ". reason: " + e.getMessage());
                 e.printStackTrace();
             }
         }
     }
 
-    private static DataFormat createDataFormat(String typeFrom, String path, String content) {
+    private static DataFormat createDataFormat(String typeFrom, String content) {
         switch (typeFrom.toLowerCase()) {
             case "csv":
-                return factory.newCsv(path, content);
+                return factory.newCsv(content);
             case "xml":
-                return factory.newXml(path, content);
+                return factory.newXml(content);
             case "json":
-                return factory.newJson(path, content);
+                return factory.newJson(content);
             case "yaml":
-                return factory.newYaml(path, content, Yaml.Extension.YAML);
+                return factory.newYaml(content, Yaml.Extension.YAML);
             case "yml":
-                return factory.newYaml(path, content, Yaml.Extension.YML);
+                return factory.newYaml(content, Yaml.Extension.YML);
             default:
                 return null;
         }
