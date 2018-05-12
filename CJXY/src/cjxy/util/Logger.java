@@ -14,22 +14,25 @@ public class Logger {
     private Logger() {
         try {
             bw = new FileWriter(new File("log.txt"));
-            bw.write("CJXY - Data Exchange Format Converter");
-            bw.write(time() + " [Logging Started]");
+            bw.write("CJXY - Data Exchange Format Converter\n");
+            bw.write(time() + " [Logging Started]\n");
+            bw.flush();
         } catch(IOException ignored) {}
     }
 
     public void info(String message) {
-        String log = time() + " [" + message + "]" + " [SUCCESSFUL]";
+        String log = time() + " [" + message + "]" + " [SUCCESSFUL]\n";
         try {
             bw.write(log);
+            bw.flush();
         } catch(Exception ignored) {}
     }
 
     public void error(String message) {
-        String log = time() + " [" + message + "]" + " [FAILED]";
+        String log = time() + " [" + message + "]" + " [FAILED]\n";
         try {
             bw.write(log);
+            bw.flush();
         } catch(Exception ignored) {}
     }
 
