@@ -1,7 +1,7 @@
 package cjxy;
 
 import cjxy.datatypes.DataFormat;
-import cjxy.datatypes.YamlFile;
+import cjxy.datatypes.Yaml;
 import cjxy.factories.DataFormatFactory;
 import cjxy.util.IO;
 import cjxy.util.Logger;
@@ -10,76 +10,81 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class CJXY {
+    private static DataFormatFactory factory = DataFormatFactory.get();
+
     public static void main(String[] args) {
-        DataFormat file;
-        DataFormatFactory factory = DataFormatFactory.get();
-        String content, input, type, toType;
         Scanner scanner = new Scanner(System.in);
+        String content;
 
         while(true){
             System.out.println("Enter file path: ");
-            input = scanner.next();
-            content = IO.get().readFile(input);
+            String path = scanner.next();
+
+            if(path.equals("quit"))
+                break;
+            content = IO.get().readFile(path);
+
             System.out.println("Enter file type: ");
-            type = scanner.next();
+            String typeFrom = scanner.next();
+
             System.out.println("Enter file type to convert: ");
-            toType = scanner.next();
+            String typeTo = scanner.next();
 
-            switch (type.toLowerCase()) {
-                case "csv": {
-                    file = factory.newCsv(input, content);
-                    break;
-                }
-                case "xml": {
-                    file = factory.newXml(input, content);
-                    break;
-                }
-                case "json": {
-                    file = factory.newJson(input, content);
-                    break;
-                }
-                case "yaml": {
-                    file = factory.newYaml(input, content, YamlFile.Extension.YAML);
-                    break;
-                }
-                case "yml": {
-                    file = factory.newYaml(input, content, YamlFile.Extension.YML);
-                    break;
-                }
-                default: continue;
-            }
-
-            switch (toType.toLowerCase()) {
-                case "csv": {
-                    content = file.toCsv();
-                    break;
-                }
-                case "xml": {
-                    content = file.toXml();
-                    break;
-                }
-                case "json": {
-                    content = file.toJson();
-                    break;
-                }
-                case "yaml":
-                case "yml": {
-                    content = file.toYaml();
-                    break;
-                }
-                default: continue;
-            }
-            if(content == null){
-                Logger.get().error(type + " -> " + toType);
+            DataFormat file = createDataFormat(typeFrom, path, content);
+            if(file == null) {
+                Logger.get().error("wrong type to convert from: " + typeFrom + " for " + path);
                 continue;
             }
-            input = Paths.get(input).toString().split("\\.")[0] + "." + toType;
-            try {
-                IO.get().writeFile(input ,content);
-                Logger.get().info(type + " -> " + toType);
-            } catch (Exception e) {
-                Logger.get().error(type + " -> " + toType);
+
+            switch (typeTo.toLowerCase()) {
+                case "csv":
+                    content = file.toCsv();
+                    break;
+                case "xml":
+                    content = file.toXml();
+                    break;
+                case "json":
+                    content = file.toJson();
+                    break;
+                case "yaml":
+                case "yml":
+                    content = file.toYaml();
+                    break;
+                default:
+                    Logger.get().error("wrong type to convert to: " + typeTo + " for " + path);
+                    continue;
             }
+
+            if(content == null) {
+                Logger.get().error("could not convert from " + typeFrom + " to " + typeTo);
+                continue;
+            }
+
+            try {
+                path = Paths.get(path).toString().split("\\.")[0] + "." + typeTo;
+                IO.get().writeFile(path ,content);
+                Logger.get().info(typeFrom + " -> " + typeTo);
+            } catch (Exception e) {
+                Logger.get().error(typeFrom + " -> " + typeTo);
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private static DataFormat createDataFormat(String typeFrom, String path, String content) {
+        switch (typeFrom.toLowerCase()) {
+            case "csv":
+                return factory.newCsv(path, content);
+            case "xml":
+                return factory.newXml(path, content);
+            case "json":
+                return factory.newJson(path, content);
+            case "yaml":
+                return factory.newYaml(path, content, Yaml.Extension.YAML);
+            case "yml":
+                return factory.newYaml(path, content, Yaml.Extension.YML);
+            default:
+                return null;
         }
     }
 }
