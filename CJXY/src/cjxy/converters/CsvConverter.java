@@ -1,11 +1,16 @@
 package cjxy.converters;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.csv.CsvMapper;
+import com.fasterxml.jackson.dataformat.csv.CsvSchema;
+
+import java.util.Map;
 
 public class CsvConverter extends Converter {
     private static CsvConverter instance;
 
-    private CsvConverter() {}
+    private CsvConverter() {
+        mapper = new CsvMapper();
+    }
 
     @Override
     public String fromCsv(String content) {
@@ -14,21 +19,27 @@ public class CsvConverter extends Converter {
 
     @Override
     public String fromYaml(String content) {
-        return convert(content, yamlMapper);
+        return convert(YamlConverter.get(), content);
     }
 
     @Override
     public String fromXml(String content) {
-        return convert(content, xmlMapper);
+        return convert(XmlConverter.get(), content);
     }
 
     @Override
     public String fromJson(String content) {
-        return convert(content, jsonMapper);
+        return convert(JsonConverter.get(), content);
     }
 
-    private String convert(String content, ObjectMapper reader) {
-        return convert(content, reader, csvMapper);
+    public Object read(String data) throws Exception {
+        CsvSchema schema = CsvSchema.emptySchema().withHeader();
+        return mapper.readerFor(Map.class).with(schema).readValue(data);
+    }
+
+    public String write(Object data) throws Exception {
+        // TODO
+        return mapper.writeValueAsString(data);
     }
 
     public static CsvConverter get() {

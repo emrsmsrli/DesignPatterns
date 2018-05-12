@@ -1,11 +1,15 @@
 package cjxy.converters;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 public class XmlConverter extends Converter {
     private static XmlConverter instance;
 
-    private XmlConverter() {}
+    private XmlConverter() {
+        mapper = new XmlMapper();
+        mapper.enable(DeserializationFeature.UNWRAP_ROOT_VALUE);
+    }
 
     @Override
     public String fromXml(String content) {
@@ -14,21 +18,25 @@ public class XmlConverter extends Converter {
 
     @Override
     public String fromJson(String content) {
-        return convert(content, jsonMapper);
+        return convert(JsonConverter.get(), content);
     }
 
     @Override
     public String fromYaml(String content) {
-        return convert(content, yamlMapper);
+        return convert(YamlConverter.get(), content);
     }
 
     @Override
     public String fromCsv(String content) {
-        return convert(content, csvMapper);
+        return convert(CsvConverter.get(), content);
     }
 
-    private String convert(String content, ObjectMapper reader) {
-        return convert(content, reader, xmlMapper);
+    public Object read(String data) throws Exception {
+        return mapper.readTree(data.getBytes());
+    }
+
+    public String write(Object data) throws Exception {
+        return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(data);
     }
 
     public static XmlConverter get() {

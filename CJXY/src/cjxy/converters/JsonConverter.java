@@ -1,11 +1,14 @@
 package cjxy.converters;
 
+import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JsonConverter extends Converter {
     private static JsonConverter instance;
 
-    private JsonConverter() {}
+    private JsonConverter() {
+        mapper = new ObjectMapper(new JsonFactory());
+    }
 
     @Override
     public String fromJson(String content) {
@@ -14,21 +17,25 @@ public class JsonConverter extends Converter {
 
     @Override
     public String fromXml(String content) {
-        return convert(content, xmlMapper);
+        return convert(XmlConverter.get(), content);
     }
 
     @Override
     public String fromYaml(String content) {
-        return convert(content, yamlMapper);
+        return convert(YamlConverter.get(), content);
     }
 
     @Override
     public String fromCsv(String content) {
-        return convert(content, csvMapper);
+        return convert(CsvConverter.get(), content);
     }
 
-    private String convert(String content, ObjectMapper reader) {
-        return convert(content, reader, jsonMapper);
+    public Object read(String data) throws Exception {
+        return mapper.readValue(data, Object.class);
+    }
+
+    public String write(Object data) throws Exception {
+        return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(data);
     }
 
     public static JsonConverter get() {
