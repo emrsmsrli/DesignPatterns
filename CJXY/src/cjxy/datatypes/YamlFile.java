@@ -1,16 +1,16 @@
 package cjxy.datatypes;
 
 public class YamlFile extends AbstractDataFormat {
-    public enum YamlExtensionType {
+    public enum Extension {
         YAML,
         YML
     }
 
-    private YamlExtensionType type;
+    private Extension extension;
 
-    public YamlFile(String filePath, String content, YamlExtensionType type) {
+    public YamlFile(String filePath, String content, Extension extension) {
         super(filePath, content);
-        this.type = type;
+        this.extension = extension;
     }
 
     @Override
@@ -19,11 +19,11 @@ public class YamlFile extends AbstractDataFormat {
     }
 
     @Override
-    public IDataFormat toYaml(YamlExtensionType type) {
-        if(this.type == type)
+    public IDataFormat toYaml(Extension extension) {
+        if(this.extension == extension)
             return this;
 
-        switch(type) {
+        switch(extension) {
             case YAML:
                 break;
             case YML:

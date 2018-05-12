@@ -2,7 +2,7 @@ package cjxy.datatypes;
 
 public interface IDataFormat {
     IDataFormat toCsv();
-    IDataFormat toYaml(YamlFile.YamlExtensionType type);
+    IDataFormat toYaml(YamlFile.Extension extension);
     IDataFormat toJson();
     IDataFormat toXml();
 }

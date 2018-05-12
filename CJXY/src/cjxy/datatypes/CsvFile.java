@@ -11,7 +11,7 @@ public class CsvFile extends AbstractDataFormat {
     }
 
     @Override
-    public IDataFormat toYaml(YamlExtensionType type) {
+    public IDataFormat toYaml(YamlFile.Extension extension) {
         return null;
     }
 
