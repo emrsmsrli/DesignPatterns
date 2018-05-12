@@ -1,6 +1,11 @@
 package cjxy.datatypes;
 
-public class YamlFile extends AbstractDataFormat {
+import cjxy.converters.CsvConverter;
+import cjxy.converters.JsonConverter;
+import cjxy.converters.XmlConverter;
+import cjxy.converters.YamlConverter;
+
+public class YamlFile extends DataFormat {
     public enum Extension {
         YAML,
         YML
@@ -13,34 +18,27 @@ public class YamlFile extends AbstractDataFormat {
         this.extension = extension;
     }
 
-    @Override
-    public IDataFormat toCsv() {
-        return null;
+    public Extension getExtension() {
+        return extension;
     }
 
     @Override
-    public IDataFormat toYaml(Extension extension) {
-        if(this.extension == extension)
-            return this;
-
-        switch(extension) {
-            case YAML:
-                break;
-            case YML:
-                break;
-        }
-
-        // TODO remove this
-        return null;
+    public String toCsv() {
+        return CsvConverter.get().fromYaml(getContent());
     }
 
     @Override
-    public IDataFormat toJson() {
-        return null;
+    public String toYaml() {
+        return YamlConverter.get().fromYaml(getContent());
     }
 
     @Override
-    public IDataFormat toXml() {
-        return null;
+    public String toJson() {
+        return JsonConverter.get().fromYaml(getContent());
+    }
+
+    @Override
+    public String toXml() {
+        return XmlConverter.get().fromYaml(getContent());
     }
 }

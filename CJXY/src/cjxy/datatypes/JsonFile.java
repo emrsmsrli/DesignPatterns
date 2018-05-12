@@ -1,27 +1,32 @@
 package cjxy.datatypes;
 
-public class JsonFile extends AbstractDataFormat {
+import cjxy.converters.CsvConverter;
+import cjxy.converters.JsonConverter;
+import cjxy.converters.XmlConverter;
+import cjxy.converters.YamlConverter;
+
+public class JsonFile extends DataFormat {
     public JsonFile(String filePath, String content) {
         super(filePath, content);
     }
 
     @Override
-    public IDataFormat toCsv() {
-        return null;
+    public String toCsv() {
+        return CsvConverter.get().fromJson(getContent());
     }
 
     @Override
-    public IDataFormat toYaml(YamlFile.Extension extension) {
-        return null;
+    public String toYaml() {
+        return YamlConverter.get().fromJson(getContent());
     }
 
     @Override
-    public IDataFormat toJson() {
-        return this;
+    public String toJson() {
+        return JsonConverter.get().fromJson(getContent());
     }
 
     @Override
-    public IDataFormat toXml() {
-        return null;
+    public String toXml() {
+        return XmlConverter.get().fromJson(getContent());
     }
 }
