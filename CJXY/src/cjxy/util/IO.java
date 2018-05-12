@@ -12,7 +12,7 @@ public class IO {
 
     private IO() {}
 
-    public static String readFile(String path) {
+    public String readFile(String path) {
         try {
             byte[] encoded = Files.readAllBytes(Paths.get(path));
             return new String(encoded, "utf-8");
@@ -21,7 +21,7 @@ public class IO {
         }
     }
 
-    public static void writeFile(String fileName, String content) throws Exception {
+    public void writeFile(String fileName, String content) throws Exception {
         try(Writer fileWriter = new BufferedWriter(
                 new OutputStreamWriter(
                         new FileOutputStream(fileName), "utf-8"))) {
