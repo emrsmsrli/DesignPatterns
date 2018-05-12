@@ -31,10 +31,12 @@ public class XmlConverter extends Converter {
         return convert(CsvConverter.get(), content);
     }
 
+    @Override
     public Object read(String data) throws Exception {
         return mapper.readTree(data.getBytes());
     }
 
+    @Override
     public String write(Object data) throws Exception {
         return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(data);
     }

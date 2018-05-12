@@ -29,10 +29,12 @@ public class YamlConverter extends Converter {
         return convert(CsvConverter.get(), content);
     }
 
+    @Override
     public Object read(String data) throws Exception {
         return mapper.readValue(data, Object.class);
     }
 
+    @Override
     public String write(Object data) throws Exception {
         return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(data);
     }
