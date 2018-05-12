@@ -31,7 +31,7 @@ public class DataFormatFactory {
         return csvFactory.createDataFormat(path, contents);
     }
 
-    public DataFormat newYaml(String path, String contents, YamlFile.Extension extension) {
+    public DataFormat newYaml(String path, String contents, Yaml.Extension extension) {
         switch(extension) {
             case YAML:
                 return yamlFactory.createDataFormat(path, contents);

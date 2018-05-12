@@ -1,6 +1,6 @@
 package cjxy.factories;
 
-import cjxy.datatypes.CsvFile;
+import cjxy.datatypes.Csv;
 import cjxy.datatypes.DataFormat;
 
 public class CsvFactory implements IDataFormatFactory {
@@ -8,6 +8,6 @@ public class CsvFactory implements IDataFormatFactory {
 
     @Override
     public DataFormat createDataFormat(String path, String contents) {
-        return new CsvFile(path, contents);
+        return new Csv(path, contents);
     }
 }

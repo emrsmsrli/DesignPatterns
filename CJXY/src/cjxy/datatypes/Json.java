@@ -5,28 +5,28 @@ import cjxy.converters.JsonConverter;
 import cjxy.converters.XmlConverter;
 import cjxy.converters.YamlConverter;
 
-public class CsvFile extends DataFormat {
-    public CsvFile(String filePath, String content) {
+public class Json extends DataFormat {
+    public Json(String filePath, String content) {
         super(filePath, content);
     }
 
     @Override
     public String toCsv() {
-        return CsvConverter.get().fromCsv(getContent());
+        return CsvConverter.get().fromJson(getContent());
     }
 
     @Override
     public String toYaml() {
-        return YamlConverter.get().fromCsv(getContent());
+        return YamlConverter.get().fromJson(getContent());
     }
 
     @Override
     public String toJson() {
-        return JsonConverter.get().fromCsv(getContent());
+        return JsonConverter.get().fromJson(getContent());
     }
 
     @Override
     public String toXml() {
-        return XmlConverter.get().fromCsv(getContent());
+        return XmlConverter.get().fromJson(getContent());
     }
 }

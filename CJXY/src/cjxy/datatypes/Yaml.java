@@ -5,7 +5,7 @@ import cjxy.converters.JsonConverter;
 import cjxy.converters.XmlConverter;
 import cjxy.converters.YamlConverter;
 
-public class YamlFile extends DataFormat {
+public class Yaml extends DataFormat {
     public enum Extension {
         YAML,
         YML
@@ -13,7 +13,7 @@ public class YamlFile extends DataFormat {
 
     private Extension extension;
 
-    public YamlFile(String filePath, String content, Extension extension) {
+    public Yaml(String filePath, String content, Extension extension) {
         super(filePath, content);
         this.extension = extension;
     }

@@ -5,8 +5,8 @@ import cjxy.converters.JsonConverter;
 import cjxy.converters.XmlConverter;
 import cjxy.converters.YamlConverter;
 
-public class XmlFile extends DataFormat {
-    public XmlFile(String filePath, String content) {
+public class Xml extends DataFormat {
+    public Xml(String filePath, String content) {
         super(filePath, content);
     }
 

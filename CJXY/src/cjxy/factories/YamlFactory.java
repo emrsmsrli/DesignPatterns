@@ -1,9 +1,9 @@
 package cjxy.factories;
 
-import cjxy.datatypes.YamlFile;
+import cjxy.datatypes.Yaml;
 
 public class YamlFactory extends AbstractYamlFactory {
     YamlFactory() {
-        super(YamlFile.Extension.YAML);
+        super(Yaml.Extension.YAML);
     }
 }
