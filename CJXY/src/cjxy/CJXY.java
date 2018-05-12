@@ -69,13 +69,16 @@ public class CJXY {
                 }
                 default: continue;
             }
+            if(content == null){
+                Logger.get().error(type + " -> " + toType);
+                continue;
+            }
+            input = Paths.get(input).toString().split("\\.")[0] + "." + toType;
             try {
-                input = Paths.get(input).toString().split("\\.")[0] + "." + toType;
                 IO.get().writeFile(input ,content);
                 Logger.get().info(type + " -> " + toType);
             } catch (Exception e) {
                 Logger.get().error(type + " -> " + toType);
-                e.printStackTrace();
             }
         }
     }
