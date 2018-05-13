@@ -34,6 +34,7 @@ public class XmlConverter extends Converter {
     private XStream xStream;
 
     private XmlConverter() {
+        mapper = new XmlMapper();
         xStream = new XStream();
         xStream.alias("root", Map.class);
         xStream.registerConverter(new MapEntryConverter());
