@@ -5,7 +5,8 @@ import cjxy.datatypes.Yaml;
 
 public abstract class AbstractYamlFactory implements IDataFormatFactory {
 
-    AbstractYamlFactory() { }
+    AbstractYamlFactory() {
+    }
 
     @Override
     public DataFormat createDataFormat(String contents) {

@@ -14,7 +14,9 @@ public class XmlConverter extends Converter {
         public boolean canConvert(Class clazz) {
             return AbstractMap.class.isAssignableFrom(clazz);
         }
-        public void marshal(Object value, HierarchicalStreamWriter writer, MarshallingContext context) { }
+
+        public void marshal(Object value, HierarchicalStreamWriter writer, MarshallingContext context) {
+        }
 
         public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
             return xmlToMap(reader, new HashMap<>());
@@ -24,21 +26,19 @@ public class XmlConverter extends Converter {
             List<Object> list = new ArrayList<>();
             while(reader.hasMoreChildren()) {
                 reader.moveDown();
-                if(reader.hasMoreChildren()) {
+                if(reader.hasMoreChildren())
                     list.add(xmlToMap(reader, new HashMap<>()));
-                } else {
+                else
                     map.put(reader.getNodeName(), reader.getValue());
-                }
                 reader.moveUp();
             }
 
             if(list.isEmpty())
                 return map;
-            if(list.size() == 1) {
+            if(list.size() == 1)
                 map.put(reader.getNodeName(), list.get(0));
-            } else {
+            else
                 map.put(reader.getNodeName(), list);
-            }
             return map;
         }
     }

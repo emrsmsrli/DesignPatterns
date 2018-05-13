@@ -4,7 +4,8 @@ import cjxy.datatypes.DataFormat;
 import cjxy.datatypes.Xml;
 
 public class XmlFactory implements IDataFormatFactory {
-    XmlFactory() {}
+    XmlFactory() {
+    }
 
     @Override
     public DataFormat createDataFormat(String contents) {

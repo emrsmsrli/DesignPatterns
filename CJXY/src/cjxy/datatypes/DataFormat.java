@@ -8,8 +8,11 @@ public abstract class DataFormat {
     }
 
     public abstract String toCsv();
+
     public abstract String toYaml();
+
     public abstract String toJson();
+
     public abstract String toXml();
 
     public String getContent() {

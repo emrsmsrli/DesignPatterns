@@ -17,7 +17,7 @@ public class CJXY {
         Scanner scanner = new Scanner(System.in);
         String content;
 
-        while(true){
+        while(true) {
             System.out.println("Enter file path: ");
             String path = scanner.next();
 
@@ -45,7 +45,7 @@ public class CJXY {
             System.out.println("Enter file type to convert: ");
             String typeTo = scanner.next();
 
-            switch (typeTo.toLowerCase()) {
+            switch(typeTo.toLowerCase()) {
                 case "csv":
                     content = file.toCsv();
                     break;
@@ -71,9 +71,9 @@ public class CJXY {
 
             try {
                 path = f.getParent() + File.separator + fileNameWithoutExtension + "." + typeTo;
-                IO.get().writeFile(path ,content);
+                IO.get().writeFile(path, content);
                 Logger.get().info(typeFrom + " -> " + typeTo);
-            } catch (Exception e) {
+            } catch(Exception e) {
                 Logger.get().error(typeFrom + " -> " + typeTo + ". reason: " + e.getMessage());
                 e.printStackTrace();
             }
@@ -81,7 +81,7 @@ public class CJXY {
     }
 
     private static DataFormat createDataFormat(String typeFrom, String content) {
-        switch (typeFrom.toLowerCase()) {
+        switch(typeFrom.toLowerCase()) {
             case "csv":
                 return factory.newCsv(content);
             case "xml":

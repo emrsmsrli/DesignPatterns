@@ -2,7 +2,6 @@ package cjxy.converters;
 
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
-import com.fasterxml.jackson.dataformat.csv.CsvParser;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 
 import java.util.ArrayList;
@@ -40,7 +39,7 @@ public class CsvConverter extends Converter {
     @Override
     public Object read(String data) throws Exception {
         CsvSchema schema = CsvSchema.emptySchema().withHeader();
-        MappingIterator<Map<String,String>> it = mapper.readerFor(Map.class).with(schema).readValues(data);
+        MappingIterator<Map<String, String>> it = mapper.readerFor(Map.class).with(schema).readValues(data);
         List<Map<String, String>> list = new ArrayList<>();
         while(it.hasNext()) {
             list.add(it.next());
@@ -62,7 +61,7 @@ public class CsvConverter extends Converter {
     }
 
     private String write(Object hdrs, Object data) throws Exception {
-        Set headers = ((Map)hdrs).keySet();
+        Set headers = ((Map) hdrs).keySet();
         CsvSchema.Builder schemaBuilder = CsvSchema.builder();
         schemaBuilder.setUseHeader(true);
         for(Object header : headers) {

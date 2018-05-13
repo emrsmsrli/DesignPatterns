@@ -17,7 +17,8 @@ public class Logger {
             bw.write("CJXY - Data Exchange Format Converter\n");
             bw.write(time() + " [Logging Started]\n");
             bw.flush();
-        } catch(IOException ignored) {}
+        } catch(IOException ignored) {
+        }
     }
 
     public void info(String message) {
@@ -25,7 +26,8 @@ public class Logger {
         try {
             bw.write(log);
             bw.flush();
-        } catch(Exception ignored) {}
+        } catch(Exception ignored) {
+        }
     }
 
     public void error(String message) {
@@ -33,7 +35,8 @@ public class Logger {
         try {
             bw.write(log);
             bw.flush();
-        } catch(Exception ignored) {}
+        } catch(Exception ignored) {
+        }
     }
 
     private String time() {

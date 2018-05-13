@@ -10,7 +10,8 @@ import java.nio.file.Paths;
 public class IO {
     private static IO instance = null;
 
-    private IO() {}
+    private IO() {
+    }
 
     public String readFile(String path) {
         try {

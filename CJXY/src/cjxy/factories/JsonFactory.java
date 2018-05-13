@@ -4,7 +4,8 @@ import cjxy.datatypes.DataFormat;
 import cjxy.datatypes.Json;
 
 public class JsonFactory implements IDataFormatFactory {
-    JsonFactory() {}
+    JsonFactory() {
+    }
 
     @Override
     public DataFormat createDataFormat(String contents) {

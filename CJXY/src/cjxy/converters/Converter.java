@@ -9,8 +9,7 @@ abstract class Converter implements IConverter {
         try {
             return write(reader.read(content));
         } catch(Exception e) {
-            // todo remove this line
-            System.out.println(e.toString());
+            System.err.println(e.toString());
             return null;
         }
     }
