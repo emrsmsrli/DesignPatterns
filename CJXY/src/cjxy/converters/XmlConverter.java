@@ -1,30 +1,43 @@
 package cjxy.converters;
 
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
-import java.util.AbstractMap;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class XmlConverter extends Converter {
-    public static class MapEntryConverter implements com.thoughtworks.xstream.converters.Converter {
+    public class MapEntryConverter implements com.thoughtworks.xstream.converters.Converter {
         public boolean canConvert(Class clazz) {
             return AbstractMap.class.isAssignableFrom(clazz);
         }
         public void marshal(Object value, HierarchicalStreamWriter writer, MarshallingContext context) { }
 
         public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
-            Map<String, Object> map = new HashMap<>();
+            return xmlToMap(reader, new HashMap<>());
+        }
+
+        private Map<String, Object> xmlToMap(HierarchicalStreamReader reader, Map<String, Object> map) {
+            List<Object> list = new ArrayList<>();
             while(reader.hasMoreChildren()) {
                 reader.moveDown();
-                String key = reader.getNodeName(); // nodeName aka element's name
-                Object value = reader.getValue();
-                map.put(key, value);
+                if(reader.hasMoreChildren()) {
+                    list.add(xmlToMap(reader, new HashMap<>()));
+                } else {
+                    map.put(reader.getNodeName(), reader.getValue());
+                }
                 reader.moveUp();
+            }
+
+            if(list.isEmpty())
+                return map;
+            if(list.size() == 1) {
+                map.put(reader.getNodeName(), list.get(0));
+            } else {
+                map.put(reader.getNodeName(), list);
             }
             return map;
         }
