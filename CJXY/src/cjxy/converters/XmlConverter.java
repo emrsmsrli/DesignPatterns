@@ -1,14 +1,14 @@
 package cjxy.converters;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+
+import java.util.Map;
 
 public class XmlConverter extends Converter {
     private static XmlConverter instance;
 
     private XmlConverter() {
         mapper = new XmlMapper();
-        mapper.enable(DeserializationFeature.UNWRAP_ROOT_VALUE);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class XmlConverter extends Converter {
 
     @Override
     public Object read(String data) throws Exception {
-        return mapper.readTree(data.getBytes());
+        return mapper.readValue(data, Map.class);
     }
 
     @Override
