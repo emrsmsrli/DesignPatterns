@@ -75,7 +75,6 @@ public class CJXY {
                 Logger.get().info(typeFrom + " -> " + typeTo);
             } catch(Exception e) {
                 Logger.get().error(typeFrom + " -> " + typeTo + ". reason: " + e.getMessage());
-                e.printStackTrace();
             }
         }
     }
