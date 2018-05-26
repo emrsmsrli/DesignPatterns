@@ -1,4 +1,4 @@
-package Strategies;
+package game.Strategies;
 
 public class JumpingMoveStrategy extends MoveStrategy {
     @Override
