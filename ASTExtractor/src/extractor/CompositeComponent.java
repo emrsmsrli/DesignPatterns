@@ -1,10 +1,9 @@
 package extractor;
 
-//todo change Class Name.
-public abstract class ClassElement {
+public abstract class CompositeComponent {
     private String name;
 
-    public ClassElement(String name){
+    public CompositeComponent(String name){
         this.name = name;
     }
 
@@ -13,4 +12,6 @@ public abstract class ClassElement {
     }
 
     public abstract int getVariableCount();
+    public abstract int getMethodCount();
+    public abstract int getVariableCountInMethods();
 }

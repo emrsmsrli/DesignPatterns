@@ -31,19 +31,19 @@ public class JavaProject {
     }
 
     private int getMethodsCount(){
-        int counter = 0;
+        int methodCount = 0;
         for(ConcreteClass concreteClass: classes){
-            counter += concreteClass.getMethodCount();
+            methodCount += concreteClass.getMethodCount();
         }
-        return counter;
+        return methodCount;
     }
 
     private int getVariablesCount()
     {
-        int counter = 0;
+        int variableCount = 0;
         for(ConcreteClass concreteClass: classes){
-            counter += concreteClass.getTotalVariableCount();
+            variableCount += concreteClass.getVariableCount();
         }
-        return counter;
+        return variableCount;
     }
 }

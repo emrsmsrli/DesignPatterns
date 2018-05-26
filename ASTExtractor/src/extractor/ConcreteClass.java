@@ -3,42 +3,39 @@ package extractor;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConcreteClass {
-    private String name;
-    private List<ClassElement> classElements;
+public class ConcreteClass extends CompositeComponent {
+    private List<CompositeComponent> components;
 
     public ConcreteClass(String name){
-        classElements = new ArrayList<>();
-        this.name = name;
+        super(name);
+        components = new ArrayList<>();
     }
 
-    public void addElement(ClassElement element){
-        classElements.add(element);
+    @Override
+    public int getVariableCount() {
+        int variableCount = 0;
+        for(CompositeComponent component: components)
+            variableCount += component.getVariableCount();
+        return variableCount;
+    }
+
+    public void addElement(CompositeComponent element){
+        components.add(element);
     }
 
     public int getMethodCount(){
-        int counter = 0;
-        for(ClassElement element: classElements){
-            if(element instanceof ConcreteMethod)
-                counter++;
+        int methodCount = 0;
+        for(CompositeComponent component: components){
+            methodCount += component.getMethodCount();
         }
-        return counter;
+        return methodCount;
     }
 
-    public int getVariableCountInMethods(){
-        int counter = 0;
-        for(ClassElement element: classElements){
-            if(element instanceof ConcreteMethod)
-                counter += element.getVariableCount();
-        }
-        return counter;
-    }
-
-    public int getTotalVariableCount(){
-        int counter = 0;
-        for(ClassElement element: classElements){
-            counter += element.getVariableCount();
-        }
-        return counter;
+    @Override
+    public int getVariableCountInMethods() {
+        int variableCount = 0;
+        for(CompositeComponent component: components)
+            variableCount += component.getVariableCount();
+        return variableCount;
     }
 }
