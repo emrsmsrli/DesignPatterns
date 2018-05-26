@@ -1,3 +1,5 @@
+package extractor;
+
 public class ConcreteVariable extends ClassElement{
 
     public ConcreteVariable(String name) {

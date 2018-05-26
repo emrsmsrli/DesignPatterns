@@ -1,4 +1,4 @@
-
+package extractor;
 
 public class CodeTreeExtractor {
     public static void main(String[] args) {
