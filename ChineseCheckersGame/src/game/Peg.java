@@ -1,10 +1,10 @@
 package game;
 
-import game.Visitors.PegVisitor;
+import game.Visitors.Visitor;
 
-public class Peg {
-
-    public void accept(PegVisitor visitor){
-        visitor.visit(this);
+public class Peg implements Acceptor {
+    @Override
+    public void accept(Visitor v) {
+        v.visit(this);
     }
 }
