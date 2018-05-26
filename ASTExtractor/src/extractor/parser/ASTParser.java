@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ASTParser {
+    private static final String CLASS_ANONYMOUS = "[anonymous]";
+
     private static final String TAG_CLASS = "ClassOrInterfaceDeclaration";
     private static final String TAG_FIELD = "FieldDeclaration";
     private static final String TAG_VARIBLE = "LocalVariableDeclaration";
@@ -44,9 +46,14 @@ public class ASTParser {
     }
 
     private static ConcreteClass parseClass(String parentClassName, Element classElement) {
-        String className = classElement.getAttribute(ATTR_CLASS_NAME);
-        if(parentClassName != null)
-            className = parentClassName + "." + className;
+        String className;
+        if(parentClassName != null && parentClassName.endsWith(CLASS_ANONYMOUS)) {
+            className = parentClassName;
+        } else {
+            className = classElement.getAttribute(ATTR_CLASS_NAME);
+            if(parentClassName != null)
+                className = parentClassName + "." + className;
+        }
         ConcreteClass clazz = new ConcreteClass(className);
         List<ClassElement> elements = new ArrayList<>();
 
@@ -73,7 +80,7 @@ public class ASTParser {
 
         NodeList anonymousClasses = methodElement.getElementsByTagName(TAG_CLASS);
         for(int i = 0; i < anonymousClasses.getLength(); ++i)
-            ;//elements.add(parseClass((Element) anonymousClasses.item(i)));
+            ;//elements.add(parseClass(name + "." + CLASS_ANONYMOUS, (Element) anonymousClasses.item(i)));
 
         NodeList localVars = methodElement.getElementsByTagName(TAG_VARIBLE);
         for(int i = 0; i < localVars.getLength(); ++i)
