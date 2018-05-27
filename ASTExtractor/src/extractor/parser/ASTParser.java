@@ -85,6 +85,11 @@ public class ASTParser {
     }
 
     private void loadASTFiles(File path, List<File> asts) {
+        File[] astFiles = path.listFiles(f -> f.getName().endsWith(".ast"));
+        if(astFiles == null)
+            return;
+        asts.addAll(Arrays.asList(astFiles));
+
         File[] dirs = path.listFiles(File::isDirectory);
         if(dirs == null)
             return;
@@ -92,11 +97,6 @@ public class ASTParser {
         for(File dir : dirs) {
             loadASTFiles(dir, asts);
         }
-
-        File[] astFiles = path.listFiles(f -> f.getName().endsWith(".ast"));
-        if(astFiles == null)
-            return;
-        asts.addAll(Arrays.asList(astFiles));
     }
 
     public static ASTParser instance() throws Exception {
