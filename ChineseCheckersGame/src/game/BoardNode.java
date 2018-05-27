@@ -1,4 +1,10 @@
 package game;
 
-public class BoardNode {
+import game.Visitors.Visitor;
+
+public class BoardNode implements Acceptor{
+    @Override
+    public void accept(Visitor v) {
+
+    }
 }
