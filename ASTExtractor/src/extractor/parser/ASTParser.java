@@ -1,10 +1,7 @@
 package extractor.parser;
 
-import extractor.javaProjectElements.CompositeProjectElement;
-import extractor.javaProjectElements.ConcreteClass;
-import extractor.javaProjectElements.ConcreteMethod;
-import extractor.javaProjectElements.ConcreteVariable;
-import extractor.projects.JavaProject;
+import extractor.project.JavaProject;
+import extractor.project.elements.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -36,60 +33,56 @@ public class ASTParser {
     }
 
     public JavaProject generateProject(String astFolderPath) throws Exception {
-        JavaProject project = new JavaProject();
+        List<JavaClass> classes = new ArrayList<>();
 
         for(File javaFile : loadASTFiles(astFolderPath)) {
             Document xmlDoc = builder.parse(javaFile);
-            ConcreteClass clazz = parseClass(null, (Element)xmlDoc.getElementsByTagName(TAG_CLASS).item(0));
-            project.addClass(clazz);
+            JavaClass clazz = parseClass(null, (Element)xmlDoc.getElementsByTagName(TAG_CLASS).item(0));
+            classes.add(clazz);
         }
 
-        return project;
+        return new JavaProject(classes);
     }
 
-    private static ConcreteClass parseClass(String parentClassName, Element CompositeComponent) {
-        String className = CompositeComponent.getAttribute(ATTR_CLASS_NAME);
-        if(parentClassName != null)
-            className = parentClassName + "." + className;
-        ConcreteClass clazz = new ConcreteClass(className);
-        List<CompositeProjectElement> elements = new ArrayList<>();
+    private static JavaClass parseClass(String parentName, Element CompositeComponent) {
+        String name = CompositeComponent.getAttribute(ATTR_CLASS_NAME);
+        if(parentName != null)
+            name = parentName + "." + name;
+        List<JavaElement> elements = new ArrayList<>();
 
         NodeList innerClasses = CompositeComponent.getElementsByTagName(TAG_CLASS);
         for(int i = 0; i < innerClasses.getLength(); ++i)
-            ;//elements.add(parseClass(className, (Element) innerClasses.item(i)));
+            elements.add(parseClass(name, (Element) innerClasses.item(i)));
 
         NodeList fields = CompositeComponent.getElementsByTagName(TAG_FIELD);
         for(int i = 0; i < fields.getLength(); ++i)
-            ;//elements.add(parseVariable((Element) fields.item(i)));
+            elements.add(parseVariable(name, (Element) fields.item(i)));
 
         NodeList methods = CompositeComponent.getElementsByTagName(TAG_METHODS);
         for(int i = 0; i < methods.getLength(); ++i)
-            ;//elements.add(parseMethod((Element) methods.item(i)));
+            elements.add(parseMethod(name, (Element) methods.item(i)));
 
-        //clazz.addElements(elements);
-        return clazz;
+        return new JavaClass(name, elements);
     }
 
-    private static ConcreteMethod parseMethod(Element methodElement) {
-        String name = methodElement.getAttribute(ATTR_METHOD_NAME);
-        ConcreteMethod method = new ConcreteMethod(name);
-        List<CompositeProjectElement> elements = new ArrayList<>();
+    private static JavaMethod parseMethod(String parentName, Element methodElement) {
+        String name = parentName + "." + methodElement.getAttribute(ATTR_METHOD_NAME) + "()";
+        List<JavaElement> elements = new ArrayList<>();
 
-        NodeList anonymousClasses = methodElement.getElementsByTagName(TAG_CLASS);
+        /*NodeList anonymousClasses = methodElement.getElementsByTagName(TAG_CLASS);
         for(int i = 0; i < anonymousClasses.getLength(); ++i)
-            ;//elements.add(parseClass((Element) anonymousClasses.item(i)));
+            elements.add(parseClass((Element) anonymousClasses.item(i)));*/
 
         NodeList localVars = methodElement.getElementsByTagName(TAG_VARIBLE);
         for(int i = 0; i < localVars.getLength(); ++i)
-            ;//elements.add(parseVariable((Element) localVars.item(i)));
+            elements.add(parseVariable(name, (Element) localVars.item(i)));
 
-        //method.addVariables(elements);
-        return method;
+        return new JavaMethod(name, elements);
     }
 
-    private static ConcreteVariable parseVariable(Element variableElement) {
-        String name = variableElement.getAttribute(ATTR_VAR_NAME);
-        return new ConcreteVariable(name);
+    private static JavaVariable parseVariable(String parentName, Element variableElement) {
+        String name = parentName + "." + variableElement.getAttribute(ATTR_VAR_NAME);
+        return new JavaVariable(name);
     }
 
     private File[] loadASTFiles(String path) {
