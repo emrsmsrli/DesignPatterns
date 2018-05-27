@@ -10,6 +10,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ASTParser {
@@ -35,8 +36,10 @@ public class ASTParser {
     public JavaProject generateProject(String astFolderPath) throws Exception {
         List<JavaClass> classes = new ArrayList<>();
 
-        for(File javaFile : loadASTFiles(astFolderPath)) {
-            Document xmlDoc = builder.parse(javaFile);
+        List<File> astsFiles = new ArrayList<>();
+        loadASTFiles(new File(astFolderPath), astsFiles);
+        for(File ast : astsFiles) {
+            Document xmlDoc = builder.parse(ast);
             JavaClass clazz = parseClass(null, (Element)xmlDoc.getElementsByTagName(TAG_CLASS).item(0));
             classes.add(clazz);
         }
@@ -81,8 +84,19 @@ public class ASTParser {
         return new JavaVariable(name);
     }
 
-    private File[] loadASTFiles(String path) {
-        return new File(path).listFiles((dir, name) -> name.endsWith(".ast"));
+    private void loadASTFiles(File path, List<File> asts) {
+        File[] dirs = path.listFiles(File::isDirectory);
+        if(dirs == null)
+            return;
+
+        for(File dir : dirs) {
+            loadASTFiles(dir, asts);
+        }
+
+        File[] astFiles = path.listFiles(f -> f.getName().endsWith(".ast"));
+        if(astFiles == null)
+            return;
+        asts.addAll(Arrays.asList(astFiles));
     }
 
     public static ASTParser instance() throws Exception {
