@@ -1,11 +1,17 @@
-package extractor;
+package extractor.analysers;
+
+import extractor.printers.IProjectPrinter;
+import extractor.projects.IProject;
 
 public interface IProjectAnalyser {
-    public int getClassCount(IJavaProject project);
-    public int getVariablesCountInClass(IJavaProject project);
-    public int getMethodsCountInClass(IJavaProject project);
-    public int getVariableCountInMethods(IJavaProject project);
-    public float getAverageNumberOfMethodsPerClass(IJavaProject project);
-    public float getAverageNumberOfVariablesPerClass(IJavaProject project);
-    public float getAverageNumberOfVariablesPerMethod(IJavaProject project);
+    public void printAnalysis(IProject project);
+    /*
+    public int getClassCount(IProject project);
+    public int getVariablesCountInClass(IProject project);
+    public int getMethodsCountInClass(IProject project);
+    public int getVariableCountInMethods(IProject project);
+    public float getAverageNumberOfMethodsPerClass(IProject project);
+    public float getAverageNumberOfVariablesPerClass(IProject project);
+    public float getAverageNumberOfVariablesPerMethod(IProject project);
+    */
 }

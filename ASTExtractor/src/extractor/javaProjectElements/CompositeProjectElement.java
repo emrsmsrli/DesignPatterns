@@ -1,4 +1,4 @@
-package extractor;
+package extractor.javaProjectElements;
 
 import extractor.javaProjectElements.ConcreteClass;
 import extractor.javaProjectElements.ConcreteMethod;

@@ -1,6 +1,8 @@
 package extractor;
 
 import extractor.parser.ASTParser;
+import extractor.printers.JavaProjectPrinter;
+import extractor.projects.JavaProject;
 
 public class CodeTreeExtractor {
     public static void main(String[] args) throws Exception {
@@ -10,7 +12,7 @@ public class CodeTreeExtractor {
         }
 
         JavaProject project = ASTParser.instance().generateProject(args[0]);
-        // System.out.println(project.getAverageNumberOfMethodsPerClass());
+
         /* How many classes exist.
            How many methods exist in each class.
            How many variables exist in each class.
