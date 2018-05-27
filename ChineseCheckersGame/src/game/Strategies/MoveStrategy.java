@@ -1,8 +1,8 @@
 package game.Strategies;
 
-public class MoveStrategy implements game.Strategies.Move {
+public class MoveStrategy implements Move {
     @Override
-    public void move() {
+    public void move(int x, int y) {
 
     }
 }

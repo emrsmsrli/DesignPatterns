@@ -2,7 +2,7 @@ package game;
 
 import game.Visitors.Visitor;
 
-public class Peg extends BoardNode implements Acceptor {
+public class Peg extends BoardNode {
     private int color;
 
     Peg(int color){
