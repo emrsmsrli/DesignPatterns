@@ -69,10 +69,6 @@ public class ASTParser {
         String name = parentName + "." + methodElement.getAttribute(ATTR_METHOD_NAME) + "()";
         List<JavaElement> elements = new ArrayList<>();
 
-        /*NodeList anonymousClasses = methodElement.getElementsByTagName(TAG_CLASS);
-        for(int i = 0; i < anonymousClasses.getLength(); ++i)
-            elements.add(parseClass((Element) anonymousClasses.item(i)));*/
-
         NodeList localVars = methodElement.getElementsByTagName(TAG_VARIBLE);
         for(int i = 0; i < localVars.getLength(); ++i)
             elements.add(parseVariable(name, (Element) localVars.item(i)));
