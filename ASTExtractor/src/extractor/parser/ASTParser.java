@@ -35,9 +35,12 @@ public class ASTParser {
 
     public JavaProject generateProject(String astFolderPath) throws Exception {
         List<JavaClass> classes = new ArrayList<>();
-
         List<File> astsFiles = new ArrayList<>();
         loadASTFiles(new File(astFolderPath), astsFiles);
+
+        if(astsFiles.isEmpty())
+            throw new RuntimeException("no ast files found");
+
         for(File ast : astsFiles) {
             Document xmlDoc = builder.parse(ast);
             JavaClass clazz = parseClass(null, (Element)xmlDoc.getElementsByTagName(TAG_CLASS).item(0));
