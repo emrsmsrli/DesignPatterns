@@ -1,6 +1,10 @@
 package extractor.parser;
 
-import extractor.*;
+import extractor.javaProjectElements.CompositeProjectElement;
+import extractor.javaProjectElements.ConcreteClass;
+import extractor.javaProjectElements.ConcreteMethod;
+import extractor.javaProjectElements.ConcreteVariable;
+import extractor.projects.JavaProject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -12,8 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ASTParser {
-    private static final String CLASS_ANONYMOUS = "[anonymous]";
-
     private static final String TAG_CLASS = "ClassOrInterfaceDeclaration";
     private static final String TAG_FIELD = "FieldDeclaration";
     private static final String TAG_VARIBLE = "LocalVariableDeclaration";
@@ -45,27 +47,22 @@ public class ASTParser {
         return project;
     }
 
-    private static ConcreteClass parseClass(String parentClassName, Element classElement) {
-        String className;
-        if(parentClassName != null && parentClassName.endsWith(CLASS_ANONYMOUS)) {
-            className = parentClassName;
-        } else {
-            className = classElement.getAttribute(ATTR_CLASS_NAME);
-            if(parentClassName != null)
-                className = parentClassName + "." + className;
-        }
+    private static ConcreteClass parseClass(String parentClassName, Element CompositeComponent) {
+        String className = CompositeComponent.getAttribute(ATTR_CLASS_NAME);
+        if(parentClassName != null)
+            className = parentClassName + "." + className;
         ConcreteClass clazz = new ConcreteClass(className);
-        List<ClassElement> elements = new ArrayList<>();
+        List<CompositeProjectElement> elements = new ArrayList<>();
 
-        NodeList innerClasses = classElement.getElementsByTagName(TAG_CLASS);
+        NodeList innerClasses = CompositeComponent.getElementsByTagName(TAG_CLASS);
         for(int i = 0; i < innerClasses.getLength(); ++i)
             ;//elements.add(parseClass(className, (Element) innerClasses.item(i)));
 
-        NodeList fields = classElement.getElementsByTagName(TAG_FIELD);
+        NodeList fields = CompositeComponent.getElementsByTagName(TAG_FIELD);
         for(int i = 0; i < fields.getLength(); ++i)
             ;//elements.add(parseVariable((Element) fields.item(i)));
 
-        NodeList methods = classElement.getElementsByTagName(TAG_METHODS);
+        NodeList methods = CompositeComponent.getElementsByTagName(TAG_METHODS);
         for(int i = 0; i < methods.getLength(); ++i)
             ;//elements.add(parseMethod((Element) methods.item(i)));
 
@@ -76,11 +73,11 @@ public class ASTParser {
     private static ConcreteMethod parseMethod(Element methodElement) {
         String name = methodElement.getAttribute(ATTR_METHOD_NAME);
         ConcreteMethod method = new ConcreteMethod(name);
-        List<ClassElement> elements = new ArrayList<>();
+        List<CompositeProjectElement> elements = new ArrayList<>();
 
         NodeList anonymousClasses = methodElement.getElementsByTagName(TAG_CLASS);
         for(int i = 0; i < anonymousClasses.getLength(); ++i)
-            ;//elements.add(parseClass(name + "." + CLASS_ANONYMOUS, (Element) anonymousClasses.item(i)));
+            ;//elements.add(parseClass((Element) anonymousClasses.item(i)));
 
         NodeList localVars = methodElement.getElementsByTagName(TAG_VARIBLE);
         for(int i = 0; i < localVars.getLength(); ++i)

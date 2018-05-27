@@ -6,7 +6,7 @@ import extractor.javaProjectElements.ConcreteVariable;
 
 import java.util.List;
 
-public interface IJavaProject {
+public interface IProject {
     public void addClass(ConcreteClass clazz);
     public List<ConcreteVariable> getVariables();
     public List<ConcreteMethod> getMethods();

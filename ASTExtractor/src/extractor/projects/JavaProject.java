@@ -1,5 +1,6 @@
-package extractor;
+package extractor.projects;
 
+import extractor.javaProjectElements.CompositeProjectElement;
 import extractor.javaProjectElements.ConcreteClass;
 import extractor.javaProjectElements.ConcreteMethod;
 import extractor.javaProjectElements.ConcreteVariable;
@@ -7,7 +8,7 @@ import extractor.javaProjectElements.ConcreteVariable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JavaProject implements IJavaProject {
+public class JavaProject implements IProject {
     private List<ConcreteClass> classes;
 
     public JavaProject(){
