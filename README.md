@@ -7,3 +7,5 @@ Design patterns practices
 - Manufacturer Production Module
 - Social Music Platform (Iztechify) -- incomplete
 - Data Exchange File Converter (CJXY)
+- Java AST Analyser
+- Chinese Checkers -- incomplete
